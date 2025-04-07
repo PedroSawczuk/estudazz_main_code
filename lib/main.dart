@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/theme/appTheme.dart';
 import 'package:estudazz_main_code/views/homePage.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ void main() {
       themeMode: AppTheme.themeMode,
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+      initialRoute: AppRoutes.homePage,
+      getPages: AppRoutes.routes,
     )
   );
 }
