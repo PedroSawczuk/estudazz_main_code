@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(titleAppBar: 'Estudazz'),
+      appBar: CustomAppBar(titleAppBar: 'Estudazz', showPersonIcon: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16),
