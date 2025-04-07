@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,8 +7,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Home Page'),
+      appBar: CustomAppBar(titleAppBar: 'Estudazz'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(children: [
+            Text('Olá!')
+          ],
+        ),
+        ),
       ),
     );
   }
