@@ -8,6 +8,10 @@ import '../views/ia/iaPage.dart';
 import '../views/settings/settingsPage.dart';
 import '../views/profile/profilePage.dart';
 
+import '../views/auth/signUpPage.dart';
+import '../views/auth/signInPage.dart';
+import '../views/auth/forgotPasswordPage.dart';
+
 class AppRoutes {
   static const String homePage = '/homePage';
   static const String settingsPage = '/settingsPage';
@@ -17,6 +21,10 @@ class AppRoutes {
   static const String iaPage = '/iaPage';
   static const String performancePage = '/performancePage'; 
   static const String studyGroupPage = '/studyGroupPage'; 
+  
+  static const String signUpPage = '/signUpPage'; 
+  static const String signInPage = '/signInPage'; 
+  static const String forgotPasswordPage = '/forgotPasswordPage'; 
 
   static final routes = [
     GetPage(
@@ -51,6 +59,18 @@ class AppRoutes {
       name: performancePage,
       page: () => PerformancePage(),
     ),
-  ];
 
+    GetPage(
+      name: signUpPage,
+      page: () => SignUpPage(),
+    ),
+    GetPage(
+      name: signInPage,
+      page: () => SignInPage(),
+    ),
+    GetPage(
+      name: forgotPasswordPage,
+      page: () => ForgotPasswordPage(),
+    ),
+  ];
 }
