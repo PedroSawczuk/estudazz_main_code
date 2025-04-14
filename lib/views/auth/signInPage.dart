@@ -1,107 +1,123 @@
+import 'package:estudazz_main_code/controller/auth/authController.dart';
+import 'package:estudazz_main_code/views/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+import 'signUpPage.dart';
+
+class SignInPage extends StatefulWidget {
+  SignInPage({super.key});
+
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AuthController _authController = AuthController();
+  bool _isPasswordVisible = false;
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      String email = _emailController.text;
+      String password = _passwordController.text;
+
+      Get.snackbar('Aguarde', 'Entrando...', snackPosition: SnackPosition.BOTTOM);
+      
+      try {
+        await _authController.signIn(email, password);
+        Get.offAll(() => HomePage());
+      } catch (e) {
+        Get.snackbar('Erro', 'Falha ao entrar: $e', snackPosition: SnackPosition.BOTTOM);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'ENTRAR',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 32),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.white54),
-                  filled: true,
-                  fillColor: Colors.grey[900],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none,
+      appBar: AppBar(
+        title: Text(
+          'Entrar',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.email)
                   ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Senha',
-                  hintStyle: TextStyle(color: Colors.white54),
-                  filled: true,
-                  fillColor: Colors.grey[900],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onTap: () {
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira um email válido';
+                    }
+                    return null;
                   },
-                  child: Text(
-                    'Esqueceu a senha?',
-                    style: TextStyle(color: Color(0xFF525252)),
-                  ),
                 ),
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Já tem conta?', style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 4),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'Entre aqui',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
+                SizedBox(height: 10),
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.password),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                       ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: 32),
-              SizedBox(
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                  ),
-                  child: Text(
-                    'Entrar',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  validator: (value) {
+                    if (value == null || value.length < 6) {
+                      return 'A senha deve ter pelo menos 6 caracteres';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-            ],
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Não tem uma conta?'),
+                    TextButton(
+                      onPressed: () {
+                        Get.offAll(() => SignUpPage());
+                      },
+                      child: Text('Crie aqui'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: _submitForm,
+                  style: ElevatedButton.styleFrom(fixedSize: Size(240, 44)),
+                  child: Text('Entrar'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
