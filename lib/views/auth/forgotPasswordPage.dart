@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'signInPage.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
@@ -13,7 +16,7 @@ class ForgotPasswordPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'RECUPERAR',
+                'RECUPERAR CONTA',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 35,
@@ -39,9 +42,12 @@ class ForgotPasswordPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   onTap: () {},
-                  child: Text(
-                    'Voltar ao login',
-                    style: TextStyle(color: Color(0xFF525252)),
+                  child: TextButton(
+                    onPressed: () {
+                      Get.offAll(() => SignInPage());
+                    },
+                    child: Text('Voltar ao login',
+                    style: TextStyle(color: Color(0xFF525252)),),
                   ),
                 ),
               ),
@@ -51,7 +57,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Color(0xFFED820E),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
