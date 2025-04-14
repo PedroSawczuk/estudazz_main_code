@@ -4,8 +4,58 @@ import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
+import '../controller/homePageController.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final HomePageController _profileController = Get.put(HomePageController());
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () {
+      ever(_profileController.profileCompleted, (bool isCompleted) {
+        if (!isCompleted) {
+          _showIncompleteProfileDialog();
+        }
+      });
+    });
+  }
+
+  void _showIncompleteProfileDialog() {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(
+              "Falta Pouco!",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              "Adicione algumas informações que serão úteis para sua experiência ser completa!",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("Mais Tarde"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Editar Perfil"),
+              ),
+            ],
+          ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
