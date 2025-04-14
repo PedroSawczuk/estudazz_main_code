@@ -1,7 +1,8 @@
 import 'package:estudazz_main_code/components/cards/homeCards.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
-import 'package:estudazz_main_code/utils/auth/userAuthCheck.dart';
+import 'package:estudazz_main_code/utils/user/authProfileCheck.dart';
+import 'package:estudazz_main_code/utils/user/userAuthCheck.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,42 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(Duration.zero, () {
-      ever(_profileController.profileCompleted, (bool isCompleted) {
-        if (!isCompleted) {
-          _showIncompleteProfileDialog();
-        }
-      });
-    });
-  }
-
-  void _showIncompleteProfileDialog() {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(
-              "Falta Pouco!",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            content: Text(
-              "Adicione algumas informações que serão úteis para sua experiência ser completa!",
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Mais Tarde"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Editar Perfil"),
-              ),
-            ],
-          ),
-    );
+    checkProfileCompletion(_profileController, context);
   }
 
   @override
