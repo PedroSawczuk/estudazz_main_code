@@ -19,7 +19,7 @@ Future<void> main() async {
       darkTheme: AppTheme.darkTheme,
       themeMode: AppTheme.themeMode,
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.signUpPage,
+      initialRoute: AppRoutes.homePage,
       getPages: AppRoutes.routes,
     ),
   );
