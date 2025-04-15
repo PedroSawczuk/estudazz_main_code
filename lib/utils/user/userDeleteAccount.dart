@@ -49,7 +49,10 @@ void showDeleteAccountDialog(BuildContext context) {
             onPressed: () => Navigator.of(context).pop(),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
             child: Text("Excluir"),
             onPressed: () async {
               if (emailController.text.trim() == currentUser?.email) {
