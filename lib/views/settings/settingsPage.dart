@@ -1,6 +1,7 @@
 import 'package:estudazz_main_code/components/cards/settingsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:estudazz_main_code/utils/user/userDeleteAccount.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +57,7 @@ class SettingsPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 20.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () => showDeleteAccountDialog(context),
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
                 child: Text(
                   "Deletar Conta",
