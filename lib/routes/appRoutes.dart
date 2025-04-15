@@ -1,3 +1,5 @@
+import 'package:estudazz_main_code/views/settings/user/editDataPage.dart';
+import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';
 import 'package:get/get.dart';
 import '../views/homePage.dart';
 import '../views/tasks/allTasksPage.dart';
@@ -21,6 +23,9 @@ class AppRoutes {
   static const String iaPage = '/iaPage';
   static const String performancePage = '/performancePage'; 
   static const String studyGroupPage = '/studyGroupPage'; 
+
+  static const String myDataPage = '/myDataPage'; 
+  static const String editDataPage = '/editDataPage'; 
   
   static const String signUpPage = '/signUpPage'; 
   static const String signInPage = '/signInPage'; 
@@ -60,6 +65,18 @@ class AppRoutes {
       page: () => PerformancePage(),
     ),
 
+  // -------------- SETTINGS
+    GetPage(
+      name: myDataPage,
+      page: () => MyDataPage(),
+    ),
+    GetPage(
+      name: editDataPage,
+      page: () => EditDataPage(),
+    ),
+
+
+  // -------------- AUTH
     GetPage(
       name: signUpPage,
       page: () => SignUpPage(),
