@@ -5,8 +5,7 @@ import 'package:estudazz_main_code/utils/user/authProfileCheck.dart';
 import 'package:estudazz_main_code/utils/user/userAuthCheck.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../controller/homePageController.dart';
+import '../controllers/homePageController.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

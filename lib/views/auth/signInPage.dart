@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/controller/auth/authController.dart';
+import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/views/auth/forgotPasswordPage.dart';
 import 'package:estudazz_main_code/views/homePage.dart';
 import 'package:flutter/material.dart';

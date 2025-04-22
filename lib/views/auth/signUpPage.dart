@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/controller/auth/authController.dart';
+import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/views/auth/signInPage.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
         key: _formKey,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +123,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(200, 44),
-                    backgroundColor: const Color(0xFFED820E),
+                    backgroundColor: Color(0xFFED820E),
                     foregroundColor: Colors.white,
                   ),
                   child: Text('Criar Conta'),

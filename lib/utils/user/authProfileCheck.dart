@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/controller/homePageController.dart';
+import 'package:estudazz_main_code/controllers/homePageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
