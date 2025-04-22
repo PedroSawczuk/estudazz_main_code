@@ -32,7 +32,8 @@ class _EditDataPageState extends State<EditDataPage> {
 
   Future<void> _loadUserData() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     final data = doc.data();
     if (data != null) {
@@ -100,14 +101,23 @@ class _EditDataPageState extends State<EditDataPage> {
                 const SizedBox(height: 10),
                 _buildTextField('Curso', _courseController),
                 const SizedBox(height: 10),
-                _buildTextField('Conclusão Prevista', _graduationDateController),
+                _buildTextField(
+                  'Conclusão Prevista',
+                  _graduationDateController,
+                ),
                 const SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
                     onPressed: _saveData,
-                    child: const Text('Salvar Alterações', style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Salvar Alterações',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 12,
+                      ),
                       backgroundColor: const Color(0xFFED820E),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

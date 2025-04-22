@@ -1,24 +1,22 @@
+import 'package:estudazz_main_code/components/cards/userInfoCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:estudazz_main_code/services/user/fetchUserDataService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class MyDataPage extends StatelessWidget {
   MyDataPage({super.key});
 
-  Future<DocumentSnapshot> getUserData() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    return await FirebaseFirestore.instance.collection('users').doc(uid).get();
-  }
+  final FetchUserDataService _fetchUserDataService = FetchUserDataService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Meus Dados'),
       body: FutureBuilder<DocumentSnapshot>(
-        future: getUserData(),
+        future: _fetchUserDataService.getUserData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -34,15 +32,21 @@ class MyDataPage extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
-                _buildInfoRow("Nome", data['display_name'] ?? ''),
-                _buildInfoRow("Username", data['username'] ?? ''),
-                _buildInfoRow("Email", data['email'] ?? ''),
-                _buildInfoRow("Data de Nascimento", data['birth_date'] ?? ''),
-                _buildInfoRow("Instituição", data['institution'] ?? ''),
-                _buildInfoRow("Curso", data['course'] ?? ''),
-                _buildInfoRow(
-                  "Conclusão Prevista",
-                  data['expected_graduation'] ?? '',
+                UserInfoCard(label: "Nome", value: data['display_name'] ?? ''),
+                UserInfoCard(label: "Username", value: data['username'] ?? ''),
+                UserInfoCard(label: "Email", value: data['email'] ?? ''),
+                UserInfoCard(
+                  label: "Data de Nascimento",
+                  value: data['birth_date'] ?? '',
+                ),
+                UserInfoCard(
+                  label: "Instituição",
+                  value: data['institution'] ?? '',
+                ),
+                UserInfoCard(label: "Curso", value: data['course'] ?? ''),
+                UserInfoCard(
+                  label: "Conclusão Prevista",
+                  value: data['expected_graduation'] ?? '',
                 ),
                 SizedBox(height: 30),
                 ElevatedButton.icon(
@@ -60,16 +64,6 @@ class MyDataPage extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(label), Text(value)],
       ),
     );
   }
