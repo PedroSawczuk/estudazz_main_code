@@ -2,6 +2,7 @@ import 'package:estudazz_main_code/components/cards/settingsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/user/userDeleteAccount.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,7 +50,10 @@ class SettingsPage extends StatelessWidget {
                     context,
                     icon: Icons.logout,
                     title: "Sair",
-                    onTap: () {},
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Get.offAllNamed(AppRoutes.signInPage); 
+                    },
                   ),
                 ],
               ),
