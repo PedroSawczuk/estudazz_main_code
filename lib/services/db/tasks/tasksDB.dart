@@ -6,13 +6,11 @@ class TasksDB {
 
   Future<void> addTask({
     required String uid,
-    required String refUser,
     required String taskName,
     required String dueDate,
   }) async {
     await tasksCollection.add({
-      'uid': uid,
-      'ref_user': refUser,
+      'uid': uid, 
       'task_name': taskName,
       'created_at': DateTime.now().toIso8601String(),
       'task_completed': false,
@@ -22,7 +20,7 @@ class TasksDB {
 
   Stream<QuerySnapshot> getTasksByUser(String uid) {
     return tasksCollection
-        .where('ref_user', isEqualTo: uid)
+        .where('uid', isEqualTo: uid) 
         .orderBy('created_at')
         .snapshots();
   }
