@@ -38,7 +38,9 @@ class SettingsPage extends StatelessWidget {
                     context,
                     icon: Icons.dark_mode,
                     title: "Tema",
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.themeSettingsPage);
+                    },
                   ),
                   SettingsCard(
                     context,
@@ -53,6 +55,13 @@ class SettingsPage extends StatelessWidget {
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
                       Get.offAllNamed(AppRoutes.signInPage); 
+                      Get.snackbar(
+                        "Desconectado",
+                        "Você foi desconectado com sucesso.",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     },
                   ),
                 ],

@@ -1,6 +1,7 @@
-import 'package:estudazz_main_code/views/settings/user/editDataPage.dart';
-import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';
 import 'package:get/get.dart';
+import '../views/settings/theme/themeSettingsPage.dart';
+import '../views/settings/user/editDataPage.dart';
+import '../views/settings/user/myDataPage.dart';
 import '../views/homePage.dart';
 import '../views/tasks/allTasksPage.dart';
 import '../views/calendar/calendarPage.dart';
@@ -26,6 +27,7 @@ class AppRoutes {
 
   static const String myDataPage = '/myDataPage'; 
   static const String editDataPage = '/editDataPage'; 
+  static const String themeSettingsPage = '/themeSettingsPage'; 
   
   static const String signUpPage = '/signUpPage'; 
   static const String signInPage = '/signInPage'; 
@@ -75,6 +77,11 @@ class AppRoutes {
       page: () => EditDataPage(),
     ),
 
+  // -------------- THEME
+    GetPage(
+      name: themeSettingsPage,
+      page: () => ThemeSettingsPage(),
+    ),
 
   // -------------- AUTH
     GetPage(

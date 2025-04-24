@@ -21,8 +21,8 @@ class AuthGuard {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Você não está autenticado"),
-        content: Text("Faça login para acessar esta funcionalidade."),
+        title: Text("Você não está autenticado!"),
+        content: Text("Para ter uma experiência completa, faça login."),
         actions: [
           ElevatedButton(
             onPressed: () {
