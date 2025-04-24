@@ -20,19 +20,20 @@ class AuthGuard {
   static void _showLoginRequiredDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Você não está autenticado!"),
-        content: Text("Para ter uma experiência completa, faça login."),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Get.toNamed(AppRoutes.signInPage);
-            },
-            child: Text("Entrar"),
+      builder:
+          (context) => AlertDialog(
+            title: Text("Você não está autenticado!"),
+            content: Text("Para ter uma experiência completa, faça login."),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Get.toNamed(AppRoutes.signInPage);
+                },
+                child: Text("Entrar"),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

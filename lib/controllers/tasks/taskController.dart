@@ -15,7 +15,7 @@ class TaskController {
       Get.snackbar('Erro!', 'Nome da tarefa não pode ficar vazio');
     }
     if (dueDate.isBefore(DateTime.now())) {
-      Get.snackbar('Erro!', 'A data não pode ser no passado');    
+      Get.snackbar('Erro!', 'A data não pode ser no passado');
     }
 
     String dueDateString = dueDate.toIso8601String();

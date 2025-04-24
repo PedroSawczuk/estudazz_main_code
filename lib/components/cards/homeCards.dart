@@ -33,7 +33,11 @@ class ItensCards extends StatelessWidget {
             CircleAvatar(
               backgroundColor: color.withOpacity(0.8),
               radius: 28,
-              child: Icon(icon, color: Theme.of(context).iconTheme.color, size: 28),
+              child: Icon(
+                icon,
+                color: Theme.of(context).iconTheme.color,
+                size: 28,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -45,7 +49,9 @@ class ItensCards extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black87,
+                      color:
+                          Theme.of(context).textTheme.bodyLarge?.color ??
+                          Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -53,7 +59,9 @@ class ItensCards extends StatelessWidget {
                     description,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black54,
+                      color:
+                          Theme.of(context).textTheme.bodyMedium?.color ??
+                          Colors.black54,
                     ),
                   ),
                 ],

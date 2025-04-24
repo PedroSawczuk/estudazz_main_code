@@ -5,10 +5,10 @@ class StudyGroupPage extends StatelessWidget {
   const StudyGroupPage({Key? key}) : super(key: key);
 
   @override
-     Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: CustomAppBar(titleAppBar: 'Study Group'),
-    body: Column(children: [Text('Study Group')]),
-  );
-  } 
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(titleAppBar: 'Study Group'),
+      body: Column(children: [Text('Study Group')]),
+    );
+  }
 }

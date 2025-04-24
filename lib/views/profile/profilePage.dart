@@ -5,7 +5,7 @@ class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'PROFILE'),
       body: Column(children: [Text('PROFILE')]),

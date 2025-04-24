@@ -22,79 +22,37 @@ class AppRoutes {
   static const String profilePage = '/profilePage';
   static const String calendarPage = '/calendarPage';
   static const String iaPage = '/iaPage';
-  static const String performancePage = '/performancePage'; 
-  static const String studyGroupPage = '/studyGroupPage'; 
+  static const String performancePage = '/performancePage';
+  static const String studyGroupPage = '/studyGroupPage';
 
-  static const String myDataPage = '/myDataPage'; 
-  static const String editDataPage = '/editDataPage'; 
-  static const String themeSettingsPage = '/themeSettingsPage'; 
-  
-  static const String signUpPage = '/signUpPage'; 
-  static const String signInPage = '/signInPage'; 
-  static const String forgotPasswordPage = '/forgotPasswordPage'; 
+  static const String myDataPage = '/myDataPage';
+  static const String editDataPage = '/editDataPage';
+  static const String themeSettingsPage = '/themeSettingsPage';
+
+  static const String signUpPage = '/signUpPage';
+  static const String signInPage = '/signInPage';
+  static const String forgotPasswordPage = '/forgotPasswordPage';
 
   static final routes = [
-    GetPage(
-      name: homePage,
-      page: () => HomePage(),
-    ),
-    GetPage(
-      name: settingsPage,
-      page: () => SettingsPage(),
-    ),
-    GetPage(
-      name: studyGroupPage,
-      page: () => StudyGroupPage(),
-    ),
-    GetPage(
-      name: allTasksPage,
-      page: () => AllTasksPage(),
-    ),
-    GetPage(
-      name: profilePage,
-      page: () => ProfilePage(),
-    ),
-    GetPage(
-      name: calendarPage,
-      page: () => CalendarPage(),
-    ),
-    GetPage(
-      name: iaPage,
-      page: () => IaPage(),
-    ),
-    GetPage(
-      name: performancePage,
-      page: () => PerformancePage(),
-    ),
+    GetPage(name: homePage, page: () => HomePage()),
+    GetPage(name: settingsPage, page: () => SettingsPage()),
+    GetPage(name: studyGroupPage, page: () => StudyGroupPage()),
+    GetPage(name: allTasksPage, page: () => AllTasksPage()),
+    GetPage(name: profilePage, page: () => ProfilePage()),
+    GetPage(name: calendarPage, page: () => CalendarPage()),
+    GetPage(name: iaPage, page: () => IaPage()),
+    GetPage(name: performancePage, page: () => PerformancePage()),
 
-  // -------------- SETTINGS
-    GetPage(
-      name: myDataPage,
-      page: () => MyDataPage(),
-    ),
-    GetPage(
-      name: editDataPage,
-      page: () => EditDataPage(),
-    ),
+    // -------------- SETTINGS
+    GetPage(name: myDataPage, page: () => MyDataPage()),
+    GetPage(name: editDataPage, page: () => EditDataPage()),
 
-  // -------------- THEME
-    GetPage(
-      name: themeSettingsPage,
-      page: () => ThemeSettingsPage(),
-    ),
+    // -------------- THEME
+    GetPage(name: themeSettingsPage, page: () => ThemeSettingsPage()),
 
-  // -------------- AUTH
-    GetPage(
-      name: signUpPage,
-      page: () => SignUpPage(),
-    ),
-    GetPage(
-      name: signInPage,
-      page: () => SignInPage(),
-    ),
-    GetPage(
-      name: forgotPasswordPage,
-      page: () => ForgotPasswordPage(),
-    ),
+    // -------------- AUTH
+    GetPage(name: signUpPage, page: () => SignUpPage()),
+    GetPage(name: signInPage, page: () => SignInPage()),
+    GetPage(name: forgotPasswordPage, page: () => ForgotPasswordPage()),
   ];
 }

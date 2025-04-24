@@ -54,7 +54,7 @@ class SettingsPage extends StatelessWidget {
                     title: "Sair",
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
-                      Get.offAllNamed(AppRoutes.signInPage); 
+                      Get.offAllNamed(AppRoutes.signInPage);
                       Get.snackbar(
                         "Desconectado",
                         "Você foi desconectado com sucesso.",

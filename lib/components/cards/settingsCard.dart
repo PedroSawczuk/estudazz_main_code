@@ -8,9 +8,7 @@ Widget SettingsCard(
 }) {
   return Card(
     margin: const EdgeInsets.symmetric(vertical: 8.0),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12.0),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
     elevation: 4,
     child: ListTile(
       leading: Icon(icon, color: Theme.of(context).iconTheme.color),

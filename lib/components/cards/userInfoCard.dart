@@ -12,7 +12,10 @@ class UserInfoCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(label), Text(value)],
+        children: [
+          Text(label, style: TextStyle(fontSize: 16, color: Colors.grey[400])),
+          Text(value, style: TextStyle(fontSize: 16)),
+        ],
       ),
     );
   }

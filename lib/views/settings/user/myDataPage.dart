@@ -31,7 +31,17 @@ class MyDataPage extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
+                Text(
+                  'Informações Pessoais',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+
+                Divider(thickness: 1),
+                SizedBox(height: 8),
+
                 UserInfoCard(label: "Nome", value: data['display_name'] ?? ''),
                 UserInfoCard(label: "Username", value: data['username'] ?? ''),
                 UserInfoCard(label: "Email", value: data['email'] ?? ''),
@@ -39,6 +49,17 @@ class MyDataPage extends StatelessWidget {
                   label: "Data de Nascimento",
                   value: data['birth_date'] ?? '',
                 ),
+
+                SizedBox(height: 13),
+
+                Text(
+                  'Informações Acadêmicas',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+
+                Divider(thickness: 1),
+                SizedBox(height: 8),
+
                 UserInfoCard(
                   label: "Instituição",
                   value: data['institution'] ?? '',

@@ -6,13 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(
     GetMaterialApp(
       theme: AppTheme.lightTheme,

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TasksDB {
-  final CollectionReference tasksCollection =
-      FirebaseFirestore.instance.collection('tasks');
+  final CollectionReference tasksCollection = FirebaseFirestore.instance
+      .collection('tasks');
 
   Future<void> addTask({
     required String uid,
@@ -10,7 +10,7 @@ class TasksDB {
     required String dueDate,
   }) async {
     await tasksCollection.add({
-      'uid': uid, 
+      'uid': uid,
       'task_name': taskName,
       'created_at': DateTime.now().toIso8601String(),
       'task_completed': false,
@@ -20,7 +20,7 @@ class TasksDB {
 
   Stream<QuerySnapshot> getTasksByUser(String uid) {
     return tasksCollection
-        .where('uid', isEqualTo: uid) 
+        .where('uid', isEqualTo: uid)
         .orderBy('created_at')
         .snapshots();
   }
