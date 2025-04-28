@@ -88,43 +88,79 @@ class MarkTaskCompletedDialog {
               "Você tem certeza que deseja marcar a tarefa ${taskName} como concluída?",
             ),
             actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Cancelar"),
-              ),
-              TextButton(
-                onPressed: () async {
-                  try {
-                    await _taskController.tasksDB.updateTask(
-                      taskId: taskId,
-                      data: {
-                        'task_completed': true,
-                        'task_completed_at': DateTime.now().toIso8601String(),
-                      },
-                    );
-                    Get.snackbar(
-                      'Tarefa Concluída',
-                      'A tarefa foi marcada como concluída.',
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: ConstColors.greenColor,
-                      colorText: ConstColors.whiteColor,
-                      duration: Duration(seconds: 2),
-                    );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Erro ao marcar tarefa como concluída: $e',
-                        ),
-                        backgroundColor: ConstColors.redColor,
-                      ),
-                    );
-                  }
-                  Navigator.of(context).pop();
-                },
-                child: Text("Confirmar"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Cancelar"),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: ConstColors.redColor,
+                      foregroundColor: ConstColors.whiteColor,
+                    ),
+                    onPressed: () async {
+                      try {
+                        await _taskController.tasksDB.deleteTask(
+                          taskId,
+                        );
+                        Get.snackbar(
+                          'Tarefa Excluída',
+                          'A tarefa foi excluída com sucesso.',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: ConstColors.redColor,
+                          colorText: ConstColors.whiteColor,
+                          duration: Duration(seconds: 2),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Erro ao excluir tarefa: $e'),
+                            backgroundColor: ConstColors.redColor,
+                          ),
+                        );
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Excluir'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      try {
+                        await _taskController.tasksDB.updateTask(
+                          taskId: taskId,
+                          data: {
+                            'task_completed': true,
+                            'task_completed_at':
+                                DateTime.now().toIso8601String(),
+                          },
+                        );
+                        Get.snackbar(
+                          'Tarefa Concluída',
+                          'A tarefa foi marcada como concluída.',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: ConstColors.greenColor,
+                          colorText: ConstColors.whiteColor,
+                          duration: Duration(seconds: 2),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Erro ao marcar tarefa como concluída: $e',
+                            ),
+                            backgroundColor: ConstColors.redColor,
+                          ),
+                        );
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Confirmar"),
+                  ),
+                ],
               ),
             ],
           );

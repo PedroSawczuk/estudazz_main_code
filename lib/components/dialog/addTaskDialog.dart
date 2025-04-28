@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
@@ -46,6 +47,7 @@ class AddTaskDialog {
                           );
 
                           DateTime? pickedDate = await showDatePicker(
+                            locale: Locale('pt', 'BR'),
                             context: context,
                             initialDate: onlyDate,
                             firstDate: onlyDate,
@@ -88,8 +90,8 @@ class AddTaskDialog {
                       Get.snackbar(
                         'Sucesso!',
                         'Tarefa adicionada com sucesso!',
-                        backgroundColor: Colors.green,
-                        colorText: Colors.white,
+                        backgroundColor: ConstColors.greenColor,
+                        colorText: ConstColors.whiteColor,
                         snackPosition: SnackPosition.BOTTOM,
                       );
 
@@ -98,8 +100,8 @@ class AddTaskDialog {
                       Get.snackbar(
                         'Erro!',
                         'Erro desconhecido ao adicionar tarefa.',
-                        backgroundColor: Colors.red,
-                        colorText: Colors.white,
+                        backgroundColor: ConstColors.redColor,
+                        colorText: ConstColors.whiteColor,
                         snackPosition: SnackPosition.BOTTOM,
                       );
                     }

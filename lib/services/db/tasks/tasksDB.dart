@@ -26,9 +26,14 @@ class TasksDB {
     return tasksCollection.doc(taskId).update(data);
   }
 
+  Future<void> deleteTask(String taskId) async {
+    await tasksCollection.doc(taskId).delete();
+  }
+  
   Future<DocumentSnapshot> getTask(String taskId) async {
     return await tasksCollection.doc(taskId).get();
   }
+
 
   Stream<QuerySnapshot> getTasksByUser(String uid) {
     return tasksCollection

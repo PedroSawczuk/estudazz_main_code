@@ -116,10 +116,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
                   }
 
                   return Opacity(
-                    opacity:
-                        taskCompleted
-                            ? 0.5
-                            : 1.0, 
+                    opacity: taskCompleted ? 0.5 : 1.0,
                     child: GestureDetector(
                       onLongPress: () {
                         _showMarkTaskCompletedDialog(task.id, taskName);
@@ -153,7 +150,6 @@ class _AllTasksPageState extends State<AllTasksPage> {
                                       Text(
                                         "$statusText: ",
                                         style: TextStyle(
-                                          color: ConstColors.whiteColor,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -161,7 +157,6 @@ class _AllTasksPageState extends State<AllTasksPage> {
                                       Text(
                                         "$taskName",
                                         style: TextStyle(
-                                          color: ConstColors.whiteColor,
                                           fontSize: 16,
                                         ),
                                       ),

@@ -73,7 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
