@@ -44,6 +44,21 @@ dependencies:
   intl: ^0.19.0
   image_picker: ^1.1.2
   firebase_storage: ^12.4.5
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.6
+
+flutter_native_splash:
+  color: "#5242a3"
+  image: "assets/images/icons/logo-splash.png"
+  android: true
+  web: false
+
+flutter_icons:
+  image_path: "assets/images/icons/logo-image.png"
+  adaptive_icon_background: "#5242a3"
+  adaptive_icon_foreground: "assets/images/icons/logo-image.png"
+  android: true
+  size: 120
 
 dev_dependencies:
   flutter_test:
@@ -69,7 +84,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/image-check-orange.png
+    # Como adicionar todos os arquivos de uma pasta
+    - assets/images/icons/logo-splash.png
+    - assets/images/icons/logo-image.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
