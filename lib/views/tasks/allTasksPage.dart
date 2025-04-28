@@ -1,9 +1,12 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:estudazz_main_code/components/dialog/addTaskDialog.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class AllTasksPage extends StatefulWidget {
   const AllTasksPage({super.key});
@@ -13,8 +16,6 @@ class AllTasksPage extends StatefulWidget {
 }
 
 class _AllTasksPageState extends State<AllTasksPage> {
-  final TextEditingController _taskNameController = TextEditingController();
-  DateTime? _selectedDate;
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
 
   Future<String?> _getUserUid() async {
@@ -23,112 +24,10 @@ class _AllTasksPageState extends State<AllTasksPage> {
   }
 
   void _showAddTaskDialog() {
-    DateTime? tempSelectedDate = _selectedDate;
-
-    showDialog(
+    AddTaskDialog().showAddTaskDialog(
       context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setStateDialog) {
-            String formatDate(DateTime? date) {
-              if (date == null) return 'Nenhuma data selecionada';
-              return 'Data: ${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
-            }
-
-            return AlertDialog(
-              title: Text("Adicionar Tarefa"),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: _taskNameController,
-                    decoration: InputDecoration(labelText: 'Nome da Tarefa'),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(child: Text(formatDate(tempSelectedDate))),
-                      TextButton(
-                        onPressed: () async {
-                          DateTime today = DateTime.now();
-                          DateTime onlyDate = DateTime(
-                            today.year,
-                            today.month,
-                            today.day,
-                          );
-
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: onlyDate,
-                            firstDate: onlyDate,
-                            lastDate: DateTime(2100),
-                          );
-
-                          if (pickedDate != null) {
-                            setStateDialog(() {
-                              tempSelectedDate = pickedDate;
-                            });
-                          }
-                        },
-                        child: Text('Selecionar Data'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  child: Text("Cancelar"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ElevatedButton(
-                  child: Text("Salvar"),
-                  onPressed: () async {
-                    String? uid = await _getUserUid();
-
-                    if (uid == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "Você precisa estar logado para adicionar uma tarefa",
-                          ),
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                      return;
-                    }
-
-                    try {
-                      await _taskController.addTask(
-                        uid: uid,
-                        taskName: _taskNameController.text,
-                        dueDate: tempSelectedDate!,
-                      );
-
-                      _taskNameController.clear();
-                      _selectedDate = null;
-
-                      Get.snackbar(
-                        'Sucesso!',
-                        'Tarefa criada com sucesso.',
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-
-                      Navigator.of(context).pop();
-                    } catch (e) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text(e.toString())));
-                    }
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
+      taskController: _taskController,
+      getUserUid: _getUserUid,
     );
   }
 
@@ -136,7 +35,138 @@ class _AllTasksPageState extends State<AllTasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Minhas Tarefas'),
-      body: Center(child: Text("Lista de Tarefas")),
+      body: FutureBuilder<String?>(
+        future: _getUserUid(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
+            return Center(child: Text("Erro ao carregar UID do usuário."));
+          }
+
+          String uid = snapshot.data!;
+
+          return StreamBuilder<QuerySnapshot>(
+            stream: _taskController.tasksDB.getTasksByUser(uid),
+            builder: (context, taskSnapshot) {
+              if (taskSnapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (taskSnapshot.hasError) {
+                return Center(
+                  child: Text(
+                    "Erro ao carregar tarefas: ${taskSnapshot.error} \n Contacte o suporte.",
+                  ),
+                );
+              }
+
+              if (!taskSnapshot.hasData || taskSnapshot.data!.docs.isEmpty) {
+                return Center(child: Text("Nenhuma tarefa encontrada."));
+              }
+
+              final tasks = taskSnapshot.data!.docs;
+
+              return ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+                  final taskName = task['task_name'] ?? "Sem nome";
+                  final dueDate = task['due_date'] ?? "Sem data";
+                  final taskCompleted = task['task_completed'] ?? false;
+
+                  final formattedDueDate =
+                      dueDate != "Sem data"
+                          ? DateFormat(
+                            "dd/MM/yyyy",
+                          ).format(DateTime.parse(dueDate))
+                          : "Sem data";
+
+                  DateTime now = DateTime.now();
+                  DateTime dueDateTime = DateTime.tryParse(dueDate) ?? now;
+
+                  bool isOverdue = !taskCompleted && dueDateTime.isBefore(now);
+                  String statusText;
+                  IconData statusIcon;
+                  Color statusColor;
+
+                  if (taskCompleted) {
+                    statusText = "Tarefa Concluída";
+                    statusIcon = Icons.check_circle;
+                    statusColor = ConstColors.greenColor;
+                  } else if (isOverdue) {
+                    statusText = "Tarefa Atrasada";
+                    statusIcon = Icons.cancel;
+                    statusColor = ConstColors.redColor;
+                  } else {
+                    statusText = "Tarefa Pendente";
+                    statusIcon = Icons.warning_amber_rounded;
+                    statusColor = ConstColors.yellowColor;
+                  }
+
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black54,
+                          blurRadius: 4,
+                          offset: Offset(2, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "$statusText: ",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "$taskName",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                "Prazo: $formattedDueDate",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(statusIcon, color: statusColor, size: 32),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Color(0xFFED820E),
         foregroundColor: Colors.white,
