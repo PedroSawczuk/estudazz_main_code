@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/views/auth/signInPage.dart';
@@ -123,8 +124,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(200, 44),
-                    backgroundColor: Color(0xFFED820E),
-                    foregroundColor: Colors.white,
+                    backgroundColor: ConstColors.orangeColor,
+                    foregroundColor: ConstColors.whiteColor,
                   ),
                   child: Text('Criar Conta'),
                 ),

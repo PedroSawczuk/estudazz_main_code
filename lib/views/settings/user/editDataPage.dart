@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -111,14 +112,14 @@ class _EditDataPageState extends State<EditDataPage> {
                     onPressed: _saveData,
                     child: const Text(
                       'Salvar Alterações',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: ConstColors.whiteColor),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 30,
                         vertical: 12,
                       ),
-                      backgroundColor: const Color(0xFFED820E),
+                      backgroundColor: ConstColors.yellowColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,8 @@ class ForgotPasswordPage extends StatelessWidget {
       Get.snackbar(
         "Erro",
         "Digite um email válido.",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        backgroundColor: ConstColors.redColor,
+        colorText: ConstColors.whiteColor,
       );
       return;
     }
@@ -26,8 +27,8 @@ class ForgotPasswordPage extends StatelessWidget {
       Get.snackbar(
         "Sucesso",
         "Email de recuperação enviado! Verifique sua caixa de entrada.",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
+        backgroundColor: ConstColors.greenColor,
+        colorText: ConstColors.whiteColor,
       );
       Get.offAllNamed(AppRoutes.signInPage);
     } on FirebaseAuthException catch (e) {
@@ -45,8 +46,8 @@ class ForgotPasswordPage extends StatelessWidget {
       Get.snackbar(
         "Erro",
         message,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        backgroundColor: ConstColors.redColor,
+        colorText: ConstColors.whiteColor,
       );
     }
   }
@@ -54,7 +55,7 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: ConstColors.blackColor,
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 32.0),
@@ -64,7 +65,7 @@ class ForgotPasswordPage extends StatelessWidget {
               Text(
                 'RECUPERAR CONTA',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: ConstColors.whiteColor,
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
                 ),
@@ -82,7 +83,7 @@ class ForgotPasswordPage extends StatelessWidget {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: ConstColors.whiteColor),
               ),
               SizedBox(height: 16),
               Align(
@@ -93,7 +94,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   },
                   child: Text(
                     'Voltar ao login',
-                    style: TextStyle(color: Color(0xFF525252)),
+                    style: TextStyle(color: ConstColors.greyColor),
                   ),
                 ),
               ),
@@ -103,7 +104,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: recoverPassword,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFED820E),
+                    backgroundColor: ConstColors.orangeColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -112,7 +113,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   child: Text(
                     'Recuperar',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: ConstColors.whiteColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

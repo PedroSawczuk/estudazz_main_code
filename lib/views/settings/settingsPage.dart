@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/cards/settingsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/user/userDeleteAccount.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,8 +60,8 @@ class SettingsPage extends StatelessWidget {
                         "Desconectado",
                         "Você foi desconectado com sucesso.",
                         snackPosition: SnackPosition.BOTTOM,
-                        backgroundColor: Colors.green,
-                        colorText: Colors.white,
+                        backgroundColor: ConstColors.greenColor,
+                        colorText: ConstColors.whiteColor,
                       );
                     },
                   ),
@@ -71,13 +72,13 @@ class SettingsPage extends StatelessWidget {
               padding: EdgeInsets.only(top: 20.0),
               child: TextButton(
                 onPressed: () => showDeleteAccountDialog(context),
-                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                style: TextButton.styleFrom(foregroundColor: ConstColors.redColor),
                 child: Text(
                   "Deletar Conta",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                    color: Colors.red,
+                    color: ConstColors.redColor,
                   ),
                 ),
               ),
