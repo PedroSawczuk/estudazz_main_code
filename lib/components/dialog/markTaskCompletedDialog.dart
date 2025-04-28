@@ -19,16 +19,52 @@ class MarkTaskCompletedDialog {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              "Tarefa já Concluída",
+              "Tarefa Concluída",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("A tarefa ${taskName} já foi marcada como concluída."),
+                SizedBox(height: 10),
+                Text("Deseja desmarcá-la? como concluída?"),
               ],
             ),
             actions: [
+              TextButton(
+                // Estiliza o botão "Desmarcar"
+                style: TextButton.styleFrom(
+                  backgroundColor: ConstColors.redColor,
+                  foregroundColor: ConstColors.whiteColor,
+                ),
+                onPressed: () async {
+                  try {
+                    await _taskController.tasksDB.updateTask(
+                      taskId: taskId,
+                      data: {
+                        'task_completed': false,
+                        'task_completed_at': null,
+                      },
+                    );
+                    Get.snackbar(
+                      'Tarefa Desmarcada',
+                      'A tarefa foi desmarcada como concluída.',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: ConstColors.yellowColor,
+                      colorText: ConstColors.whiteColor,
+                      duration: Duration(seconds: 2),
+                    );
+                  } catch (e) {
+                    Get.snackbar(
+                      'Erro',
+                      'Ocorreu um erro ao desmarcar a tarefa: $e',
+                    );
+                  }
+                  Navigator.of(context).pop();
+                },
+                child: Text('Desmarcar'),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
