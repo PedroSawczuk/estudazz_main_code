@@ -1,0 +1,93 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
+
+class markTaskCompletedDialog {
+  final TaskController _taskController = TaskController(tasksDB: TasksDB());
+
+  Future<void> showMarkTaskCompletedDialog({
+    required BuildContext context,
+    required String taskId,
+    required String taskName,
+  }) async {
+    bool isTaskCompleted = await _taskController.isTaskCompleted(taskId);
+    if (isTaskCompleted) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Tarefa já Concluída",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              "A tarefa ${taskName} já foi marcada como concluída.",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Marcar Tarefa como Concluída",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              "Você tem certeza que deseja marcar a tarefa ${taskName} como concluída?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Cancelar"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  try {
+                    await _taskController.tasksDB.updateTask(
+                      taskId: taskId,
+                      data: {'task_completed': true},
+                    );
+                    Get.snackbar(
+                      'Tarefa Concluída',
+                      'A tarefa foi marcada como concluída.',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: ConstColors.greenColor,
+                      colorText: ConstColors.whiteColor,
+                      duration: Duration(seconds: 2),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Erro ao marcar tarefa como concluída: $e',
+                        ),
+                        backgroundColor: ConstColors.redColor,
+                      ),
+                    );
+                  }
+                  Navigator.of(context).pop();
+                },
+                child: Text("Confirmar"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+}

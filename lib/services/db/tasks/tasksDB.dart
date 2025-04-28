@@ -18,6 +18,17 @@ class TasksDB {
     });
   }
 
+  Future<void> updateTask({
+    required String taskId,
+    required Map<String, dynamic> data,
+  }) {
+    return tasksCollection.doc(taskId).update(data);
+  }
+
+  Future<DocumentSnapshot> getTask(String taskId) async {
+    return await tasksCollection.doc(taskId).get();
+  }
+
   Stream<QuerySnapshot> getTasksByUser(String uid) {
     return tasksCollection
         .where('uid', isEqualTo: uid)
