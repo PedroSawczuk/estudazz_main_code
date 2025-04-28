@@ -25,7 +25,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
   }
 
   void _showMarkTaskCompletedDialog(String taskId, String taskName) {
-    markTaskCompletedDialog().showMarkTaskCompletedDialog(
+    MarkTaskCompletedDialog().showMarkTaskCompletedDialog(
       context: context,
       taskId: taskId,
       taskName: taskName,
@@ -115,63 +115,72 @@ class _AllTasksPageState extends State<AllTasksPage> {
                     statusColor = ConstColors.yellowColor;
                   }
 
-                  return GestureDetector(
-                    onLongPress: () {
-                      _showMarkTaskCompletedDialog(task.id, taskName);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 4,
-                            offset: Offset(2, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "$statusText: ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      "$taskName",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "Prazo: $formattedDueDate",
-                                  style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
+                  return Opacity(
+                    opacity:
+                        taskCompleted
+                            ? 0.5
+                            : 1.0, 
+                    child: GestureDetector(
+                      onLongPress: () {
+                        _showMarkTaskCompletedDialog(task.id, taskName);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ConstColors.black54Color,
+                              blurRadius: 4,
+                              offset: Offset(2, 4),
                             ),
-                          ),
-                          Icon(statusIcon, color: statusColor, size: 32),
-                        ],
+                          ],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "$statusText: ",
+                                        style: TextStyle(
+                                          color: ConstColors.whiteColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "$taskName",
+                                        style: TextStyle(
+                                          color: ConstColors.whiteColor,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "Prazo: $formattedDueDate",
+                                    style: TextStyle(
+                                      color: ConstColors.greyColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(statusIcon, color: statusColor, size: 32),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -182,8 +191,8 @@ class _AllTasksPageState extends State<AllTasksPage> {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Color(0xFFED820E),
-        foregroundColor: Colors.white,
+        backgroundColor: ConstColors.orangeColor,
+        foregroundColor: ConstColors.whiteColor,
         onPressed: _showAddTaskDialog,
         icon: Icon(Icons.add),
         label: Text('Adicionar Tarefa'),

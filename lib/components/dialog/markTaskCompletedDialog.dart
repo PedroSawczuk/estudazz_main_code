@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 
-class markTaskCompletedDialog {
+class MarkTaskCompletedDialog {
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
 
   Future<void> showMarkTaskCompletedDialog({
@@ -22,8 +22,11 @@ class markTaskCompletedDialog {
               "Tarefa já Concluída",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            content: Text(
-              "A tarefa ${taskName} já foi marcada como concluída.",
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("A tarefa ${taskName} já foi marcada como concluída."),
+              ],
             ),
             actions: [
               TextButton(
@@ -60,7 +63,10 @@ class markTaskCompletedDialog {
                   try {
                     await _taskController.tasksDB.updateTask(
                       taskId: taskId,
-                      data: {'task_completed': true},
+                      data: {
+                        'task_completed': true,
+                        'task_completed_at': DateTime.now().toIso8601String(),
+                      },
                     );
                     Get.snackbar(
                       'Tarefa Concluída',

@@ -15,6 +15,7 @@ class TasksDB {
       'created_at': DateTime.now().toIso8601String(),
       'task_completed': false,
       'due_date': dueDate,
+      'task_completed_at': null,
     });
   }
 
@@ -31,8 +32,9 @@ class TasksDB {
 
   Stream<QuerySnapshot> getTasksByUser(String uid) {
     return tasksCollection
-        .where('uid', isEqualTo: uid)
-        .orderBy('created_at')
-        .snapshots();
+      .where('uid', isEqualTo: uid)
+      .orderBy('task_completed') 
+      .orderBy('created_at')
+      .snapshots();
   }
 }
