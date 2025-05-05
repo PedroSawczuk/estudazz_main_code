@@ -8,11 +8,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
   final String titleAppBar;
   final bool showPersonIcon;
+  final bool showSettingsIAIcon;
 
   CustomAppBar({
     Key? key,
     required this.titleAppBar,
     this.showPersonIcon = false,
+    this.showSettingsIAIcon = false,
   }) : preferredSize = Size.fromHeight(56.0),
        super(key: key);
 
@@ -23,30 +25,37 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(left: 16.0),
         child: Text(titleAppBar),
       ),
-      actions:
-          showPersonIcon
-              ? [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: IconButton(
-                    icon: Icon(Icons.person),
-                    onPressed:
-                        () => {
-                          AuthGuard.handleAuthenticatedAction(
-                            context: context,
-                            onAuthenticated:
-                                () => Get.toNamed(AppRoutes.profilePage),
-                          ),
-                        },
-                  ),
-                ),
-              ]
-              : [],
+      actions: [
+        if (showSettingsIAIcon)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              icon: Icon(Icons.settings),
+              onPressed:
+                  () => {
+                    AuthGuard.handleAuthenticatedAction(
+                      context: context,
+                      onAuthenticated:
+                          () => Get.toNamed(AppRoutes.settingsAIPage),
+                    ),
+                  },
+            ),
+          ),
+        if (showPersonIcon)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              icon: Icon(Icons.person),
+              onPressed:
+                  () => {
+                    AuthGuard.handleAuthenticatedAction(
+                      context: context,
+                      onAuthenticated: () => Get.toNamed(AppRoutes.profilePage),
+                    ),
+                  },
+            ),
+          ),
+      ],
     );
   }
 }
-
-/* AuthGuard.handleAuthenticatedAction(
-                      context: context,
-                      onAuthenticated: () => Get.toNamed(AppRoutes.iaPage),
-                    ), */

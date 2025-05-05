@@ -12,8 +12,8 @@ class _IaPageState extends State<IaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(titleAppBar: 'IA'),
-      body: Column(children: [Text('IA')]),
+      appBar: CustomAppBar(titleAppBar: 'InteA', showSettingsIAIcon: true),
+      body: Column(children: []),
     );
   }
 }

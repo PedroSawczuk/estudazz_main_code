@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/views/ia/settings/settingsAIPage.dart';
 import 'package:get/get.dart';
 import '../views/settings/theme/themeSettingsPage.dart';
 import '../views/settings/user/editDataPage.dart';
@@ -21,7 +22,11 @@ class AppRoutes {
   static const String allTasksPage = '/allTasksPage';
   static const String profilePage = '/profilePage';
   static const String calendarPage = '/calendarPage';
+
+  // -------------- IA
   static const String iaPage = '/iaPage';
+  static const String settingsAIPage = '/settingsAIPage';
+  
   static const String performancePage = '/performancePage';
   static const String studyGroupPage = '/studyGroupPage';
 
@@ -40,8 +45,11 @@ class AppRoutes {
     GetPage(name: allTasksPage, page: () => AllTasksPage()),
     GetPage(name: profilePage, page: () => ProfilePage()),
     GetPage(name: calendarPage, page: () => CalendarPage()),
-    GetPage(name: iaPage, page: () => IaPage()),
     GetPage(name: performancePage, page: () => PerformancePage()),
+    
+    // -------------- IA
+    GetPage(name: iaPage, page: () => IaPage()),
+    GetPage(name: settingsAIPage, page: () => SettingsAIPage()),
 
     // -------------- SETTINGS
     GetPage(name: myDataPage, page: () => MyDataPage()),
