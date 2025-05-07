@@ -79,49 +79,49 @@ class _EditDataPageState extends State<EditDataPage> {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Editar Dados'),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Informações Pessoais',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                const Divider(thickness: 1),
+                Divider(thickness: 1),
                 _buildTextField('Nome', _nameController),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildTextField('Username', _usernameController),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildTextField('Email', _emailController),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildTextField('Data de Nascimento', _birthDateController),
-                const SizedBox(height: 30),
-                const Text(
+                SizedBox(height: 30),
+                Text(
                   'Informações Acadêmicas',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                const Divider(thickness: 1),
+                Divider(thickness: 1),
                 _buildTextField('Instituição', _institutionController),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildTextField('Curso', _courseController),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildTextField(
                   'Conclusão Prevista',
                   _graduationDateController,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
                     onPressed: _saveData,
-                    child: const Text(
+                    child: Text(
                       'Salvar Alterações',
                       style: TextStyle(color: ConstColors.whiteColor),
                     ),
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 30,
                         vertical: 12,
                       ),

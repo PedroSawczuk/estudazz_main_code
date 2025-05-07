@@ -35,16 +35,16 @@ class MyDataPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Center(
                   child: CircleAvatar(
                     radius: 60,
-                    backgroundImage: NetworkImage('https://picsum.photos/200'),
-                    onBackgroundImageError:
-                        (_, __) => debugPrint('Erro ao carregar imagem.'),
+                    backgroundImage: NetworkImage(data['profile_picture'] ?? 'assets/images/no-profile-photo.png',
+                    ),
                   ),
+                 
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Text(
                   'Informações Pessoais',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -81,15 +81,17 @@ class MyDataPage extends StatelessWidget {
                   value: data['expected_graduation'] ?? '',
                 ),
                 SizedBox(height: 30),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.editDataPage);
-                  },
-                  icon: Icon(Icons.edit, color: ConstColors.whiteColor),
-                  label: Text("Editar Dados"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ConstColors.orangeColor,
-                    foregroundColor: ConstColors.whiteColor,
+                Center(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.editDataPage);
+                    },
+                    icon: Icon(Icons.edit, color: ConstColors.whiteColor),
+                    label: Text("Editar Dados"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ConstColors.orangeColor,
+                      foregroundColor: ConstColors.whiteColor,
+                    ),
                   ),
                 ),
               ],
