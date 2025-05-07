@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/cards/userInfoCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/services/user/fetchUserDataService.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,16 @@ class MyDataPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
+                const SizedBox(height: 20),
+                Center(
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: NetworkImage('https://picsum.photos/200'),
+                    onBackgroundImageError:
+                        (_, __) => debugPrint('Erro ao carregar imagem.'),
+                  ),
+                ),
+                const SizedBox(height: 30),
                 Text(
                   'Informações Pessoais',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -74,11 +85,11 @@ class MyDataPage extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(AppRoutes.editDataPage);
                   },
-                  icon: Icon(Icons.edit, color: Colors.white),
+                  icon: Icon(Icons.edit, color: ConstColors.whiteColor),
                   label: Text("Editar Dados"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFED820E),
-                    foregroundColor: Colors.white,
+                    backgroundColor: ConstColors.orangeColor,
+                    foregroundColor: ConstColors.whiteColor,
                   ),
                 ),
               ],

@@ -49,22 +49,28 @@ class _EditDataPageState extends State<EditDataPage> {
   }
 
   Future<void> _saveData() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      final uid = FirebaseAuth.instance.currentUser!.uid;
+    try {
+      if (_formKey.currentState?.validate() ?? false) {
+        final uid = FirebaseAuth.instance.currentUser!.uid;
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'display_name': _nameController.text,
-        'username': _usernameController.text,
-        'email': _emailController.text,
-        'birth_date': _birthDateController.text,
-        'institution': _institutionController.text,
-        'course': _courseController.text,
-        'expected_graduation': _graduationDateController.text,
-        'profileCompleted': true,
-      });
+        await FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'display_name': _nameController.text,
+          'username': _usernameController.text,
+          'email': _emailController.text,
+          'birth_date': _birthDateController.text,
+          'institution': _institutionController.text,
+          'course': _courseController.text,
+          'expected_graduation': _graduationDateController.text,
+          'profileCompleted': true,
+        });
 
-      Get.snackbar('Sucesso!', 'Dados atualizados com sucesso');
-      Get.offAllNamed(AppRoutes.myDataPage);
+        Get.snackbar('Sucesso!', 'Dados atualizados com sucesso');
+        Get.offAllNamed(AppRoutes.myDataPage);
+      }  
+    } catch (e) {
+      print(e);
+      Get.snackbar('Erro!', 'Erro ao atualizar os dados. Tente novamente.', snackPosition: SnackPosition.BOTTOM, backgroundColor: ConstColors.redColor, colorText: ConstColors.whiteColor);
+      Get.offAllNamed(AppRoutes.myDataPage);       
     }
   }
 
@@ -119,7 +125,7 @@ class _EditDataPageState extends State<EditDataPage> {
                         horizontal: 30,
                         vertical: 12,
                       ),
-                      backgroundColor: ConstColors.yellowColor,
+                      backgroundColor: ConstColors.orangeColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
