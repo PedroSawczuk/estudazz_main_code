@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/views/auth/forgotPasswordPage.dart';
@@ -26,20 +27,21 @@ class _SignInPageState extends State<SignInPage> {
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      Get.snackbar(
-        'Aguarde',
-        'Entrando...',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomSnackBar.show(
+        title: 'Aguarde',
+        message: 'Entrando...',
+        backgroundColor: ConstColors.orangeColor,
       );
 
       try {
         await _authController.signIn(email, password);
         Get.offAll(() => HomePage());
       } catch (e) {
-        Get.snackbar(
-          'Erro',
-          'Falha ao entrar: $e',
-          snackPosition: SnackPosition.BOTTOM,
+         CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Falha ao criar conta: $e',
+          backgroundColor: ConstColors.redColor,
+          textColor: ConstColors.whiteColor,
         );
       }
     }

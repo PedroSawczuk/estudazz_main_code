@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:flutter/material.dart';
@@ -13,22 +14,22 @@ class ForgotPasswordPage extends StatelessWidget {
   void recoverPassword() async {
     final email = emailController.text.trim();
     if (email.isEmpty) {
-      Get.snackbar(
-        "Erro",
-        "Digite um email válido.",
-        backgroundColor: ConstColors.redColor,
-        colorText: ConstColors.whiteColor,
-      );
+       CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Email não pode ser vazio.',
+          backgroundColor: ConstColors.redColor,
+          textColor: ConstColors.whiteColor,
+        );
       return;
     }
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      Get.snackbar(
-        "Sucesso",
-        "Email de recuperação enviado! Verifique sua caixa de entrada.",
+      CustomSnackBar.show(
+        title: 'Sucesso',
+        message: 'Email de recuperação enviado! Verifique sua caixa de entrada.',
         backgroundColor: ConstColors.greenColor,
-        colorText: ConstColors.whiteColor,
+        textColor: ConstColors.whiteColor,
       );
       Get.offAllNamed(AppRoutes.signInPage);
     } on FirebaseAuthException catch (e) {
@@ -43,11 +44,11 @@ class ForgotPasswordPage extends StatelessWidget {
         default:
           message = "Erro ao enviar email de recuperação.";
       }
-      Get.snackbar(
-        "Erro",
-        message,
+      CustomSnackBar.show(
+        title: 'Erro',
+        message: message,
         backgroundColor: ConstColors.redColor,
-        colorText: ConstColors.whiteColor,
+        textColor: ConstColors.whiteColor,
       );
     }
   }

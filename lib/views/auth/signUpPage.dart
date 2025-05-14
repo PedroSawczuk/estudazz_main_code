@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
@@ -24,17 +25,22 @@ class _SignUpPageState extends State<SignUpPage> {
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      Get.snackbar(
-        'Aguarde',
-        'Criando conta...',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomSnackBar.show(
+        title: 'Aguarde',
+        message: 'Estamos criando sua conta...',
+        backgroundColor: ConstColors.orangeColor,
       );
 
       try {
         await _authController.signUp(email, password);
         Get.offAndToNamed(AppRoutes.signInPage);
       } catch (e) {
-        Get.snackbar('Erro', e.toString(), snackPosition: SnackPosition.BOTTOM);
+        CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Falha ao criar conta: $e',
+          backgroundColor: ConstColors.redColor,
+          textColor: ConstColors.whiteColor,
+        );
       }
     }
   }
