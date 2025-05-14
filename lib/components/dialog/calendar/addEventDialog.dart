@@ -50,10 +50,18 @@ class AddEventDialog {
                         });
                       }
                     },
-                    child: Text(
-                      selectedTime == null
-                          ? 'Selecionar Horário'
-                          : 'Horário: ${selectedTime!.format(context)}',
+                    child: Row(
+                      children: [
+                        selectedTime == null
+                            ? Text('Selecionar Horário')
+                            : Text(
+                              'Horário: ${selectedTime!.hour.toString().padLeft(2, '0')}:${selectedTime!.minute.toString().padLeft(2, '0')}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                      ],
                     ),
                   ),
                 ],
@@ -96,8 +104,7 @@ class AddEventDialog {
 
                       CustomSnackBar.show(
                         title: 'Evento Adicionado',
-                        message:
-                            'Evento adicionado com sucesso.',
+                        message: 'Evento adicionado com sucesso.',
                         backgroundColor: ConstColors.greenColor,
                       );
                     } catch (e) {
