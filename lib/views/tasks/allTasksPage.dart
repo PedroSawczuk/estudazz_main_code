@@ -1,7 +1,7 @@
-import 'package:estudazz_main_code/components/dialog/markTaskCompletedDialog.dart';
+import 'package:estudazz_main_code/components/dialog/task/markTaskCompletedDialog.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
-import 'package:estudazz_main_code/components/dialog/addTaskDialog.dart';
+import 'package:estudazz_main_code/components/dialog/task/addTaskDialog.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';

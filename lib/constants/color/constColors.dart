@@ -11,4 +11,8 @@ class ConstColors {
   static const Color blackColor = Color(0xFF0F0F0F);
   static const Color black54Color = Color(0x89000000);
   static const Color orangeColor = Color(0xFFED820E);
+
+  static const Color accentPurpleColor = Colors.deepPurpleAccent;
+  static const Color purpleColor = Colors.deepPurple;
+  
 }
