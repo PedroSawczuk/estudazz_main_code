@@ -18,7 +18,6 @@ class ForgotPasswordPage extends StatelessWidget {
           title: 'Erro',
           message: 'Email não pode ser vazio.',
           backgroundColor: ConstColors.redColor,
-          textColor: ConstColors.whiteColor,
         );
       return;
     }
@@ -29,7 +28,6 @@ class ForgotPasswordPage extends StatelessWidget {
         title: 'Sucesso',
         message: 'Email de recuperação enviado! Verifique sua caixa de entrada.',
         backgroundColor: ConstColors.greenColor,
-        textColor: ConstColors.whiteColor,
       );
       Get.offAllNamed(AppRoutes.signInPage);
     } on FirebaseAuthException catch (e) {
@@ -48,7 +46,6 @@ class ForgotPasswordPage extends StatelessWidget {
         title: 'Erro',
         message: message,
         backgroundColor: ConstColors.redColor,
-        textColor: ConstColors.whiteColor,
       );
     }
   }

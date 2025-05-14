@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,12 +65,20 @@ class _EditDataPageState extends State<EditDataPage> {
           'profileCompleted': true,
         });
 
-        Get.snackbar('Sucesso!', 'Dados atualizados com sucesso');
+        CustomSnackBar.show(
+          title: 'Sucesso',
+          message: 'Dados atualizados com sucesso!',
+          backgroundColor: ConstColors.greenColor,
+        );
         Get.offAllNamed(AppRoutes.myDataPage);
       }  
     } catch (e) {
       print(e);
-      Get.snackbar('Erro!', 'Erro ao atualizar os dados. Tente novamente.', snackPosition: SnackPosition.BOTTOM, backgroundColor: ConstColors.redColor, colorText: ConstColors.whiteColor);
+      CustomSnackBar.show(
+        title: 'Erro',
+        message: 'Erro ao atualizar os dados. Tente novamente mais tarde.',
+        backgroundColor: ConstColors.redColor,
+      );
       Get.offAllNamed(AppRoutes.myDataPage);       
     }
   }

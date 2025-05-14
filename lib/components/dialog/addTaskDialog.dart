@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,22 +88,18 @@ class AddTaskDialog {
                       _taskNameController.clear();
                       _selectedDate = null;
 
-                      Get.snackbar(
-                        'Sucesso!',
-                        'Tarefa adicionada com sucesso!',
+                      CustomSnackBar.show(
+                        title: 'Tarefa adicionada',
+                        message: 'A tarefa foi adicionada com sucesso.',
                         backgroundColor: ConstColors.greenColor,
-                        colorText: ConstColors.whiteColor,
-                        snackPosition: SnackPosition.BOTTOM,
                       );
 
                       Navigator.of(context).pop();
                     } catch (e) {
-                      Get.snackbar(
-                        'Erro!',
-                        'Erro desconhecido ao adicionar tarefa.',
+                      CustomSnackBar.show(
+                        title: 'Erro',
+                        message: 'Falha ao adicionar tarefa: $e',
                         backgroundColor: ConstColors.redColor,
-                        colorText: ConstColors.whiteColor,
-                        snackPosition: SnackPosition.BOTTOM,
                       );
                     }
                   },

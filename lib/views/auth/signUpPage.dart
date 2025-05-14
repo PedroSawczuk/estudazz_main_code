@@ -39,7 +39,6 @@ class _SignUpPageState extends State<SignUpPage> {
           title: 'Erro',
           message: 'Falha ao criar conta: $e',
           backgroundColor: ConstColors.redColor,
-          textColor: ConstColors.whiteColor,
         );
       }
     }

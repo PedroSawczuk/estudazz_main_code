@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
 import 'package:get/get.dart';
 
@@ -13,10 +15,18 @@ class TaskController {
     required DateTime dueDate,
   }) async {
     if (taskName.isEmpty) {
-      Get.snackbar('Erro!', 'Nome da tarefa não pode ficar vazio');
+      CustomSnackBar.show(
+        title: 'Erro!',
+        message: 'O nome da tarefa não pode ser vazio', 
+        backgroundColor: ConstColors.redColor,
+      );
     }
     if (dueDate.isBefore(DateTime.now())) {
-      Get.snackbar('Erro!', 'A data não pode ser no passado');
+      CustomSnackBar.show(
+        title: 'Erro!',
+        message: 'A data de vencimento não pode ser no passado',
+        backgroundColor: ConstColors.redColor,
+      );
     }
 
     String dueDateString = dueDate.toIso8601String();

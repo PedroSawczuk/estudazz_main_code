@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/cards/settingsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/user/userDeleteAccount.dart';
@@ -56,12 +57,10 @@ class SettingsPage extends StatelessWidget {
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
                       Get.offAllNamed(AppRoutes.signInPage);
-                      Get.snackbar(
-                        "Desconectado",
-                        "Você foi desconectado com sucesso.",
-                        snackPosition: SnackPosition.BOTTOM,
+                      CustomSnackBar.show(
+                        title: 'Desconectado',
+                        message: 'Você foi desconectado com sucesso.',
                         backgroundColor: ConstColors.greenColor,
-                        colorText: ConstColors.whiteColor,
                       );
                     },
                   ),

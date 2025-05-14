@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,29 +69,26 @@ void showDeleteAccountDialog(BuildContext context) {
 
                   Navigator.of(context).pop();
 
-                  Get.snackbar(
-                    "Conta excluída",
-                    "Sua conta foi deletada com sucesso.",
+                  CustomSnackBar.show(
+                    title: "Conta excluída com sucesso!",
+                    message: "Sua conta foi excluída.",
                     backgroundColor: Colors.green,
-                    colorText: Colors.white,
                   );
 
                   Get.offAllNamed(AppRoutes.signInPage);
                 } catch (e) {
                   Navigator.of(context).pop();
-                  Get.snackbar(
-                    "Erro",
-                    "Falha ao excluir conta: $e",
+                  CustomSnackBar.show(
+                    title: "Erro ao excluir conta",
+                    message: "Ocorreu um erro ao tentar excluir sua conta.",
                     backgroundColor: Colors.red,
-                    colorText: Colors.white,
                   );
                 }
               } else {
-                Get.snackbar(
-                  "Erro",
-                  "E-mail incorreto!",
+                CustomSnackBar.show(
+                  title: "E-mail incorreto",
+                  message: "O e-mail digitado não corresponde ao e-mail da conta.",
                   backgroundColor: Colors.red,
-                  colorText: Colors.white,
                 );
               }
             },

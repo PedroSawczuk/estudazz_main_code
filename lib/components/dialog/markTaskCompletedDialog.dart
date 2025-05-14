@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
 import 'package:flutter/material.dart';
@@ -47,18 +48,16 @@ class MarkTaskCompletedDialog {
                         'task_completed_at': null,
                       },
                     );
-                    Get.snackbar(
-                      'Tarefa Desmarcada',
-                      'A tarefa foi desmarcada como concluída.',
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: ConstColors.yellowColor,
-                      colorText: ConstColors.whiteColor,
-                      duration: Duration(seconds: 2),
+                    CustomSnackBar.show(
+                      title: 'Tarefa Desmarcada',
+                      message: 'A tarefa foi desmarcada com sucesso.',
+                      backgroundColor: ConstColors.greenColor,
                     );
                   } catch (e) {
-                    Get.snackbar(
-                      'Erro',
-                      'Ocorreu um erro ao desmarcar a tarefa: $e',
+                    CustomSnackBar.show(
+                      title: 'Erro',
+                      message: 'Erro ao desmarcar tarefa: $e',
+                      backgroundColor: ConstColors.redColor,
                     );
                   }
                   Navigator.of(context).pop();
@@ -107,13 +106,10 @@ class MarkTaskCompletedDialog {
                         await _taskController.tasksDB.deleteTask(
                           taskId,
                         );
-                        Get.snackbar(
-                          'Tarefa Excluída',
-                          'A tarefa foi excluída com sucesso.',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: ConstColors.redColor,
-                          colorText: ConstColors.whiteColor,
-                          duration: Duration(seconds: 2),
+                        CustomSnackBar.show(
+                          title: 'Tarefa Excluída',
+                          message: 'A tarefa foi excluída com sucesso.',
+                          backgroundColor: ConstColors.greenColor,
                         );
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -138,13 +134,10 @@ class MarkTaskCompletedDialog {
                                 DateTime.now().toIso8601String(),
                           },
                         );
-                        Get.snackbar(
-                          'Tarefa Concluída',
-                          'A tarefa foi marcada como concluída.',
-                          snackPosition: SnackPosition.BOTTOM,
+                        CustomSnackBar.show(
+                          title: 'Tarefa Concluída',
+                          message: 'A tarefa foi marcada como concluída.',
                           backgroundColor: ConstColors.greenColor,
-                          colorText: ConstColors.whiteColor,
-                          duration: Duration(seconds: 2),
                         );
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
