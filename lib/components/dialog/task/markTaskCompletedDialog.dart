@@ -33,7 +33,6 @@ class MarkTaskCompletedDialog {
             ),
             actions: [
               TextButton(
-                // Estiliza o botão "Desmarcar"
                 style: TextButton.styleFrom(
                   backgroundColor: ConstColors.redColor,
                   foregroundColor: ConstColors.whiteColor,

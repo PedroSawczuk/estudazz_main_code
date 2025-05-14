@@ -4,7 +4,6 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -35,11 +34,23 @@ class _CalendarPageState extends State<CalendarPage> {
               lastDay: DateTime.utc(2030, 12, 31),
               focusedDay: _focusedDay,
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
+              onDayLongPressed: (selectedDay, focusedDay) async {
+                final todayDate = DateTime.now();
+                final isFuture = selectedDay.isAfter(
+                  DateTime(todayDate.year, todayDate.month, todayDate.day),
+                );
+
+                if (isFuture) {
+                  final uid = await _getUserUid();
+
+                  AddEventDialog().showAddEventDialog(
+                    context: context,
+                    eventId: uid!,
+                    eventName: "",
+                    eventDate: selectedDay,
+                    getUserUid: _getUserUid,
+                  );
+                }
               },
               calendarStyle: CalendarStyle(
                 selectedDecoration: BoxDecoration(
@@ -51,7 +62,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   shape: BoxShape.circle,
                 ),
                 markerDecoration: BoxDecoration(
-                  color: Colors.red,
+                  color: ConstColors.redColor,
                   shape: BoxShape.circle,
                 ),
               ),
