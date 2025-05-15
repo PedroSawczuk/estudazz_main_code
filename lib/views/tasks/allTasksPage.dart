@@ -18,6 +18,7 @@ class AllTasksPage extends StatefulWidget {
 
 class _AllTasksPageState extends State<AllTasksPage> {
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
+  final TasksDB _tasksDB = TasksDB();
 
   Future<String?> _getUserUid() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -58,7 +59,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
           String uid = snapshot.data!;
 
           return StreamBuilder<QuerySnapshot>(
-            stream: _taskController.tasksDB.getTasksByUser(uid),
+            stream: _tasksDB.getTasksByUser(uid),
             builder: (context, taskSnapshot) {
               if (taskSnapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());

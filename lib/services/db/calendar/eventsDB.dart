@@ -17,10 +17,9 @@ class EventsDB {
     });
   }
 
-  Future<DocumentSnapshot> getEvent(String eventId) async {
+  Future<DocumentSnapshot> getEvents(String eventId) async {
     return await eventsCollection.doc(eventId).get();
   }
-
 
   Stream<QuerySnapshot> getEventsByUser(String uid) {
     return eventsCollection

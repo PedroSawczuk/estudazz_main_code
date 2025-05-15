@@ -1,9 +1,12 @@
+import 'package:estudazz_main_code/components/cards/eventsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/addEventDialog.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -13,6 +16,8 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final EventsDB _eventsDB = EventsDB();
+
   Future<String?> _getUserUid() async {
     User? user = FirebaseAuth.instance.currentUser;
     return user?.uid;
@@ -71,6 +76,60 @@ class _CalendarPageState extends State<CalendarPage> {
                 titleCentered: true,
               ),
               locale: 'pt_BR',
+            ),
+            const SizedBox(height: 16),
+
+            Expanded(
+              child: FutureBuilder<String?>(
+                future: _getUserUid(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final uid = snapshot.data!;
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: _eventsDB.getEventsByUser(uid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                        if (snapshot.hasError) {
+                        print('Erro: ${snapshot.error}');
+                        return Center(child: Text('Erro ao carregar eventos. \n Contate o suporte.'));
+                        }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Nenhum evento cadastrado.',
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        );
+                      }
+                      final eventsDocs = snapshot.data!.docs;
+
+                      return ListView.builder(
+                        itemCount: eventsDocs.length,
+                        itemBuilder: (context, index) {
+                          final doc = eventsDocs[index];
+                          final data = doc.data() as Map<String, dynamic>;
+
+                          final eventName = data['event_name'];
+                          final eventDateString = data['event_date'];
+                          final eventDate = DateTime.tryParse(eventDateString) ?? DateTime.now();
+
+                          return EventsCard(
+                            eventName: eventName,
+                            eventDate: eventDate,
+                            onTap: () {
+                              // print('Evento: $eventName');
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
