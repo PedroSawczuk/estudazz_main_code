@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 
 Widget SettingsCard(
@@ -17,7 +18,7 @@ Widget SettingsCard(
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500,
-          color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black87,
+          color: Theme.of(context).textTheme.bodyLarge?.color ?? ConstColors.black87Color,
         ),
       ),
       trailing: Icon(

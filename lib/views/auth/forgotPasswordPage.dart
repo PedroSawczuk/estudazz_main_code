@@ -73,9 +73,9 @@ class ForgotPasswordPage extends StatelessWidget {
                 controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.white54),
+                  hintStyle: TextStyle(color: ConstColors.white54Color),
                   filled: true,
-                  fillColor: Colors.grey[900],
+                  fillColor: ConstColors.grey900Color,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,

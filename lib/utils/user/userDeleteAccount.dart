@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,7 +27,7 @@ void showDeleteAccountDialog(BuildContext context) {
                     text: "${currentUser?.email ?? '[email não disponível]'}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.redAccent,
+                      color: ConstColors.redColor,
                     ),
                   ),
                 ],
@@ -51,8 +52,8 @@ void showDeleteAccountDialog(BuildContext context) {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              backgroundColor:ConstColors.redColor,
+              foregroundColor: ConstColors.whiteColor,
             ),
             child: Text("Excluir"),
             onPressed: () async {
@@ -72,7 +73,7 @@ void showDeleteAccountDialog(BuildContext context) {
                   CustomSnackBar.show(
                     title: "Conta excluída com sucesso!",
                     message: "Sua conta foi excluída.",
-                    backgroundColor: Colors.green,
+                    backgroundColor: ConstColors.greenColor,
                   );
 
                   Get.offAllNamed(AppRoutes.signInPage);
@@ -81,14 +82,14 @@ void showDeleteAccountDialog(BuildContext context) {
                   CustomSnackBar.show(
                     title: "Erro ao excluir conta",
                     message: "Ocorreu um erro ao tentar excluir sua conta.",
-                    backgroundColor: Colors.red,
+                    backgroundColor:ConstColors.redColor,
                   );
                 }
               } else {
                 CustomSnackBar.show(
                   title: "E-mail incorreto",
                   message: "O e-mail digitado não corresponde ao e-mail da conta.",
-                  backgroundColor: Colors.red,
+                  backgroundColor:ConstColors.redColor,
                 );
               }
             },

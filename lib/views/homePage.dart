@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/cards/homeCards.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/user/authProfileCheck.dart';
 import 'package:estudazz_main_code/utils/user/userAuthCheck.dart';
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Minhas Tarefas",
                 description: "Gerencie suas tarefas pendentes.",
                 icon: Icons.task_alt,
-                color: Colors.teal,
+                color: ConstColors.tealColor,
                 onTap:
                     () => AuthGuard.handleAuthenticatedAction(
                       context: context,
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Calendário",
                 description: "Veja seus prazos e compromissos.",
                 icon: Icons.calendar_today,
-                color: Colors.orange,
+                color: ConstColors.orangeColor,
                 onTap:
                     () => AuthGuard.handleAuthenticatedAction(
                       context: context,
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Grupos de Estudo",
                 description: "Colabore com colegas.",
                 icon: Icons.groups,
-                color: Colors.purple,
+                color: ConstColors.purpleColor,
                 onTap:
                     () => AuthGuard.handleAuthenticatedAction(
                       context: context,
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Desempenho",
                 description: "Acompanhe seu progresso acadêmico.",
                 icon: Icons.bar_chart,
-                color: Colors.blue,
+                color: ConstColors.blueColor,
                 onTap:
                     () => AuthGuard.handleAuthenticatedAction(
                       context: context,
@@ -84,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Inteligência Artificial",
                 description: "Receba recomendações personalizadas com IA.",
                 icon: Icons.lightbulb,
-                color: Colors.indigo,
+                color: ConstColors.indigoColor,
                 onTap:
                     () => AuthGuard.handleAuthenticatedAction(
                       context: context,
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Configurações",
                 description: "Personalize a sua experiência.",
                 icon: Icons.settings,
-                color: Color(0xFFB90F0F),
+                color: ConstColors.darkRedColor,
                 onTap:
                     () => AuthGuard.handleAuthenticatedAction(
                       context: context,

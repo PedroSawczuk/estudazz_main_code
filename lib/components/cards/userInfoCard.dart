@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 
 class UserInfoCard extends StatelessWidget {
@@ -13,7 +14,7 @@ class UserInfoCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: 16, color: Colors.grey[400])),
+          Text(label, style: TextStyle(fontSize: 16, color: ConstColors.grey400Color)),
           Text(value, style: TextStyle(fontSize: 16)),
         ],
       ),

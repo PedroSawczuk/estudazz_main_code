@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 
 class ItensCards extends StatelessWidget {
@@ -21,8 +22,8 @@ class ItensCards extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(20),
@@ -51,7 +52,7 @@ class ItensCards extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       color:
                           Theme.of(context).textTheme.bodyLarge?.color ??
-                          Colors.black87,
+                          ConstColors.black87Color,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -61,7 +62,7 @@ class ItensCards extends StatelessWidget {
                       fontSize: 14,
                       color:
                           Theme.of(context).textTheme.bodyMedium?.color ??
-                          Colors.black54,
+                          ConstColors.black54Color,
                     ),
                   ),
                 ],
