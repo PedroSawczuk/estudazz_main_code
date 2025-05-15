@@ -21,6 +21,10 @@ class EventsDB {
     return await eventsCollection.doc(eventId).get();
   }
 
+  Future<void> deleteEvent(String eventId) async {
+    await eventsCollection.doc(eventId).delete();
+  }
+
   Stream<QuerySnapshot> getEventsByUser(String uid) {
     return eventsCollection
       .where('uid', isEqualTo: uid)

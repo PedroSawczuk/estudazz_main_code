@@ -123,6 +123,10 @@ class _CalendarPageState extends State<CalendarPage> {
                             eventDate: eventDate,
                             onTap: () {
                               DetailEventDialog().showDetailEventDialog(
+                                deleteEvent: () async {
+                                  await _eventsDB.deleteEvent(doc.id);
+                                },
+                                eventId: uid,
                                 context: context,
                                 eventName: eventName,
                                 eventDate: eventDate,

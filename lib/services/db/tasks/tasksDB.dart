@@ -34,7 +34,6 @@ class TasksDB {
     return await tasksCollection.doc(taskId).get();
   }
 
-
   Stream<QuerySnapshot> getTasksByUser(String uid) {
     return tasksCollection
       .where('uid', isEqualTo: uid)

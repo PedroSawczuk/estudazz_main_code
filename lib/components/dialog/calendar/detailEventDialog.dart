@@ -1,3 +1,5 @@
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
@@ -7,6 +9,8 @@ class DetailEventDialog {
     required BuildContext context,
     required String eventName,
     required DateTime eventDate,
+    required String eventId,
+    required VoidCallback deleteEvent,
   }) {
     showDialog(
       context: context,
@@ -51,6 +55,23 @@ class DetailEventDialog {
             ),
           ),
           actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.edit, color: ConstColors.whiteColor),
+            ),
+            IconButton(
+              onPressed: () async {
+                await EventsDB().deleteEvent(eventId);
+                CustomSnackBar.show(
+                  title: 'Sucesso',
+                  message: 'Evento "$eventName" excluído com sucesso!',
+                  backgroundColor: ConstColors.greenColor,
+                );
+                Navigator.of(context).pop();
+                deleteEvent(); 
+              },
+              icon: Icon(Icons.delete_forever, color: ConstColors.whiteColor),
+            ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text('Fechar'),
