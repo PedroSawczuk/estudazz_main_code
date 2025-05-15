@@ -7,8 +7,8 @@ class StudyGroupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(titleAppBar: 'Study Group'),
-      body: Column(children: [Text('Study Group')]),
+      appBar: CustomAppBar(titleAppBar: 'Grupo de Estudos'),
+      body: Column(children: [Text('Grupo de Estudos'),]),
     );
   }
 }

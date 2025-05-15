@@ -7,8 +7,8 @@ class PerformancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(titleAppBar: 'PERFOMANCE'),
-      body: Column(children: [Text('PERFOMANCE')]),
+      appBar: CustomAppBar(titleAppBar: 'Desempenho'),
+      body: Column(children: [Text('Desempenho'),]),
     );
   }
 }

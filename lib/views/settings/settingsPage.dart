@@ -23,7 +23,6 @@ class SettingsPage extends StatelessWidget {
               child: ListView(
                 children: [
                   SettingsCard(
-                    context,
                     icon: Icons.person,
                     title: "Meus Dados",
                     onTap: () {
@@ -31,13 +30,11 @@ class SettingsPage extends StatelessWidget {
                     },
                   ),
                   SettingsCard(
-                    context,
                     icon: Icons.notifications,
                     title: "Notificações",
                     onTap: () {},
                   ),
                   SettingsCard(
-                    context,
                     icon: Icons.dark_mode,
                     title: "Tema",
                     onTap: () {
@@ -45,13 +42,11 @@ class SettingsPage extends StatelessWidget {
                     },
                   ),
                   SettingsCard(
-                    context,
                     icon: Icons.language,
                     title: "Idioma",
                     onTap: () {},
                   ),
                   SettingsCard(
-                    context,
                     icon: Icons.logout,
                     title: "Sair",
                     onTap: () async {
@@ -71,7 +66,9 @@ class SettingsPage extends StatelessWidget {
               padding: EdgeInsets.only(top: 20.0),
               child: TextButton(
                 onPressed: () => showDeleteAccountDialog(context),
-                style: TextButton.styleFrom(foregroundColor: ConstColors.redColor),
+                style: TextButton.styleFrom(
+                  foregroundColor: ConstColors.redColor,
+                ),
                 child: Text(
                   "Deletar Conta",
                   style: TextStyle(

@@ -7,8 +7,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(titleAppBar: 'PROFILE'),
-      body: Column(children: [Text('PROFILE')]),
+      appBar: CustomAppBar(titleAppBar: 'Perfil'),
+      body: Column(children: [Text('Perfil'),]),
     );
   }
 }
