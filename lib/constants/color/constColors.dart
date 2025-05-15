@@ -8,6 +8,7 @@ class ConstColors {
   static const Color darkRedColor = Color(0xFFB90F0F);
   static const Color greenColor = Colors.green;
   static const Color blueColor = Colors.blue;
+  static const Color lightBlueColor = Color(0xFF4F7DFF);
   static const Color indigoColor = Colors.indigo;
   static const Color tealColor = Colors.teal;
   static const Color yellowColor = Color(0xFFE0D101);
