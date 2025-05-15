@@ -26,7 +26,7 @@ class MarkTaskCompletedDialog {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("A tarefa ${taskName} já foi marcada como concluída."),
+                Text("A tarefa '$taskName' já foi marcada como concluída."),
                 SizedBox(height: 10),
                 Text("Deseja desmarcá-la? como concluída?"),
               ],
@@ -48,7 +48,7 @@ class MarkTaskCompletedDialog {
                     );
                     CustomSnackBar.show(
                       title: 'Tarefa Desmarcada',
-                      message: 'A tarefa foi desmarcada com sucesso.',
+                      message: 'A tarefa "$taskName" foi desmarcada com sucesso.',
                       backgroundColor: ConstColors.greenColor,
                     );
                   } catch (e) {
@@ -94,11 +94,8 @@ class MarkTaskCompletedDialog {
                     },
                     child: Text("Cancelar"),
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: ConstColors.redColor,
-                      foregroundColor: ConstColors.whiteColor,
-                    ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: ConstColors.redColor),
                     onPressed: () async {
                       try {
                         await _taskController.tasksDB.deleteTask(
@@ -106,7 +103,7 @@ class MarkTaskCompletedDialog {
                         );
                         CustomSnackBar.show(
                           title: 'Tarefa Excluída',
-                          message: 'A tarefa foi excluída com sucesso.',
+                          message: 'A tarefa "$taskName" foi excluída com sucesso.',
                           backgroundColor: ConstColors.greenColor,
                         );
                       } catch (e) {
@@ -119,7 +116,6 @@ class MarkTaskCompletedDialog {
                       }
                       Navigator.of(context).pop();
                     },
-                    child: Text('Excluir'),
                   ),
                   TextButton(
                     onPressed: () async {
