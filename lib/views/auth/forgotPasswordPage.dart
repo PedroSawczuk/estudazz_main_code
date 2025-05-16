@@ -14,11 +14,11 @@ class ForgotPasswordPage extends StatelessWidget {
   void recoverPassword() async {
     final email = emailController.text.trim();
     if (email.isEmpty) {
-       CustomSnackBar.show(
-          title: 'Erro',
-          message: 'Email não pode ser vazio.',
-          backgroundColor: ConstColors.redColor,
-        );
+      CustomSnackBar.show(
+        title: 'Erro',
+        message: 'Email não pode ser vazio.',
+        backgroundColor: ConstColors.redColor,
+      );
       return;
     }
 
@@ -26,27 +26,31 @@ class ForgotPasswordPage extends StatelessWidget {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       CustomSnackBar.show(
         title: 'Sucesso',
-        message: 'Email de recuperação enviado! Verifique sua caixa de entrada.',
+        message:
+            'Email de recuperação enviado! Verifique sua caixa de entrada.',
         backgroundColor: ConstColors.greenColor,
       );
       Get.offAllNamed(AppRoutes.signInPage);
     } on FirebaseAuthException catch (e) {
-      String message = '';
-      switch (e.code) {
-        case 'user-not-found':
-          message = "Usuário não encontrado com este email.";
-          break;
-        case 'invalid-email':
-          message = "Email inválido.";
-          break;
-        default:
-          message = "Erro ao enviar email de recuperação.";
+      if (e.code == 'user-not-found') {
+        CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Usuário não encontrado com este email',
+          backgroundColor: ConstColors.redColor,
+        );
+      } else if (e.code == 'invalid-email') {
+        CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Email inválido',
+          backgroundColor: ConstColors.redColor,
+        );
+      } else {
+        CustomSnackBar.show(
+          title: 'Erro Inesperado',
+          message: 'Erro ao entrar, contate o suporte',
+          backgroundColor: ConstColors.redColor,
+        );
       }
-      CustomSnackBar.show(
-        title: 'Erro',
-        message: message,
-        backgroundColor: ConstColors.redColor,
-      );
     }
   }
 
