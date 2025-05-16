@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/services/auth/saveUserLocal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,25 +11,17 @@ class AuthServices {
       final UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      final user = userCredential.user!;
+
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'email': email,
         'profileCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
       });
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'email-already-in-use':
-          throw 'Este email já está cadastrado.';
-        case 'invalid-email':
-          throw 'O email inserido é inválido.';
-        case 'operation-not-allowed':
-          throw 'Cadastro de usuários está temporariamente desativado.';
-        case 'weak-password':
-          throw 'A senha é muito fraca. Use uma senha com pelo menos 6 caracteres.';
-        default:
-          throw 'Erro ao criar usuário. Tente novamente mais tarde.';
-      }
+
+      await SaveUserLocal.saveUser(user);
+
     } on FirebaseException catch (e) {
       throw "Erro ao salvar no Firestore: ${e.message}";
     } catch (e) {
@@ -36,12 +29,17 @@ class AuthServices {
     }
   }
 
-  Future<void> loginUser(String email, String password) async {
+    Future<void> loginUser(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      if (_firebaseAuth.currentUser != null) {
+        final user = _firebaseAuth.currentUser!;
+        await SaveUserLocal.saveUser(user);
+      }
     } catch (e) {
       throw e;
     }

@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:estudazz_main_code/services/auth/saveUserLocal.dart';
 import 'package:estudazz_main_code/utils/user/userDeleteAccount.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class SettingsPage extends StatelessWidget {
                     title: "Sair",
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
+                      await SaveUserLocal.clearUser();
                       Get.offAllNamed(AppRoutes.signInPage);
                       CustomSnackBar.show(
                         title: 'Desconectado',
