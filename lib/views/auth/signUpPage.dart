@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/views/auth/signInPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,12 +35,32 @@ class _SignUpPageState extends State<SignUpPage> {
       try {
         await _authController.signUp(email, password);
         Get.offAndToNamed(AppRoutes.signInPage);
-      } catch (e) {
-        CustomSnackBar.show(
-          title: 'Erro',
-          message: 'Falha ao criar conta: $e',
-          backgroundColor: ConstColors.redColor,
-        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'email-already-in-use') {
+          CustomSnackBar.show(
+            title: 'Erro!',
+            message: 'Esse email já está sendo usado. Tente outro',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'invalid-email') {
+          CustomSnackBar.show(
+            title: 'Erro!',
+            message: 'Email inválido. Digite um email válido',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'weak-password') {
+          CustomSnackBar.show(
+            title: 'Erro!',
+            message: 'A senha deve ter pelo menos 6 caracteres',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else {
+         CustomSnackBar.show(
+            title: 'Erro Inesperado',
+            message: 'Erro ao entrar, contate o suporte',
+            backgroundColor: ConstColors.redColor,
+          );
+        }
       }
     }
   }

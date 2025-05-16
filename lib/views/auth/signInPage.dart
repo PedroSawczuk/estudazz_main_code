@@ -5,7 +5,7 @@ import 'package:estudazz_main_code/views/auth/forgotPasswordPage.dart';
 import 'package:estudazz_main_code/views/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'signUpPage.dart';
 
 class SignInPage extends StatefulWidget {
@@ -36,13 +36,33 @@ class _SignInPageState extends State<SignInPage> {
       try {
         await _authController.signIn(email, password);
         Get.offAll(() => HomePage());
-      } catch (e) {
-         CustomSnackBar.show(
-          title: 'Erro',
-          message: 'Falha ao criar conta: $e',
-          backgroundColor: ConstColors.redColor,
-        );
-      }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          CustomSnackBar.show(
+            title: 'Erro!',
+            message: 'Usuário não encontrado',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'invalid-credential') {
+          CustomSnackBar.show(
+            title: 'Erro!',
+            message: 'Verifique se seu email ou senha estão corretos',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'user-disabled') {
+          CustomSnackBar.show(
+            title: 'Erro!',
+            message: 'Essa conta foi desativada',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else {
+          CustomSnackBar.show(
+            title: 'Erro Inesperado',
+            message: 'Erro ao entrar, contate o suporte',
+            backgroundColor: ConstColors.redColor,
+          );
+        }
+      } 
     }
   }
 
