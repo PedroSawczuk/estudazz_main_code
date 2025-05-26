@@ -1,5 +1,7 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/services/ai/aiGeminiServices.dart';
 import 'package:flutter/material.dart';
 
 class IaPage extends StatefulWidget {
@@ -11,6 +13,8 @@ class IaPage extends StatefulWidget {
 
 class _IaPageState extends State<IaPage> {
   final TextEditingController _messageController = TextEditingController();
+
+  final AiGeminiServices _aiGeminiServices = AiGeminiServices();
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +50,38 @@ class _IaPageState extends State<IaPage> {
                 const SizedBox(width: 8.0),
                 IconButton(
                   icon: Icon(Icons.send, color: ConstColors.whiteColor),
-                  onPressed: () {
-                    print('Mensagem enviada: ${_messageController.text}');
+                  onPressed: () async {
+                    final inputText = _messageController.text.trim();
+
+                    if (inputText.isEmpty) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Por favor, digite uma mensagem para enviar a IA.',
+                        backgroundColor: ConstColors.redColor,
+                      );
+                      return;
+                    }
+                    
+                    try {
+                      
+                      final responseIA = await _aiGeminiServices.generateText(
+                        inputText,
+                      );
+
+                      print('$responseIA');
+                    
+                    } catch (e) {
+
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Ocorreu um erro ao enviar a mensagem para a IA. $e',
+                        backgroundColor: ConstColors.redColor,
+                      );
+
+                      print(e);
+
+                    }
+
                     _messageController.clear();
                   },
                 ),

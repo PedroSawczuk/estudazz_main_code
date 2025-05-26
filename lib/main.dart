@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,10 @@ Future<void> main() async {
   } catch (e) {
     print("Erro ao carregar o arquivo .env: $e");
   }
+
+  Gemini.init(
+    apiKey: dotenv.env['GEMINI_API_KEY'] ?? '',
+  );
 
   runApp(
     GetMaterialApp(
