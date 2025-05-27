@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class EditDataPage extends StatefulWidget {
   const EditDataPage({super.key});
@@ -26,6 +27,20 @@ class _EditDataPageState extends State<EditDataPage> {
   final _courseController = TextEditingController();
   final _graduationDateController = TextEditingController();
 
+  /* 
+    Junto com a lib 'mask_text_input_formatter', criei um formatador para a data de nascimento e para data prevista para conclusão do curso que o usuário adicionar
+    para ter uma padronização nos dados! 
+  */
+  final _birthDateFormatter = MaskTextInputFormatter(
+    mask: '##/##/####',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
+  final _graduationDateFormatter = MaskTextInputFormatter(
+    mask: '##/####',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +49,8 @@ class _EditDataPageState extends State<EditDataPage> {
 
   Future<void> _loadUserData() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     if (doc.exists) {
       final user = UserModel.fromMap(doc.data()!, uid);
@@ -48,7 +64,6 @@ class _EditDataPageState extends State<EditDataPage> {
       _graduationDateController.text = user.expectedGraduation;
     }
   }
-
 
   Future<void> _saveUserData() async {
     try {
@@ -91,7 +106,6 @@ class _EditDataPageState extends State<EditDataPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,26 +123,130 @@ class _EditDataPageState extends State<EditDataPage> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Divider(thickness: 1),
-                _buildTextField('Nome', _nameController),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Este campo é obrigatório';
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: 10),
-                _buildTextField('Username', _usernameController),
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Este campo é obrigatório';
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: 10),
-                _buildTextField('Email', _emailController),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Este campo é obrigatório';
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: 10),
-                _buildTextField('Data de Nascimento', _birthDateController),
+                TextFormField(
+                controller: _birthDateController,
+                inputFormatters: [_birthDateFormatter],
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Data de Nascimento',
+                  hintText: 'DD/MM/AAAA',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Este campo é obrigatório';
+                  }
+                  return null;
+                },
+              ),
+
                 SizedBox(height: 30),
                 Text(
                   'Informações Acadêmicas',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Divider(thickness: 1),
-                _buildTextField('Instituição', _institutionController),
+                TextFormField(
+                  controller: _institutionController,
+                  decoration: InputDecoration(
+                    labelText: 'Instituição',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Este campo é obrigatório';
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: 10),
-                _buildTextField('Curso', _courseController),
+                TextFormField(
+                  controller: _courseController,
+                  decoration: InputDecoration(
+                    labelText: 'Curso',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Este campo é obrigatório';
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: 10),
-                _buildTextField(
-                  'Conclusão Prevista',
-                  _graduationDateController,
+                TextFormField(
+                  controller: _graduationDateController,
+                  inputFormatters: [_graduationDateFormatter],
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Data de Conclusão',
+                    hintText: 'MM/AAAA',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Este campo é obrigatório';
+                    }
+
+                    return null;
+
+                  },
                 ),
                 SizedBox(height: 30),
                 Center(
@@ -155,22 +273,6 @@ class _EditDataPageState extends State<EditDataPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTextField(String label, TextEditingController controller) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'Este campo é obrigatório';
-        }
-        return null;
-      },
     );
   }
 }
