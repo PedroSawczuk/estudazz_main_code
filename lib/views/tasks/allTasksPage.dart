@@ -3,8 +3,9 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 import 'package:estudazz_main_code/components/dialog/task/addTaskDialog.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:estudazz_main_code/models/tasks/taskModel.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -77,32 +78,29 @@ class _AllTasksPageState extends State<AllTasksPage> {
                 return Center(child: Text("Nenhuma tarefa encontrada."));
               }
 
-              final tasks = taskSnapshot.data!.docs;
+              final tasks = taskSnapshot.data!.docs.map((doc) {
+                return TaskModel.fromDocument(
+                  doc.data() as Map<String, dynamic>,
+                  doc.id,
+                );
+              }).toList();
 
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   final task = tasks[index];
-                  final taskName = task['task_name'] ?? "Sem nome";
-                  final dueDate = task['due_date'] ?? "Sem data";
-                  final taskCompleted = task['task_completed'] ?? false;
 
                   final formattedDueDate =
-                      dueDate != "Sem data"
-                          ? DateFormat(
-                            "dd/MM/yyyy",
-                          ).format(DateTime.parse(dueDate))
-                          : "Sem data";
+                      DateFormat("dd/MM/yyyy").format(task.dueDate);
 
-                  DateTime now = DateTime.now();
-                  DateTime dueDateTime = DateTime.tryParse(dueDate) ?? now;
+                  bool isOverdue = !task.taskCompleted &&
+                      task.dueDate.isBefore(DateTime.now());
 
-                  bool isOverdue = !taskCompleted && dueDateTime.isBefore(now);
                   String statusText;
                   IconData statusIcon;
                   Color statusColor;
 
-                  if (taskCompleted) {
+                  if (task.taskCompleted) {
                     statusText = "Tarefa Concluída";
                     statusIcon = Icons.check_circle;
                     statusColor = ConstColors.greenColor;
@@ -117,10 +115,10 @@ class _AllTasksPageState extends State<AllTasksPage> {
                   }
 
                   return Opacity(
-                    opacity: taskCompleted ? 0.5 : 1.0,
+                    opacity: task.taskCompleted ? 0.5 : 1.0,
                     child: GestureDetector(
                       onLongPress: () {
-                        _showMarkTaskCompletedDialog(task.id, taskName);
+                        _showMarkTaskCompletedDialog(task.id, task.taskName);
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(
@@ -156,7 +154,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
                                         ),
                                       ),
                                       Text(
-                                        "$taskName",
+                                        task.taskName,
                                         style: TextStyle(
                                           fontSize: 16,
                                         ),
