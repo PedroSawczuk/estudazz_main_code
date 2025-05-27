@@ -33,7 +33,13 @@ class SettingsPage extends StatelessWidget {
                   SettingsCard(
                     icon: Icons.notifications,
                     title: "Notificações",
-                    onTap: () {},
+                    onTap: () {
+                      CustomSnackBar.show(
+                        title: 'Em breve',
+                        message: 'Configurações de notificações em breve.',
+                        backgroundColor: ConstColors.blueColor,
+                      );
+                    },
                   ),
                   SettingsCard(
                     icon: Icons.dark_mode,
@@ -45,7 +51,13 @@ class SettingsPage extends StatelessWidget {
                   SettingsCard(
                     icon: Icons.language,
                     title: "Idioma",
-                    onTap: () {},
+                    onTap: () {
+                      CustomSnackBar.show(
+                        title: 'Em breve',
+                        message: 'Configurações de idiomas em breve.',
+                        backgroundColor: ConstColors.blueColor,
+                      );
+                    },
                   ),
                   SettingsCard(
                     icon: Icons.logout,

@@ -79,7 +79,7 @@ class _EditDataPageState extends State<EditDataPage> {
           backgroundColor: ConstColors.greenColor,
         );
 
-        Get.offAllNamed(AppRoutes.myDataPage);
+        Get.offNamedUntil(AppRoutes.myDataPage, ModalRoute.withName(AppRoutes.settingsPage));
       }
     } catch (e) {
       print(e);
