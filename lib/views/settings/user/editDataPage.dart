@@ -244,6 +244,28 @@ class _EditDataPageState extends State<EditDataPage> {
                       return 'Este campo é obrigatório';
                     }
 
+                    final separateMonthYear = value.split('/');
+
+                    final month = int.tryParse(separateMonthYear[0]);
+                    final year = int.tryParse(separateMonthYear[1]);
+
+                    if (month == null || month < 1 || month > 12) {
+                      return 'Mês inválido. Deve ser entre Janeiro (01) e Dezembro (12).';
+                    }
+
+                    if (year == null || year < DateTime.now().year) {
+                      return 'Ano Inválido. Deve ser no futuro!.';
+                    }
+
+                    if (year > DateTime.now().year + 20) {
+                      return 'Ano inválido. Deve ser no máximo 20 anos no futuro.';
+                    }
+
+                    if (month < DateTime.now().month &&
+                        year == DateTime.now().year) {
+                      return 'Mês inválido. Deve ser no futuro!.';
+                    }
+
                     return null;
 
                   },
