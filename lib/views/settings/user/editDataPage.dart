@@ -155,20 +155,30 @@ class _EditDataPageState extends State<EditDataPage> {
                   },
                 ),
                 SizedBox(height: 10),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Este campo é obrigatório';
-                    }
-                    return null;
+                GestureDetector(
+                  onTap: () {
+                    CustomSnackBar.show(
+                      title: 'Atenção!',
+                      message: 'Você não pode alterar o email do usuário.',
+                      backgroundColor: ConstColors.orangeColor,
+                    );
                   },
+                  child: TextFormField(
+                    controller: _emailController,
+                    enabled: false,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Este campo é obrigatório';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
                 SizedBox(height: 10),
                 TextFormField(
