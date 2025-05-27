@@ -17,28 +17,29 @@ class AiGeminiServices {
 
   Future<String> generateText(String userPrompt) async {
     try {
-        final response = await _dio.post(
+      final response = await _dio.post(
         '$_geminiApiUrl?key=$_geminiApiKey',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }),
+        options: Options(headers: {'Content-Type': 'application/json'}),
         data: {
           "contents": [
             {
               "parts": [
-                {"text": userPrompt}
-              ]
-            }
-          ]
+                {
+                  "text":
+                      "Olá, você é um assistente de IA especializado em ajudar alunos com dúvidas e tarefas da escola/universidade. Você deve responder de forma clara, objetiva e amigável. Sempre que possível, forneça exemplos práticos e explique os conceitos de maneira simples. Aqui está a dúvida do usuário: $userPrompt",
+                },
+              ],
+            },
+          ],
         },
       );
 
       final data = response.data;
-      final responseContent = data['candidates'][0]['content']['parts'][0]['text'];
-      return responseContent; 
-
+      final responseContent =
+          data['candidates'][0]['content']['parts'][0]['text'];
+      return responseContent;
     } catch (e) {
-      print(e); 
+      print(e);
       return 'Erro ao gerar texto: $e';
     }
   }

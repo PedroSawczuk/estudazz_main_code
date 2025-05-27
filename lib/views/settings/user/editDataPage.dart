@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 
 class EditDataPage extends StatefulWidget {
@@ -34,44 +34,52 @@ class _EditDataPageState extends State<EditDataPage> {
 
   Future<void> _loadUserData() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final doc =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-    final data = doc.data();
-    if (data != null) {
-      _nameController.text = data['display_name'] ?? '';
-      _usernameController.text = data['username'] ?? '';
-      _emailController.text = data['email'] ?? '';
-      _birthDateController.text = data['birth_date'] ?? '';
-      _institutionController.text = data['institution'] ?? '';
-      _courseController.text = data['course'] ?? '';
-      _graduationDateController.text = data['expected_graduation'] ?? '';
+    if (doc.exists) {
+      final user = UserModel.fromMap(doc.data()!, uid);
+
+      _nameController.text = user.displayName;
+      _usernameController.text = user.username;
+      _emailController.text = user.email;
+      _birthDateController.text = user.birthDate;
+      _institutionController.text = user.institution;
+      _courseController.text = user.course;
+      _graduationDateController.text = user.expectedGraduation;
     }
   }
 
-  Future<void> _saveData() async {
+
+  Future<void> _saveUserData() async {
     try {
       if (_formKey.currentState?.validate() ?? false) {
         final uid = FirebaseAuth.instance.currentUser!.uid;
 
-        await FirebaseFirestore.instance.collection('users').doc(uid).update({
-          'display_name': _nameController.text,
-          'username': _usernameController.text,
-          'email': _emailController.text,
-          'birth_date': _birthDateController.text,
-          'institution': _institutionController.text,
-          'course': _courseController.text,
-          'expected_graduation': _graduationDateController.text,
-          'profileCompleted': true,
-        });
+        final updatedUser = UserModel(
+          uid: uid,
+          displayName: _nameController.text,
+          username: _usernameController.text,
+          email: _emailController.text,
+          birthDate: _birthDateController.text,
+          institution: _institutionController.text,
+          course: _courseController.text,
+          expectedGraduation: _graduationDateController.text,
+          profileCompleted: true,
+        );
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update(updatedUser.toMap());
 
         CustomSnackBar.show(
           title: 'Sucesso',
           message: 'Dados atualizados com sucesso!',
           backgroundColor: ConstColors.greenColor,
         );
+
         Get.offAllNamed(AppRoutes.myDataPage);
-      }  
+      }
     } catch (e) {
       print(e);
       CustomSnackBar.show(
@@ -79,9 +87,10 @@ class _EditDataPageState extends State<EditDataPage> {
         message: 'Erro ao atualizar os dados. Tente novamente mais tarde.',
         backgroundColor: ConstColors.redColor,
       );
-      Get.offAllNamed(AppRoutes.myDataPage);       
+      Get.offAllNamed(AppRoutes.myDataPage);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +133,7 @@ class _EditDataPageState extends State<EditDataPage> {
                 SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
-                    onPressed: _saveData,
+                    onPressed: _saveUserData,
                     child: Text(
                       'Salvar Alterações',
                       style: TextStyle(color: ConstColors.whiteColor),
