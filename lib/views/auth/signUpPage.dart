@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      String email = _emailController.text;
+      String email = _emailController.text.toLowerCase();
       String password = _passwordController.text;
 
       CustomSnackBar.show(
