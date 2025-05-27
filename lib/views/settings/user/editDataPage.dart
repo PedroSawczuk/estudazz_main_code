@@ -186,6 +186,32 @@ class _EditDataPageState extends State<EditDataPage> {
                   if (value == null || value.trim().isEmpty) {
                     return 'Este campo é obrigatório';
                   }
+
+                  final separateDayMonthYear = value.split('/');
+                  final day = int.tryParse(separateDayMonthYear[0]);
+                  final month = int.tryParse(separateDayMonthYear[1]);
+                  final year = int.tryParse(separateDayMonthYear[2]);
+
+                  final today = DateTime.now();
+
+                  if (day == null || day < 1 || day > 31) {
+                    return 'Dia inválido. Deve ser entre 01 e 31.';
+                  }
+
+                  if (month == null || month < 1 || month > 12) {
+                    return 'Mês inválido. Deve ser entre Janeiro (01) e Dezembro (12).';
+                  }
+
+                  if (year == null || year < 1950 || year > today.year) {
+                    return 'Ano inválido. Deve ser entre 1950 e o ano atual.';
+                  }
+
+                  final birthDate = DateTime(year, month, day);
+
+                  if (birthDate.isAfter(today)) {
+                    return 'Data de nascimento inválida. Deve ser no passado.';
+                  }
+
                   return null;
                 },
               ),
@@ -248,21 +274,22 @@ class _EditDataPageState extends State<EditDataPage> {
 
                     final month = int.tryParse(separateMonthYear[0]);
                     final year = int.tryParse(separateMonthYear[1]);
+                    final today = DateTime.now();
 
                     if (month == null || month < 1 || month > 12) {
                       return 'Mês inválido. Deve ser entre Janeiro (01) e Dezembro (12).';
                     }
 
-                    if (year == null || year < DateTime.now().year) {
+                    if (year == null || year < today.year) {
                       return 'Ano Inválido. Deve ser no futuro!.';
                     }
 
-                    if (year > DateTime.now().year + 20) {
+                    if (year > today.year + 20) {
                       return 'Ano inválido. Deve ser no máximo 20 anos no futuro.';
                     }
 
-                    if (month < DateTime.now().month &&
-                        year == DateTime.now().year) {
+                    if (month < today.month &&
+                        year == today.year) {
                       return 'Mês inválido. Deve ser no futuro!.';
                     }
 
