@@ -3,11 +3,11 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:estudazz_main_code/utils/formatter/inputsFormatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class EditDataPage extends StatefulWidget {
   const EditDataPage({super.key});
@@ -26,20 +26,6 @@ class _EditDataPageState extends State<EditDataPage> {
   final _institutionController = TextEditingController();
   final _courseController = TextEditingController();
   final _graduationDateController = TextEditingController();
-
-  /* 
-    Junto com a lib 'mask_text_input_formatter', criei um formatador para a data de nascimento e para data prevista para conclusão do curso que o usuário adicionar
-    para ter uma padronização nos dados! 
-  */
-  final _birthDateFormatter = MaskTextInputFormatter(
-    mask: '##/##/####',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
-
-  final _graduationDateFormatter = MaskTextInputFormatter(
-    mask: '##/####',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
 
   @override
   void initState() {
@@ -125,6 +111,8 @@ class _EditDataPageState extends State<EditDataPage> {
                 Divider(thickness: 1),
                 TextFormField(
                   controller: _nameController,
+                  inputFormatters: [nameFormatter],
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Nome',
                     border: OutlineInputBorder(
@@ -141,6 +129,8 @@ class _EditDataPageState extends State<EditDataPage> {
                 SizedBox(height: 10),
                 TextFormField(
                   controller: _usernameController,
+                  inputFormatters: [usernameFormatter],
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Username',
                     border: OutlineInputBorder(
@@ -183,7 +173,7 @@ class _EditDataPageState extends State<EditDataPage> {
                 SizedBox(height: 10),
                 TextFormField(
                 controller: _birthDateController,
-                inputFormatters: [_birthDateFormatter],
+                inputFormatters: [birthDateFormatter],
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Data de Nascimento',
@@ -266,7 +256,7 @@ class _EditDataPageState extends State<EditDataPage> {
                 SizedBox(height: 10),
                 TextFormField(
                   controller: _graduationDateController,
-                  inputFormatters: [_graduationDateFormatter],
+                  inputFormatters: [graduationDateFormatter],
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Data de Conclusão',
