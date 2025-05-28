@@ -13,6 +13,7 @@ class ConstColors {
   static const Color tealColor = Colors.teal;
   static const Color yellowColor = Color(0xFFE0D101);
   static const Color greyColor = Color(0xFF525252);
+  static const Color grey300Color = Color(0xFFE0E0E0);
   static const Color grey400Color = Color(0xFFBDBDBD);
   static const Color grey900Color = Color(0xFF212121);
   static const Color blackColor = Color(0xFF0F0F0F);
