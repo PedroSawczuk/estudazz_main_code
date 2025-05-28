@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class HighlightPerformanceCard extends StatelessWidget {
@@ -30,7 +31,7 @@ class HighlightPerformanceCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: iconColor, size: 30),
-              SizedBox(height: 10),
+              ConstSizedBox.h10,
               Text(
                 textCard,
                 textAlign: TextAlign.center,

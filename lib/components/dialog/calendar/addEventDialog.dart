@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/calendar/eventController.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class AddEventDialog {
                     controller: _eventNameController,
                     decoration: InputDecoration(labelText: 'Nome do Evento'),
                   ),
-                  SizedBox(height: 16),
+                  ConstSizedBox.h16,
                   TextButton(
                     onPressed: () async {
                       final pickedTime = await showTimePicker(

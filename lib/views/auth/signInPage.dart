@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'signUpPage.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({super.key});
@@ -100,7 +101,7 @@ class _SignInPageState extends State<SignInPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
@@ -130,7 +131,7 @@ class _SignInPageState extends State<SignInPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -161,7 +162,7 @@ class _SignInPageState extends State<SignInPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(

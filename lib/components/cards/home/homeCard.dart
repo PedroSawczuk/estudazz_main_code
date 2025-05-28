@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class ItensCards extends StatelessWidget {
@@ -40,7 +41,7 @@ class ItensCards extends StatelessWidget {
                 size: 28,
               ),
             ),
-            const SizedBox(width: 16),
+            ConstSizedBox.h16,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +56,7 @@ class ItensCards extends StatelessWidget {
                           ConstColors.black87Color,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  ConstSizedBox.h4,
                   Text(
                     description,
                     style: TextStyle(

@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
 import 'package:flutter/material.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class MarkTaskCompletedDialog {
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
@@ -27,7 +28,7 @@ class MarkTaskCompletedDialog {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("A tarefa '$taskName' já foi marcada como concluída."),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 Text("Deseja desmarcá-la? como concluída?"),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -42,7 +43,7 @@ class DetailEventDialog {
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(height: 12),
+                ConstSizedBox.h12,
                 Text(
                   DateFormat('HH:mm').format(eventDate),
                   style: TextStyle(
@@ -68,7 +69,7 @@ class DetailEventDialog {
                   backgroundColor: ConstColors.greenColor,
                 );
                 Navigator.of(context).pop();
-                deleteEvent(); 
+                deleteEvent();
               },
               icon: Icon(Icons.delete_forever, color: ConstColors.whiteColor),
             ),

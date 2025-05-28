@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class StatsPerformanceCard extends StatelessWidget {
@@ -33,7 +34,7 @@ class StatsPerformanceCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(icon, size: 30, color: color),
-                  const SizedBox(width: 16),
+                  ConstSizedBox.w16,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +46,7 @@ class StatsPerformanceCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        ConstSizedBox.h8,
                         Text(
                           value,
                           style: TextStyle(

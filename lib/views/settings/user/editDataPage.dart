@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/formatter/inputsFormatter.dart';
@@ -126,7 +127,7 @@ class _EditDataPageState extends State<EditDataPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 TextFormField(
                   controller: _usernameController,
                   inputFormatters: [usernameFormatter],
@@ -144,7 +145,7 @@ class _EditDataPageState extends State<EditDataPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 GestureDetector(
                   onTap: () {
                     CustomSnackBar.show(
@@ -170,7 +171,7 @@ class _EditDataPageState extends State<EditDataPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 TextFormField(
                 controller: _birthDateController,
                 inputFormatters: [birthDateFormatter],
@@ -237,7 +238,7 @@ class _EditDataPageState extends State<EditDataPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 TextFormField(
                   controller: _courseController,
                   decoration: InputDecoration(
@@ -253,7 +254,7 @@ class _EditDataPageState extends State<EditDataPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                ConstSizedBox.h10,
                 TextFormField(
                   controller: _graduationDateController,
                   inputFormatters: [graduationDateFormatter],

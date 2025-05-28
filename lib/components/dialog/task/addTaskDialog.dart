@@ -2,6 +2,7 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class AddTaskDialog {
   final TextEditingController _taskNameController = TextEditingController();
@@ -33,7 +34,7 @@ class AddTaskDialog {
                     controller: _taskNameController,
                     decoration: InputDecoration(labelText: 'Nome da Tarefa'),
                   ),
-                  SizedBox(height: 10),
+                  ConstSizedBox.h10,
                   Row(
                     children: [
                       Expanded(child: Text(formatDate(tempSelectedDate))),
