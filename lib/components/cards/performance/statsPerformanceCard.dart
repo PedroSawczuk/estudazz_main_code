@@ -26,26 +26,26 @@ class StatsPerformanceCard extends StatelessWidget {
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           width: double.infinity,
           child: Column(
             children: [
               Row(
                 children: [
                   Icon(icon, size: 30, color: color),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           titleStats,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           value,
                           style: TextStyle(
@@ -59,14 +59,15 @@ class StatsPerformanceCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: LinearProgressIndicator(
-                  value: progressValue.clamp(0.0, 1.0),
-                  backgroundColor: Color(0xFFE0E0E0),
-                  color: color,
+              if (showProgressBar)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: LinearProgressIndicator(
+                    value: progressValue.clamp(0.0, 1.0),
+                    backgroundColor: Colors.grey[300],
+                    color: color,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
