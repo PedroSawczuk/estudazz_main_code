@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/addEventDialog.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/detailEventDialog.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/models/calendar/eventModel.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Column(
           children: [
             TableCalendar(
-              firstDay: DateTime.utc(2020, 1, 1),
+              firstDay: DateTime.utc(2025, 1, 1),
               lastDay: DateTime.utc(2030, 12, 31),
               focusedDay: _focusedDay,
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
@@ -90,15 +91,21 @@ class _CalendarPageState extends State<CalendarPage> {
                   final uid = snapshot.data!;
                   return StreamBuilder<QuerySnapshot>(
                     stream: _eventsDB.getEventsByUser(uid),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+                    builder: (context, eventSnapshot) {
+                      if (eventSnapshot.connectionState ==
+                          ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       }
-                        if (snapshot.hasError) {
-                        print('Erro: ${snapshot.error}');
-                        return Center(child: Text('Erro ao carregar eventos. \n Contate o suporte.'));
-                        }
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      if (eventSnapshot.hasError) {
+                        print('Erro: ${eventSnapshot.error}');
+                        return Center(
+                          child: Text(
+                            'Erro ao carregar eventos. \n Contate o suporte.',
+                          ),
+                        );
+                      }
+                      if (!eventSnapshot.hasData ||
+                          eventSnapshot.data!.docs.isEmpty) {
                         return Center(
                           child: Text(
                             'Nenhum evento cadastrado.',
@@ -106,30 +113,32 @@ class _CalendarPageState extends State<CalendarPage> {
                           ),
                         );
                       }
-                      final eventsDocs = snapshot.data!.docs;
+
+                      final events =
+                          eventSnapshot.data!.docs.map((doc) {
+                            return EventModel.fromDocument(
+                              doc.data() as Map<String, dynamic>,
+                              doc.id,
+                            );
+                          }).toList();
 
                       return ListView.builder(
-                        itemCount: eventsDocs.length,
+                        itemCount: events.length,
                         itemBuilder: (context, index) {
-                          final doc = eventsDocs[index];
-                          final data = doc.data() as Map<String, dynamic>;
-
-                          final eventName = data['event_name'];
-                          final eventDateString = data['event_date'];
-                          final eventDate = DateTime.tryParse(eventDateString) ?? DateTime.now();
+                          final event = events[index];
 
                           return EventsCard(
-                            eventName: eventName,
-                            eventDate: eventDate,
+                            eventName: event.eventName,
+                            eventDate: event.eventDate,
                             onTap: () {
                               DetailEventDialog().showDetailEventDialog(
                                 deleteEvent: () async {
-                                  await _eventsDB.deleteEvent(doc.id);
+                                  await _eventsDB.deleteEvent(event.id);
                                 },
                                 eventId: uid,
                                 context: context,
-                                eventName: eventName,
-                                eventDate: eventDate,
+                                eventName: event.eventName,
+                                eventDate: event.eventDate,
                               );
                             },
                           );
