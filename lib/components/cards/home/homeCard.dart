@@ -41,7 +41,7 @@ class ItensCards extends StatelessWidget {
                 size: 28,
               ),
             ),
-            ConstSizedBox.h16,
+            ConstSizedBox.w16,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

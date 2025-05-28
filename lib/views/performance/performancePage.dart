@@ -31,6 +31,7 @@ class PerformancePage extends StatelessWidget {
               showProgressBar: true,
               progressValue: 20 / 100,
             ),
+            ConstSizedBox.h20,
             StatsPerformanceCard(
               icon: Icons.task_alt,
               color: ConstColors.greenColor,
@@ -39,6 +40,7 @@ class PerformancePage extends StatelessWidget {
               showProgressBar: true,
               progressValue: 84 / 100,
             ),
+            ConstSizedBox.h20,
             StatsPerformanceCard(
               icon: Icons.groups,
               color: ConstColors.purpleColor,
@@ -46,6 +48,7 @@ class PerformancePage extends StatelessWidget {
               value: '42/50',
               showProgressBar: false,
             ),
+            ConstSizedBox.h20,
             StatsPerformanceCard(
               icon: Icons.check_circle,
               color: ConstColors.orangeColor,
@@ -53,6 +56,7 @@ class PerformancePage extends StatelessWidget {
               value: '${84.toStringAsFixed(2)}%',
               showProgressBar: false,
             ),
+            ConstSizedBox.h20,
             StatsPerformanceCard(
               icon: Icons.check_circle,
               color: ConstColors.lightBlueColor,

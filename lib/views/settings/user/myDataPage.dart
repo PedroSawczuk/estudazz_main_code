@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/components/cards/user/userInfoCard.dart';
+import 'package:estudazz_main_code/components/cards/user/userDataCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
@@ -54,10 +54,10 @@ class MyDataPage extends StatelessWidget {
                 Divider(thickness: 1),
                 ConstSizedBox.h8,
 
-                UserInfoCard(label: "Nome", value: data['display_name'] ?? ''),
-                UserInfoCard(label: "Username", value: data['username'] ?? ''),
-                UserInfoCard(label: "Email", value: data['email'] ?? ''),
-                UserInfoCard(
+                UserDataCard(label: "Nome", value: data['display_name'] ?? ''),
+                UserDataCard(label: "Username", value: data['username'] ?? ''),
+                UserDataCard(label: "Email", value: data['email'] ?? ''),
+                UserDataCard(
                   label: "Data de Nascimento",
                   value: data['birth_date'] ?? '',
                 ),
@@ -72,12 +72,12 @@ class MyDataPage extends StatelessWidget {
                 Divider(thickness: 1),
                 ConstSizedBox.h8,
 
-                UserInfoCard(
+                UserDataCard(
                   label: "Instituição",
                   value: data['institution'] ?? '',
                 ),
-                UserInfoCard(label: "Curso", value: data['course'] ?? ''),
-                UserInfoCard(
+                UserDataCard(label: "Curso", value: data['course'] ?? ''),
+                UserDataCard(
                   label: "Conclusão Prevista",
                   value: data['expected_graduation'] ?? '',
                 ),

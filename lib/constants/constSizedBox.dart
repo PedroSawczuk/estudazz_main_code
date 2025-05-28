@@ -3,9 +3,6 @@
 import 'package:flutter/material.dart';
 
 class ConstSizedBox {
-  static const double height = 10.0;
-  static const double width = 10.0;
-
   static const SizedBox h4 = SizedBox(height: 4);
   static const SizedBox h5 = SizedBox(height: 5);
   static const SizedBox h8 = SizedBox(height: 8);
@@ -19,6 +16,7 @@ class ConstSizedBox {
   static const SizedBox h40 = SizedBox(height: 40);
   static const SizedBox h50 = SizedBox(height: 50);
 
+  static const SizedBox w4 = SizedBox(width: 4);
   static const SizedBox w8 = SizedBox(width: 8);
   static const SizedBox w16 = SizedBox(width: 16);
 }
