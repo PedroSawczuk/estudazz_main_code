@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/addEventDialog.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/detailEventDialog.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/models/calendar/eventModel.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,8 +80,7 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
               locale: 'pt_BR',
             ),
-            const SizedBox(height: 16),
-
+            ConstSizedBox.h16,
             Expanded(
               child: FutureBuilder<String?>(
                 future: _getUserUid(),

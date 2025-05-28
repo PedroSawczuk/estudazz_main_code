@@ -1,6 +1,7 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/services/ai/aiGeminiServices.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class _IaPageState extends State<IaPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8.0),
+                ConstSizedBox.w8,
                 IconButton(
                   icon: Icon(Icons.send, color: ConstColors.whiteColor),
                   onPressed: () async {

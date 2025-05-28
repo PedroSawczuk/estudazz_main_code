@@ -83,7 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                   'ENTRAR',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 30),
+                ConstSizedBox.h30,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
@@ -146,7 +146,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 5),
+                ConstSizedBox.h5,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Row(

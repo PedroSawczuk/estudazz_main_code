@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/dialog/task/markTaskCompletedDialog.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 import 'package:estudazz_main_code/components/dialog/task/addTaskDialog.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
@@ -78,22 +79,25 @@ class _AllTasksPageState extends State<AllTasksPage> {
                 return Center(child: Text("Nenhuma tarefa encontrada."));
               }
 
-              final tasks = taskSnapshot.data!.docs.map((doc) {
-                return TaskModel.fromDocument(
-                  doc.data() as Map<String, dynamic>,
-                  doc.id,
-                );
-              }).toList();
+              final tasks =
+                  taskSnapshot.data!.docs.map((doc) {
+                    return TaskModel.fromDocument(
+                      doc.data() as Map<String, dynamic>,
+                      doc.id,
+                    );
+                  }).toList();
 
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   final task = tasks[index];
 
-                  final formattedDueDate =
-                      DateFormat("dd/MM/yyyy").format(task.dueDate);
+                  final formattedDueDate = DateFormat(
+                    "dd/MM/yyyy",
+                  ).format(task.dueDate);
 
-                  bool isOverdue = !task.taskCompleted &&
+                  bool isOverdue =
+                      !task.taskCompleted &&
                       task.dueDate.isBefore(DateTime.now());
 
                   String statusText;
@@ -155,13 +159,11 @@ class _AllTasksPageState extends State<AllTasksPage> {
                                       ),
                                       Text(
                                         task.taskName,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
+                                        style: TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 4),
+                                  ConstSizedBox.h4,
                                   Text(
                                     "Prazo: $formattedDueDate",
                                     style: TextStyle(

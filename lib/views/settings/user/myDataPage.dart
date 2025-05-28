@@ -6,6 +6,7 @@ import 'package:estudazz_main_code/services/user/fetchUserDataService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class MyDataPage extends StatelessWidget {
   MyDataPage({super.key});
@@ -35,7 +36,7 @@ class MyDataPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                SizedBox(height: 20),
+                ConstSizedBox.h20,
                 Center(
                   child: CircleAvatar(
                     radius: 60,
@@ -44,14 +45,14 @@ class MyDataPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                ConstSizedBox.h30,
                 Text(
                   'Informações Pessoais',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
 
                 Divider(thickness: 1),
-                SizedBox(height: 8),
+                ConstSizedBox.h8,
 
                 UserInfoCard(label: "Nome", value: data['display_name'] ?? ''),
                 UserInfoCard(label: "Username", value: data['username'] ?? ''),
@@ -61,7 +62,7 @@ class MyDataPage extends StatelessWidget {
                   value: data['birth_date'] ?? '',
                 ),
 
-                SizedBox(height: 13),
+                ConstSizedBox.h13,
 
                 Text(
                   'Informações Acadêmicas',
@@ -69,7 +70,7 @@ class MyDataPage extends StatelessWidget {
                 ),
 
                 Divider(thickness: 1),
-                SizedBox(height: 8),
+                ConstSizedBox.h8,
 
                 UserInfoCard(
                   label: "Instituição",
@@ -80,7 +81,7 @@ class MyDataPage extends StatelessWidget {
                   label: "Conclusão Prevista",
                   value: data['expected_graduation'] ?? '',
                 ),
-                SizedBox(height: 30),
+                ConstSizedBox.h30,
                 Center(
                   child: ElevatedButton.icon(
                     onPressed: () {

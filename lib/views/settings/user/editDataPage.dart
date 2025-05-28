@@ -217,7 +217,7 @@ class _EditDataPageState extends State<EditDataPage> {
                 },
               ),
 
-                SizedBox(height: 30),
+                ConstSizedBox.h30,
                 Text(
                   'Informações Acadêmicas',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -298,7 +298,7 @@ class _EditDataPageState extends State<EditDataPage> {
 
                   },
                 ),
-                SizedBox(height: 30),
+                ConstSizedBox.h30,
                 Center(
                   child: ElevatedButton(
                     onPressed: _saveUserData,

@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/components/cards/performance/statsPerformance
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:flutter/material.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class PerformancePage extends StatelessWidget {
   PerformancePage({super.key});
@@ -14,14 +15,14 @@ class PerformancePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            ConstSizedBox.h20,
             HighlightPerformanceCard(
               textCard: 'Bom trabalho! Você está indo bem!',
               textCardColor: ConstColors.orangeColor,
               icon: Icons.star,
               iconColor: ConstColors.orangeColor,
             ),
-            SizedBox(height: 20),
+            ConstSizedBox.h20,
             StatsPerformanceCard(
               icon: Icons.bar_chart,
               color: ConstColors.blueColor,

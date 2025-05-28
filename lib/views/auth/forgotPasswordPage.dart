@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,7 +73,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 32),
+              ConstSizedBox.h32,
               TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
@@ -87,7 +88,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 ),
                 style: TextStyle(color: ConstColors.whiteColor),
               ),
-              SizedBox(height: 16),
+              ConstSizedBox.h16,
               Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
@@ -100,7 +101,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              ConstSizedBox.h16,
               SizedBox(
                 width: 150,
                 child: ElevatedButton(

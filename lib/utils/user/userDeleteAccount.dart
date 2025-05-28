@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +35,7 @@ void showDeleteAccountDialog(BuildContext context) {
                 style: TextStyle(fontSize: 16),
               ),
             ),
-            SizedBox(height: 12),
+            ConstSizedBox.h12,
             TextField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,

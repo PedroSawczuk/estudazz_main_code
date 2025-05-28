@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   'REGISTRAR',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 30),
+                ConstSizedBox.h30,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
