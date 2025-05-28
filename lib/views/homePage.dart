@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/components/cards/homeCards.dart';
+import 'package:estudazz_main_code/components/cards/home/homeCards.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';

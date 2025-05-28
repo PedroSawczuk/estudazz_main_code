@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/components/cards/settingsCard.dart';
+import 'package:estudazz_main_code/components/cards/settings/settingsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';

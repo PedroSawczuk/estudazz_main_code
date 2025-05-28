@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/components/cards/eventsCard.dart';
+import 'package:estudazz_main_code/components/cards/events/eventsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/addEventDialog.dart';
 import 'package:estudazz_main_code/components/dialog/calendar/detailEventDialog.dart';

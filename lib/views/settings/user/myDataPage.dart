@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/components/cards/userInfoCard.dart';
+import 'package:estudazz_main_code/components/cards/user/userInfoCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
@@ -39,10 +39,10 @@ class MyDataPage extends StatelessWidget {
                 Center(
                   child: CircleAvatar(
                     radius: 60,
-                    backgroundImage: NetworkImage(data['profile_picture'] ?? 'assets/images/no-profile-photo.png',
+                    backgroundImage: NetworkImage(
+                      'assets/images/no-profile-photo.png',
                     ),
                   ),
-                 
                 ),
                 SizedBox(height: 30),
                 Text(
