@@ -1,10 +1,13 @@
 import 'package:estudazz_main_code/components/cards/user/userInfoCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/user/userController.dart';
+import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/formatter/dateFormatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -56,6 +59,34 @@ class ProfilePage extends StatelessWidget {
                   userData.email,
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
+                ConstSizedBox.h5,
+                /*T ext(
+                  "${userData.profileCompleted ? 'Perfil Completo' : 'Perfil Incompleto'}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: userData.profileCompleted
+                        ? ConstColors.greenColor
+                        : ConstColors.redColor,
+                  ),
+                ), */
+                userData.profileCompleted
+                    ? Text(
+                      'Seu perfil está completo!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: ConstColors.greenColor,
+                      ),
+                    )
+                    : ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.myDataPage);
+                      },
+                      child: Text('Complete seu perfil'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ConstColors.redColor,
+                        foregroundColor: ConstColors.whiteColor,
+                      ),
+                    ),
                 ConstSizedBox.h30,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
