@@ -41,6 +41,7 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ConstSizedBox.h20,
+
                 Center(
                   child: CircleAvatar(
                     radius: 60,
@@ -49,26 +50,37 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 ConstSizedBox.h10,
-                Text(
-                  userData.displayName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-                ConstSizedBox.h5,
+
+                userData.displayName.isNotEmpty
+                    ? Column(
+                      children: [
+                        Text(
+                          userData.displayName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+
+                        ConstSizedBox.h5,
+                      ],
+                    )
+                    : Text(
+                      'Sem nome definido',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+
                 Text(
                   userData.email,
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 ConstSizedBox.h5,
-                /*T ext(
-                  "${userData.profileCompleted ? 'Perfil Completo' : 'Perfil Incompleto'}",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: userData.profileCompleted
-                        ? ConstColors.greenColor
-                        : ConstColors.redColor,
-                  ),
-                ), */
+
                 userData.profileCompleted
                     ? Text(
                       'Seu perfil está completo!',
