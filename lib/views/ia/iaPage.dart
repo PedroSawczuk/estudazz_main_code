@@ -1,7 +1,10 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/components/ia/aiResponseMessage.dart';
+import 'package:estudazz_main_code/components/ia/userInputMessage.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
+import 'package:estudazz_main_code/models/ia/iaChatMessage.dart';
 import 'package:estudazz_main_code/services/ai/aiGeminiServices.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +17,9 @@ class IaPage extends StatefulWidget {
 
 class _IaPageState extends State<IaPage> {
   final TextEditingController _messageController = TextEditingController();
-
   final AiGeminiServices _aiGeminiServices = AiGeminiServices();
+
+  final List<ChatModel> _messages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +30,20 @@ class _IaPageState extends State<IaPage> {
       ),
       body: Column(
         children: [
-          Expanded(child: Container()),
+          Expanded(
+            child: ListView.builder(
+              reverse: true,
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return message.isUser
+                    ? UserInputMessage(text: message.text)
+                    : AIResponseMessage(text: message.text);
+              },
+            ),
+          ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             color: ConstColors.blackColor,
             child: Row(
               children: [
@@ -52,38 +67,45 @@ class _IaPageState extends State<IaPage> {
                 IconButton(
                   icon: Icon(Icons.send, color: ConstColors.whiteColor),
                   onPressed: () async {
-                    final inputText = _messageController.text.trim();
+                    final userInputText = _messageController.text.trim();
 
-                    if (inputText.isEmpty) {
+                    if (userInputText.isEmpty) {
                       CustomSnackBar.show(
                         title: 'Erro!',
-                        message: 'Por favor, digite uma mensagem para enviar a IA.',
+                        message:
+                            'Por favor, digite uma mensagem para enviar à IA.',
                         backgroundColor: ConstColors.redColor,
                       );
                       return;
                     }
-                    
-                    try {
-                      
-                      final responseIA = await _aiGeminiServices.generateText(
-                        inputText,
+
+                    setState(() {
+                      _messages.insert(
+                        0,
+                        ChatModel(text: userInputText, isUser: true),
                       );
-
-                      print('$responseIA');
-                    
-                    } catch (e) {
-
-                      CustomSnackBar.show(
-                        title: 'Erro!',
-                        message: 'Ocorreu um erro ao enviar a mensagem para a IA. $e',
-                        backgroundColor: ConstColors.redColor,
-                      );
-
-                      print(e);
-
-                    }
+                    });
 
                     _messageController.clear();
+
+                    try {
+                      final responseIA = await _aiGeminiServices.generateText(
+                        userInputText,
+                      );
+
+                      setState(() {
+                        _messages.insert(
+                          0,
+                          ChatModel(text: responseIA, isUser: false),
+                        );
+                      });
+                    } catch (e) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Erro ao enviar mensagem para a IA. $e',
+                        backgroundColor: ConstColors.redColor,
+                      );
+                    }
                   },
                 ),
               ],
