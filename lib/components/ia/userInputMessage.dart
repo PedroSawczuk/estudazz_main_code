@@ -12,8 +12,8 @@ class UserInputMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        padding: EdgeInsets.all(12.0),
+        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: ConstColors.orangeColor,
           borderRadius: BorderRadius.circular(12),

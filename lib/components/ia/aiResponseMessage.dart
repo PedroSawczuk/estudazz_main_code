@@ -12,8 +12,8 @@ class AIResponseMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        padding: EdgeInsets.all(12.0),
+        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: ConstColors.grey300Color,
           borderRadius: BorderRadius.circular(12),
