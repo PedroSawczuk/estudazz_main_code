@@ -21,7 +21,24 @@ class AIResponseMessage extends StatelessWidget {
         child: MarkdownBody(
           data: text,
           styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-            p: TextStyle(color: ConstColors.black87Color),
+            p: TextStyle(
+              color: ConstColors.black87Color,
+              fontSize: 16,
+              height: 1.5,
+              fontWeight: FontWeight.w400,
+            ),
+            a: TextStyle(
+              color: ConstColors.blueColor,
+              decoration: TextDecoration.underline,
+              fontWeight: FontWeight.w600,
+            ),
+            code: TextStyle(
+              color: ConstColors.whiteColor,
+              backgroundColor: ConstColors.grey900Color,
+              fontFamily: 'SourceCodePro',
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),
