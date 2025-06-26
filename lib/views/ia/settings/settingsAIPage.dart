@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/components/dialog/ia/iaTrainingNewDataDialog.dart';
 import 'package:flutter/material.dart';
 
 class SettingsAIPage extends StatelessWidget {
@@ -14,17 +15,13 @@ class SettingsAIPage extends StatelessWidget {
           children: [
             SwitchListTile(
               title: Text('Ativar Dicas de Produtividade'),
-              subtitle: Text(
-                'Receba sugestões para melhorar seu estudo.',
-              ),
+              subtitle: Text('Receba sugestões para melhorar seu estudo.'),
               value: true,
               onChanged: (bool value) {},
             ),
             SwitchListTile(
               title: Text('Habilitar Respostas Personalizadas'),
-              subtitle: Text(
-                'Ajuste as respostas com base no seu perfil.',
-              ),
+              subtitle: Text('Ajuste as respostas com base no seu perfil.'),
               value: false,
               onChanged: (bool value) {},
             ),
@@ -34,7 +31,12 @@ class SettingsAIPage extends StatelessWidget {
                 'Adicione informações para melhorar as respostas.',
               ),
               trailing: Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => IATrainingNewDataDialog(),
+                );
+              },
             ),
             ListTile(
               title: Text('Redefinir Configurações de IA'),
