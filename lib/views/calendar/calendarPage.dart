@@ -109,7 +109,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         return Center(
                           child: Text(
                             'Nenhum evento cadastrado.',
-                            style: TextStyle(color: Colors.white70),
+                            style: TextStyle(color: ConstColors.white54Color),
                           ),
                         );
                       }

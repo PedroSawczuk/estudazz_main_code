@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +66,7 @@ class StatsPerformanceCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: LinearProgressIndicator(
                     value: progressValue.clamp(0.0, 1.0),
-                    backgroundColor: Colors.grey[300],
+                    backgroundColor: ConstColors.grey300Color,
                     color: color,
                   ),
                 ),

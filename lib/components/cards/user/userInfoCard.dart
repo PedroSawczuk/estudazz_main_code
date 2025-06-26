@@ -33,7 +33,7 @@ class UserInfoCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: Colors.white,
+                color: ConstColors.whiteColor,
               ),
               textAlign: TextAlign.center,
               maxLines: 2,

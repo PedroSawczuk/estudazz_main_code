@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
 
                 Text(
                   userData.email,
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: ConstColors.greyColor),
                 ),
                 ConstSizedBox.h5,
 
