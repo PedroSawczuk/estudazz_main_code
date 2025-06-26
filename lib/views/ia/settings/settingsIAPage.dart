@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/components/dialog/ia/iaResetDataDialog.dart';
 import 'package:estudazz_main_code/components/dialog/ia/iaTrainingNewDataDialog.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,12 @@ class _SettingsAIPageState extends State<SettingsAIPage> {
               title: Text('Redefinir Configurações de IA'),
               subtitle: Text('Restaura para os padrões originais.'),
               trailing: Icon(Icons.restore),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => IAResetConfirmationDialog(),
+                );
+              },
             ),
           ],
         ),
