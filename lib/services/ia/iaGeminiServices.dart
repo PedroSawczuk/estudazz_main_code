@@ -7,7 +7,9 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AiGeminiServices {
@@ -17,6 +19,28 @@ class AiGeminiServices {
 
   Future<String> generateText(String userPrompt) async {
     try {
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+
+      if (uid == null) return 'Usuário não está autenticado';
+
+      String userData = '';
+
+      final snapshot =
+          await FirebaseFirestore.instance.collection('ia-data').doc(uid).get();
+
+      if (snapshot.exists && snapshot.data()?['data'] != null) {
+        userData = snapshot.data()?['data'];
+      }
+
+      final prompt = '''
+        Olá, você é um assistente de IA especializado em ajudar alunos com dúvidas e tarefas da escola/universidade.
+        Você deve responder de forma clara, objetiva e amigável. Sempre que possível, forneça exemplos práticos e explique os conceitos de maneira simples.
+
+        ${userData.isNotEmpty ? "Informações adicionais do usuário: $userData\n" : ""}
+
+        Aqui está a dúvida do usuário: $userPrompt
+      ''';
+
       final response = await _dio.post(
         '$_geminiApiUrl?key=$_geminiApiKey',
         options: Options(headers: {'Content-Type': 'application/json'}),
@@ -24,10 +48,7 @@ class AiGeminiServices {
           "contents": [
             {
               "parts": [
-                {
-                  "text":
-                      "Olá, você é um assistente de IA especializado em ajudar alunos com dúvidas e tarefas da escola/universidade. Você deve responder de forma clara, objetiva e amigável. Sempre que possível, forneça exemplos práticos e explique os conceitos de maneira simples. Aqui está a dúvida do usuário: $userPrompt",
-                },
+                {"text": prompt},
               ],
             },
           ],
