@@ -36,11 +36,11 @@ class _EditDataPageState extends State<EditDataPage> {
 
   Future<void> _loadUserData() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final doc =
+    final snapshot =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-    if (doc.exists) {
-      final user = UserModel.fromMap(doc.data()!, uid);
+    if (snapshot.exists) {
+      final user = UserModel.fromMap(snapshot.data()!, uid);
 
       _nameController.text = user.displayName;
       _usernameController.text = user.username;

@@ -8,11 +8,11 @@ class UserController {
 
     if (user != null) {
       final uid = user.uid;
-      final doc =
+      final snapshot =
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-      if (doc.exists) {
-        return UserModel.fromMap(doc.data()!, uid);
+      if (snapshot.exists) {
+        return UserModel.fromMap(snapshot.data()!, uid);
       }
     }
 

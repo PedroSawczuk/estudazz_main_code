@@ -5,7 +5,7 @@ import 'package:estudazz_main_code/components/ia/userInputMessage.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/models/ia/iaChatMessage.dart';
-import 'package:estudazz_main_code/services/ai/aiGeminiServices.dart';
+import 'package:estudazz_main_code/services/ia/iaGeminiServices.dart';
 import 'package:flutter/material.dart';
 
 class IaPage extends StatefulWidget {

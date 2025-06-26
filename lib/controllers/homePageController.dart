@@ -18,9 +18,9 @@ class HomePageController extends GetxController {
     final uid = _auth.currentUser?.uid;
     if (uid == null) return;
 
-    final doc = await _firestore.collection('users').doc(uid).get();
-    if (doc.exists) {
-      profileCompleted.value = doc.data()?['profileCompleted'] ?? false;
+    final snapshot = await _firestore.collection('users').doc(uid).get();
+    if (snapshot.exists) {
+      profileCompleted.value = snapshot.data()?['profileCompleted'] ?? false;
     }
   }
 }

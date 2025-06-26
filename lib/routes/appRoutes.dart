@@ -1,4 +1,4 @@
-import 'package:estudazz_main_code/views/ia/settings/settingsAIPage.dart';
+import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:get/get.dart';
 import '../views/settings/theme/themeSettingsPage.dart';
 import '../views/settings/user/editDataPage.dart';
