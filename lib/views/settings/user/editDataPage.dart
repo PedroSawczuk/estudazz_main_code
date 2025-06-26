@@ -75,7 +75,7 @@ class _EditDataPageState extends State<EditDataPage> {
             .update(updatedUser.toMap());
 
         CustomSnackBar.show(
-          title: 'Sucesso',
+          title: 'Sucesso!',
           message: 'Dados atualizados com sucesso!',
           backgroundColor: ConstColors.greenColor,
         );

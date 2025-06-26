@@ -1,9 +1,9 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:estudazz_main_code/constants/color/constColors.dart';
 
 class DetailEventDialog {
   void showDetailEventDialog({
@@ -64,7 +64,7 @@ class DetailEventDialog {
               onPressed: () async {
                 await EventsDB().deleteEvent(eventId);
                 CustomSnackBar.show(
-                  title: 'Sucesso',
+                  title: 'Sucesso!',
                   message: 'Evento "$eventName" excluído com sucesso!',
                   backgroundColor: ConstColors.greenColor,
                 );

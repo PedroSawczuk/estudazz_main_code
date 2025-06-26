@@ -59,6 +59,12 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
 
       Navigator.of(context).pop();
 
+      CustomSnackBar.show(
+        title: 'Sucesso!',
+        message: 'Dados salvos com sucesso.',
+        backgroundColor: ConstColors.greenColor,
+      );
+
       print(text);
     } else {
       CustomSnackBar.show(

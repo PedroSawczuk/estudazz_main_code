@@ -27,7 +27,7 @@ class ForgotPasswordPage extends StatelessWidget {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       CustomSnackBar.show(
-        title: 'Sucesso',
+        title: 'Sucesso!',
         message:
             'Email de recuperação enviado! Verifique sua caixa de entrada.',
         backgroundColor: ConstColors.greenColor,
