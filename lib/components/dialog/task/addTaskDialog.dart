@@ -1,8 +1,8 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
-import 'package:flutter/material.dart';
-import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
+import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
+import 'package:flutter/material.dart';
 
 class AddTaskDialog {
   final TextEditingController _taskNameController = TextEditingController();
@@ -97,7 +97,7 @@ class AddTaskDialog {
                       Navigator.of(context).pop();
                     } catch (e) {
                       CustomSnackBar.show(
-                        title: 'Erro',
+                        title: 'Erro!',
                         message: 'Falha ao adicionar tarefa: $e',
                         backgroundColor: ConstColors.redColor,
                       );

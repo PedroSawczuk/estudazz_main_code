@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
@@ -8,7 +9,6 @@ import 'package:estudazz_main_code/utils/formatter/inputsFormatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 
 class EditDataPage extends StatefulWidget {
   const EditDataPage({super.key});
@@ -85,7 +85,7 @@ class _EditDataPageState extends State<EditDataPage> {
     } catch (e) {
       print(e);
       CustomSnackBar.show(
-        title: 'Erro',
+        title: 'Erro!',
         message: 'Erro ao atualizar os dados. Tente novamente mais tarde.',
         backgroundColor: ConstColors.redColor,
       );

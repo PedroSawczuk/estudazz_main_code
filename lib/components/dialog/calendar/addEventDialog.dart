@@ -76,7 +76,7 @@ class AddEventDialog {
                   onPressed: () async {
                     if (selectedTime == null) {
                       CustomSnackBar.show(
-                        title: 'Erro',
+                        title: 'Erro!',
                         message: 'Selecione um horário para o evento.',
                         backgroundColor: ConstColors.redColor,
                       );
@@ -110,7 +110,7 @@ class AddEventDialog {
                       );
                     } catch (e) {
                       CustomSnackBar.show(
-                        title: 'Erro',
+                        title: 'Erro!',
                         message: 'Falha ao adicionar tarefa: $e',
                         backgroundColor: ConstColors.redColor,
                       );

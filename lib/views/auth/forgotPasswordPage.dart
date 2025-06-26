@@ -2,9 +2,10 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'signInPage.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class ForgotPasswordPage extends StatelessWidget {
     final email = emailController.text.trim();
     if (email.isEmpty) {
       CustomSnackBar.show(
-        title: 'Erro',
+        title: 'Erro!',
         message: 'Email não pode ser vazio.',
         backgroundColor: ConstColors.redColor,
       );
@@ -35,13 +36,13 @@ class ForgotPasswordPage extends StatelessWidget {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         CustomSnackBar.show(
-          title: 'Erro',
+          title: 'Erro!',
           message: 'Usuário não encontrado com este email',
           backgroundColor: ConstColors.redColor,
         );
       } else if (e.code == 'invalid-email') {
         CustomSnackBar.show(
-          title: 'Erro',
+          title: 'Erro!',
           message: 'Email inválido',
           backgroundColor: ConstColors.redColor,
         );

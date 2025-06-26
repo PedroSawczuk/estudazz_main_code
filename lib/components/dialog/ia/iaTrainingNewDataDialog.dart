@@ -21,7 +21,7 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
       print(text);
     } else {
       CustomSnackBar.show(
-        title: 'Erro',
+        title: 'Erro!',
         message: 'Campo não pode ficar vazio.',
         backgroundColor: ConstColors.redColor,
       );

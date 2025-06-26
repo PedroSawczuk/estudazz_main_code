@@ -1,9 +1,9 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/constants/constSizedBox.dart';
+import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
 import 'package:flutter/material.dart';
-import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
-import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class MarkTaskCompletedDialog {
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
@@ -54,7 +54,7 @@ class MarkTaskCompletedDialog {
                     );
                   } catch (e) {
                     CustomSnackBar.show(
-                      title: 'Erro',
+                      title: 'Erro!',
                       message: 'Erro ao desmarcar tarefa: $e',
                       backgroundColor: ConstColors.redColor,
                     );
