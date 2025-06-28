@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:flutter/material.dart';
 
 class IATrainingNewDataDialog extends StatefulWidget {
@@ -24,9 +24,8 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
 
   Future<void> _loadData() async {
     final _firestore = FirebaseFirestore.instance;
-    final _auth = FirebaseAuth.instance;
 
-    final uid = _auth.currentUser?.uid;
+    final uid = await GetUserData.getUserUid();
     if (uid == null) return;
 
     final snapshot = await _firestore.collection('ia-data').doc(uid).get();
@@ -43,9 +42,8 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
 
   void _confirmIANewData() async {
     final _firestore = FirebaseFirestore.instance;
-    final _auth = FirebaseAuth.instance;
 
-    final uid = _auth.currentUser?.uid;
+    final uid = await GetUserData.getUserUid();
     if (uid == null) return;
 
     final text = _textController.text.trim();
@@ -53,7 +51,7 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
       await _firestore.collection('ia-data').doc(uid).set({
         'data': text,
         'uid': uid,
-        'email': _auth.currentUser?.email ?? '',
+        'email': await GetUserData.getUserEmail() ?? '',
         'created_at': DateTime.now().toIso8601String(),
       });
 

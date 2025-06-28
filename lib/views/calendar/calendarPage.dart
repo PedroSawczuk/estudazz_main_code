@@ -6,7 +6,7 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/models/calendar/eventModel.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,11 +20,6 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final EventsDB _eventsDB = EventsDB();
-
-  Future<String?> _getUserUid() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    return user?.uid;
-  }
 
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -49,14 +44,14 @@ class _CalendarPageState extends State<CalendarPage> {
                 );
 
                 if (isFuture) {
-                  final uid = await _getUserUid();
+                  final uid = await GetUserData.getUserUid();
 
                   AddEventDialog().showAddEventDialog(
                     context: context,
                     eventId: uid!,
                     eventName: "",
                     eventDate: selectedDay,
-                    getUserUid: _getUserUid,
+                    getUserUid: GetUserData.getUserUid, 
                   );
                 }
               },
@@ -83,7 +78,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ConstSizedBox.h16,
             Expanded(
               child: FutureBuilder<String?>(
-                future: _getUserUid(),
+                future: GetUserData.getUserUid(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
@@ -100,7 +95,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         print('Erro: ${eventSnapshot.error}');
                         return Center(
                           child: Text(
-                            'Erro ao carregar eventos. \n Contate o suporte.',
+                            'Erro ao carregar eventos. \nContate o suporte.',
                           ),
                         );
                       }
@@ -114,13 +109,12 @@ class _CalendarPageState extends State<CalendarPage> {
                         );
                       }
 
-                      final events =
-                          eventSnapshot.data!.docs.map((doc) {
-                            return EventModel.fromDocument(
-                              doc.data() as Map<String, dynamic>,
-                              doc.id,
-                            );
-                          }).toList();
+                      final events = eventSnapshot.data!.docs.map((doc) {
+                        return EventModel.fromDocument(
+                          doc.data() as Map<String, dynamic>,
+                          doc.id,
+                        );
+                      }).toList();
 
                       return ListView.builder(
                         itemCount: events.length,

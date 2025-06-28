@@ -6,6 +6,7 @@ import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/formatter/inputsFormatter.dart';
+import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,12 +36,12 @@ class _EditDataPageState extends State<EditDataPage> {
   }
 
   Future<void> _loadUserData() async {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final uid = await GetUserData.getUserUid();
     final snapshot =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     if (snapshot.exists) {
-      final user = UserModel.fromMap(snapshot.data()!, uid);
+      final user = UserModel.fromMap(snapshot.data()!, uid!);
 
       _nameController.text = user.displayName;
       _usernameController.text = user.username;

@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePageController extends GetxController {
   final _firestore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
 
   RxBool profileCompleted = true.obs;
 
@@ -15,7 +14,7 @@ class HomePageController extends GetxController {
   }
 
   Future<void> checkProfileCompleted() async {
-    final uid = _auth.currentUser?.uid;
+    final uid = await GetUserData.getUserUid();
     if (uid == null) return;
 
     final snapshot = await _firestore.collection('users').doc(uid).get();

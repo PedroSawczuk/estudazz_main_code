@@ -9,7 +9,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AiGeminiServices {
@@ -19,7 +19,7 @@ class AiGeminiServices {
 
   Future<String> generateText(String userPrompt) async {
     try {
-      final uid = FirebaseAuth.instance.currentUser?.uid;
+      final uid = await GetUserData.getUserUid();
 
       if (uid == null) return 'Usuário não está autenticado';
 
