@@ -126,7 +126,9 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: textFieldValidator,
+                  validator:
+                      (value) =>
+                          textFieldValidator(value, 'Nome é obrigatório'),
                 ),
                 ConstSizedBox.h10,
                 TextFormField(
@@ -139,7 +141,9 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: textFieldValidator,
+                  validator:
+                      (value) =>
+                          textFieldValidator(value, 'Username é obrigatório'),
                 ),
                 ConstSizedBox.h10,
                 GestureDetector(
@@ -159,7 +163,9 @@ class _EditDataPageState extends State<EditDataPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    validator: textFieldValidator,
+                    validator:
+                        (value) =>
+                            textFieldValidator(value, 'Email é obrigatório'),
                   ),
                 ),
                 ConstSizedBox.h10,
@@ -191,7 +197,11 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: textFieldValidator,
+                  validator:
+                      (value) => textFieldValidator(
+                        value,
+                        'Instituição é obrigatória',
+                      ),
                 ),
                 ConstSizedBox.h10,
                 TextFormField(
@@ -202,7 +212,9 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: textFieldValidator,
+                  validator:
+                      (value) =>
+                          textFieldValidator(value, 'Curso é obrigatório'),
                 ),
                 ConstSizedBox.h10,
                 TextFormField(

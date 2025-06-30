@@ -2,6 +2,7 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/controllers/auth/authController.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:estudazz_main_code/utils/validators/TextFieldValidator.dart';
 import 'package:estudazz_main_code/views/auth/signInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
             backgroundColor: ConstColors.redColor,
           );
         } else {
-         CustomSnackBar.show(
+          CustomSnackBar.show(
             title: 'Erro Inesperado',
             message: 'Erro ao entrar, contate o suporte',
             backgroundColor: ConstColors.redColor,
@@ -92,12 +93,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, insira um email válido';
-                      }
-                      return null;
-                    },
+                    validator:
+                        (value) =>
+                            textFieldValidator(value, 'A email é obrigatório'),
                   ),
                 ),
                 ConstSizedBox.h10,
@@ -122,12 +120,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.length < 6) {
-                        return 'A senha deve ter pelo menos 6 caracteres';
-                      }
-                      return null;
-                    },
+                    validator:
+                        (value) =>
+                            textFieldValidator(value, 'Senha é obrigatória'),
                   ),
                 ),
                 ConstSizedBox.h10,
