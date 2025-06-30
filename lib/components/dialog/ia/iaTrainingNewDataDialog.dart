@@ -42,8 +42,10 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
 
   void _confirmIANewData() async {
     final _firestore = FirebaseFirestore.instance;
-
     final uid = await GetUserData.getUserUid();
+
+    final snapshot = await _firestore.collection('ia-data').doc(uid).get();
+
     if (uid == null) return;
 
     final text = _textController.text.trim();
@@ -51,8 +53,11 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
       await _firestore.collection('ia-data').doc(uid).set({
         'data': text,
         'uid': uid,
-        'email': await GetUserData.getUserEmail() ?? '',
-        'created_at': DateTime.now().toIso8601String(),
+        'created_at':
+            snapshot.exists
+                ? snapshot['created_at']
+                : DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
       });
 
       Navigator.of(context).pop();
