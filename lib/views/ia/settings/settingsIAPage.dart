@@ -1,4 +1,5 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
+import 'package:estudazz_main_code/components/dialog/ia/iaResetChat.dart';
 import 'package:estudazz_main_code/components/dialog/ia/iaResetDataDialog.dart';
 import 'package:estudazz_main_code/components/dialog/ia/iaTrainingNewDataDialog.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,6 @@ class _SettingsAIPageState extends State<SettingsAIPage> {
         padding: EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            SwitchListTile(
-              title: Text('Ativar Dicas de Produtividade'),
-              subtitle: Text('Receba sugestões para melhorar seu estudo.'),
-              value: true,
-              onChanged: (bool value) {},
-            ),
-            SwitchListTile(
-              title: Text('Habilitar Respostas Personalizadas'),
-              subtitle: Text('Ajuste as respostas com base no seu perfil.'),
-              value: false,
-              onChanged: (bool value) {},
-            ),
             ListTile(
               title: Text('Treinar IA com Novos Dados'),
               subtitle: Text(
@@ -52,6 +41,17 @@ class _SettingsAIPageState extends State<SettingsAIPage> {
                 showDialog(
                   context: context,
                   builder: (context) => IAResetConfirmationDialog(),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Limpar conversa com a IA'),
+              subtitle: Text('Remover todas as mensagens da conversa.'),
+              trailing: Icon(Icons.delete),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => IAResetChat(),
                 );
               },
             ),

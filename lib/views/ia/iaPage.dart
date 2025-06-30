@@ -4,7 +4,8 @@ import 'package:estudazz_main_code/components/ia/aiResponseMessage.dart';
 import 'package:estudazz_main_code/components/ia/userInputMessage.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
-import 'package:estudazz_main_code/models/ia/iaChatMessage.dart';
+import 'package:estudazz_main_code/models/ia/iaChatModel.dart';
+import 'package:estudazz_main_code/services/ia/iaChatStorageService.dart';
 import 'package:estudazz_main_code/services/ia/iaGeminiServices.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +17,22 @@ class IaPage extends StatefulWidget {
 }
 
 class _IaPageState extends State<IaPage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadMessages();
+  }
+
+  Future<void> _loadMessages() async {
+    final storedMessages = await IaChatStorageService.loadMessages();
+    setState(() {
+      _messages.addAll(storedMessages);
+    });
+  }
+
   final TextEditingController _messageController = TextEditingController();
   final AiGeminiServices _aiGeminiServices = AiGeminiServices();
-
-  final List<ChatModel> _messages = [];
+  final List<IaChatModel> _messages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +95,11 @@ class _IaPageState extends State<IaPage> {
                     setState(() {
                       _messages.insert(
                         0,
-                        ChatModel(text: userInputText, isUser: true),
+                        IaChatModel(text: userInputText, isUser: true),
                       );
                     });
 
+                    await IaChatStorageService.saveMessages(_messages);
                     _messageController.clear();
 
                     try {
@@ -96,9 +110,11 @@ class _IaPageState extends State<IaPage> {
                       setState(() {
                         _messages.insert(
                           0,
-                          ChatModel(text: responseIA, isUser: false),
+                          IaChatModel(text: responseIA, isUser: false),
                         );
                       });
+
+                      await IaChatStorageService.saveMessages(_messages);
                     } catch (e) {
                       CustomSnackBar.show(
                         title: 'Erro!',
