@@ -7,7 +7,9 @@ import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/formatter/inputsFormatter.dart';
 import 'package:estudazz_main_code/utils/user/getUserData.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:estudazz_main_code/utils/validators/TextFieldValidator.dart';
+import 'package:estudazz_main_code/utils/validators/birthDateValidator.dart';
+import 'package:estudazz_main_code/utils/validators/graduationDateValidator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,10 +58,10 @@ class _EditDataPageState extends State<EditDataPage> {
   Future<void> _saveUserData() async {
     try {
       if (_formKey.currentState?.validate() ?? false) {
-        final uid = FirebaseAuth.instance.currentUser!.uid;
+        final uid = await GetUserData.getUserUid();
 
         final updatedUser = UserModel(
-          uid: uid,
+          uid: uid!,
           displayName: _nameController.text,
           username: _usernameController.text,
           email: _emailController.text,
@@ -81,7 +83,10 @@ class _EditDataPageState extends State<EditDataPage> {
           backgroundColor: ConstColors.greenColor,
         );
 
-        Get.offNamedUntil(AppRoutes.myDataPage, ModalRoute.withName(AppRoutes.settingsPage));
+        Get.offNamedUntil(
+          AppRoutes.myDataPage,
+          ModalRoute.withName(AppRoutes.settingsPage),
+        );
       }
     } catch (e) {
       print(e);
@@ -121,12 +126,7 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Este campo é obrigatório';
-                    }
-                    return null;
-                  },
+                  validator: textFieldValidator,
                 ),
                 ConstSizedBox.h10,
                 TextFormField(
@@ -139,12 +139,7 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Este campo é obrigatório';
-                    }
-                    return null;
-                  },
+                  validator: textFieldValidator,
                 ),
                 ConstSizedBox.h10,
                 GestureDetector(
@@ -164,59 +159,23 @@ class _EditDataPageState extends State<EditDataPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Este campo é obrigatório';
-                      }
-                      return null;
-                    },
+                    validator: textFieldValidator,
                   ),
                 ),
                 ConstSizedBox.h10,
                 TextFormField(
-                controller: _birthDateController,
-                inputFormatters: [birthDateFormatter],
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Data de Nascimento',
-                  hintText: 'DD/MM/AAAA',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  controller: _birthDateController,
+                  inputFormatters: [birthDateFormatter],
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Data de Nascimento',
+                    hintText: 'DD/MM/AAAA',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
+                  validator: birthDateValidator,
                 ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Este campo é obrigatório';
-                  }
-
-                  final separateDayMonthYear = value.split('/');
-                  final day = int.tryParse(separateDayMonthYear[0]);
-                  final month = int.tryParse(separateDayMonthYear[1]);
-                  final year = int.tryParse(separateDayMonthYear[2]);
-
-                  final today = DateTime.now();
-
-                  if (day == null || day < 1 || day > 31) {
-                    return 'Dia inválido. Deve ser entre 01 e 31.';
-                  }
-
-                  if (month == null || month < 1 || month > 12) {
-                    return 'Mês inválido. Deve ser entre Janeiro (01) e Dezembro (12).';
-                  }
-
-                  if (year == null || year < 1950 || year > today.year) {
-                    return 'Ano inválido. Deve ser entre 1950 e o ano atual.';
-                  }
-
-                  final birthDate = DateTime(year, month, day);
-
-                  if (birthDate.isAfter(today)) {
-                    return 'Data de nascimento inválida. Deve ser no passado.';
-                  }
-
-                  return null;
-                },
-              ),
 
                 ConstSizedBox.h30,
                 Text(
@@ -232,12 +191,7 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Este campo é obrigatório';
-                    }
-                    return null;
-                  },
+                  validator: textFieldValidator,
                 ),
                 ConstSizedBox.h10,
                 TextFormField(
@@ -248,12 +202,7 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Este campo é obrigatório';
-                    }
-                    return null;
-                  },
+                  validator: textFieldValidator,
                 ),
                 ConstSizedBox.h10,
                 TextFormField(
@@ -267,37 +216,7 @@ class _EditDataPageState extends State<EditDataPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Este campo é obrigatório';
-                    }
-
-                    final separateMonthYear = value.split('/');
-
-                    final month = int.tryParse(separateMonthYear[0]);
-                    final year = int.tryParse(separateMonthYear[1]);
-                    final today = DateTime.now();
-
-                    if (month == null || month < 1 || month > 12) {
-                      return 'Mês inválido. Deve ser entre Janeiro (01) e Dezembro (12).';
-                    }
-
-                    if (year == null || year < today.year) {
-                      return 'Ano Inválido. Deve ser no futuro!.';
-                    }
-
-                    if (year > today.year + 20) {
-                      return 'Ano inválido. Deve ser no máximo 20 anos no futuro.';
-                    }
-
-                    if (month < today.month &&
-                        year == today.year) {
-                      return 'Mês inválido. Deve ser no futuro!.';
-                    }
-
-                    return null;
-
-                  },
+                  validator: graduationDateValidator,
                 ),
                 ConstSizedBox.h30,
                 Center(
