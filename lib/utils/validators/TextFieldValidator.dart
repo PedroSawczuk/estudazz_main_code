@@ -1,6 +1,6 @@
-String? textFieldValidator(String? value) {
+String? textFieldValidator(String? value, String requiredMessage) {
   if (value == null || value.trim().isEmpty) {
-    return 'Este campo é obrigatório';
+    return requiredMessage;
   }
 
   if (value.length < 3) {
