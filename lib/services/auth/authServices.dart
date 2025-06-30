@@ -16,8 +16,8 @@ class AuthServices {
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'email': email,
-        'profileCompleted': false,
-        'createdAt': FieldValue.serverTimestamp(),
+        'profile_completed': false,
+        'created_at': FieldValue.serverTimestamp(),
       });
 
       await SaveUserLocal.saveUser(user);

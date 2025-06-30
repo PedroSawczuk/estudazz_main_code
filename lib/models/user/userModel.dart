@@ -31,7 +31,7 @@ class UserModel {
       institution: map['institution'] ?? '',
       course: map['course'] ?? '',
       expectedGraduation: map['expected_graduation'] ?? '',
-      profileCompleted: map['profileCompleted'] ?? false,
+      profileCompleted: map['profile_completed'] ?? false,
     );
   }
 
@@ -44,7 +44,7 @@ class UserModel {
       'institution': institution,
       'course': course,
       'expected_graduation': expectedGraduation,
-      'profileCompleted': profileCompleted,
+      'profile_completed': profileCompleted,
     };
   }
 }

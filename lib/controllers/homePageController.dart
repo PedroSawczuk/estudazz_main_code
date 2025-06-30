@@ -19,7 +19,7 @@ class HomePageController extends GetxController {
 
     final snapshot = await _firestore.collection('users').doc(uid).get();
     if (snapshot.exists) {
-      profileCompleted.value = snapshot.data()?['profileCompleted'] ?? false;
+      profileCompleted.value = snapshot.data()?['profile_completed'] ?? false;
     }
   }
 }
