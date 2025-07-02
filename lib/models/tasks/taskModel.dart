@@ -15,7 +15,7 @@ class TaskModel {
     return TaskModel(
       id: docId,
       taskName: doc['task_name'] ?? '',
-      dueDate: doc['due_date'] ?? null,
+      dueDate: DateTime.parse(doc['due_date']),
       taskCompleted: doc['task_completed'] ?? false,
     );
   }
