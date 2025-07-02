@@ -1,20 +1,19 @@
 import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:get/get.dart';
-import '../views/settings/theme/themeSettingsPage.dart';
-import '../views/settings/user/editDataPage.dart';
-import '../views/settings/user/myDataPage.dart';
-import '../views/homePage.dart';
-import '../views/tasks/allTasksPage.dart';
-import '../views/calendar/calendarPage.dart';
-import '../views/studyGroup/studyGroupPage.dart';
-import '../views/performance/performancePage.dart';
-import '../views/ia/iaPage.dart';
-import '../views/settings/settingsPage.dart';
-import '../views/profile/profilePage.dart';
-
-import '../views/auth/signUpPage.dart';
-import '../views/auth/signInPage.dart';
-import '../views/auth/forgotPasswordPage.dart';
+import 'package:estudazz_main_code/views/settings/theme/themeSettingsPage.dart';
+import 'package:estudazz_main_code/views/settings/user/editDataPage.dart';
+import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';
+import 'package:estudazz_main_code/views/homePage.dart';
+import 'package:estudazz_main_code/views/tasks/allTasksPage.dart';
+import 'package:estudazz_main_code/views/calendar/calendarPage.dart';
+import 'package:estudazz_main_code/views/studyGroup/studyGroupPage.dart';
+import 'package:estudazz_main_code/views/performance/performancePage.dart';
+import 'package:estudazz_main_code/views/ia/iaPage.dart';
+import 'package:estudazz_main_code/views/settings/settingsPage.dart';
+import 'package:estudazz_main_code/views/profile/profilePage.dart';
+import 'package:estudazz_main_code/views/auth/signUpPage.dart';
+import 'package:estudazz_main_code/views/auth/signInPage.dart';
+import 'package:estudazz_main_code/views/auth/forgotPasswordPage.dart';
 
 class AppRoutes {
   static const String homePage = '/homePage';
