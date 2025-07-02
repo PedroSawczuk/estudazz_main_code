@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class IAResetConfirmationDialog extends StatelessWidget {
   const IAResetConfirmationDialog({super.key});
@@ -13,7 +14,7 @@ class IAResetConfirmationDialog extends StatelessWidget {
 
     await FirebaseFirestore.instance.collection('ia-data').doc(uid).delete();
 
-    Navigator.of(context).pop();
+    Get.back();
     CustomSnackBar.show(
       title: 'Sucesso!',
       message: 'Dados da IA foram resetados.',
@@ -30,7 +31,7 @@ class IAResetConfirmationDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Get.back(),
           child: Text('Cancelar'),
         ),
         ElevatedButton(
