@@ -4,6 +4,7 @@ import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MarkTaskCompletedDialog {
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
@@ -59,13 +60,13 @@ class MarkTaskCompletedDialog {
                       backgroundColor: ConstColors.redColor,
                     );
                   }
-                  Navigator.of(context).pop();
+                  Get.back();
                 },
                 child: Text('Desmarcar'),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Get.back();
                 },
                 child: Text("OK"),
               ),
@@ -91,7 +92,7 @@ class MarkTaskCompletedDialog {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Get.back();
                     },
                     child: Text("Cancelar"),
                   ),
@@ -115,7 +116,7 @@ class MarkTaskCompletedDialog {
                           ),
                         );
                       }
-                      Navigator.of(context).pop();
+                      Get.back();
                     },
                   ),
                   TextButton(
@@ -144,7 +145,7 @@ class MarkTaskCompletedDialog {
                           ),
                         );
                       }
-                      Navigator.of(context).pop();
+                      Get.back();
                     },
                     child: Text("Confirmar"),
                   ),

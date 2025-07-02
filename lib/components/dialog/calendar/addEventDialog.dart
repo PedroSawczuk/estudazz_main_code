@@ -4,6 +4,7 @@ import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/calendar/eventController.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddEventDialog {
   final EventController _eventController = EventController(
@@ -69,7 +70,7 @@ class AddEventDialog {
               ),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => Get.back(),
                   child: Text('Cancelar'),
                 ),
                 ElevatedButton(
@@ -101,7 +102,7 @@ class AddEventDialog {
                       );
 
                       _eventNameController.clear();
-                      Navigator.of(context).pop();
+                      Get.back();
 
                       CustomSnackBar.show(
                         title: 'Evento Adicionado',

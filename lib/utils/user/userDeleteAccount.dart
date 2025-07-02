@@ -1,11 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void showDeleteAccountDialog(BuildContext context) {
   final TextEditingController emailController = TextEditingController();
@@ -49,7 +49,7 @@ void showDeleteAccountDialog(BuildContext context) {
         actions: [
           TextButton(
             child: Text("Cancelar"),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Get.back(),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -69,7 +69,7 @@ void showDeleteAccountDialog(BuildContext context) {
 
                   await currentUser.delete();
 
-                  Navigator.of(context).pop();
+                  Get.back();
 
                   CustomSnackBar.show(
                     title: "Conta excluída com sucesso!",
@@ -79,7 +79,7 @@ void showDeleteAccountDialog(BuildContext context) {
 
                   Get.offAllNamed(AppRoutes.signInPage);
                 } catch (e) {
-                  Navigator.of(context).pop();
+                  Get.back();
                   CustomSnackBar.show(
                     title: "Erro ao excluir conta",
                     message: "Ocorreu um erro ao tentar excluir sua conta.",

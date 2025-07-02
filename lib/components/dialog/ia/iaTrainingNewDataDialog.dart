@@ -4,6 +4,7 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class IATrainingNewDataDialog extends StatefulWidget {
   IATrainingNewDataDialog({super.key});
@@ -60,7 +61,7 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
         'updated_at': DateTime.now().toIso8601String(),
       });
 
-      Navigator.of(context).pop();
+      Get.back();
 
       CustomSnackBar.show(
         title: 'Sucesso!',
@@ -101,7 +102,7 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Get.back(),
           child: Text('Cancelar'),
         ),
         ElevatedButton(onPressed: _confirmIANewData, child: Text('Salvar')),
