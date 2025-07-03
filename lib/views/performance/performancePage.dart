@@ -3,12 +3,15 @@ import 'package:estudazz_main_code/components/cards/performance/statsPerformance
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
+import 'package:estudazz_main_code/services/db/calendar/eventsRepository.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksRepository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PerformancePage extends StatelessWidget {
   final TasksRepository _tasksRepository = TasksRepository();
+  final EventsRepository _eventsRepository = EventsRepository();
+
   PerformancePage({super.key});
 
   final uid = FirebaseAuth.instance.currentUser?.uid;
@@ -81,12 +84,30 @@ class PerformancePage extends StatelessWidget {
               showProgressBar: false,
             ),
             ConstSizedBox.h20,
-            StatsPerformanceCard(
-              icon: Icons.check_circle,
-              color: ConstColors.lightBlueColor,
-              titleStats: 'Eventos Criados',
-              value: '5',
-              showProgressBar: false,
+            /*             
+            ), */
+            StreamBuilder<Map<String, int>>(
+              stream: _eventsRepository.getEventsStats(uid!),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao carregar dados: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return Text('Nenhum evento encontrado');
+                }
+
+                final data = snapshot.data!;
+                final total = data['total'] ?? 0;
+
+                return StatsPerformanceCard(
+                  icon: Icons.check_circle,
+                  color: ConstColors.lightBlueColor,
+                  titleStats: 'Eventos Criados',
+                  value: '$total',
+                  showProgressBar: false,
+                );
+              },
             ),
           ],
         ),
