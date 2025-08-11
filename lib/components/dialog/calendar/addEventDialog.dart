@@ -102,7 +102,7 @@ class AddEventDialog {
                       );
 
                       _eventNameController.clear();
-                      Get.back();
+                        Navigator.of(context).pop();
 
                       CustomSnackBar.show(
                         title: 'Evento Adicionado',

@@ -14,7 +14,7 @@ class IAResetConfirmationDialog extends StatelessWidget {
 
     await FirebaseFirestore.instance.collection('ia-data').doc(uid).delete();
 
-    Get.back();
+      Navigator.of(context).pop();
     CustomSnackBar.show(
       title: 'Sucesso!',
       message: 'Dados da IA foram resetados.',

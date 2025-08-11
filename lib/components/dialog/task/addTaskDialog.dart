@@ -3,7 +3,6 @@ import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/tasks/taskController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AddTaskDialog {
   final TextEditingController _taskNameController = TextEditingController();
@@ -72,7 +71,7 @@ class AddTaskDialog {
                 TextButton(
                   child: Text("Cancelar"),
                   onPressed: () {
-                    Get.back();
+                      Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
@@ -95,7 +94,7 @@ class AddTaskDialog {
                         backgroundColor: ConstColors.greenColor,
                       );
 
-                      Get.back();
+                        Navigator.of(context).pop();
                     } catch (e) {
                       CustomSnackBar.show(
                         title: 'Erro!',

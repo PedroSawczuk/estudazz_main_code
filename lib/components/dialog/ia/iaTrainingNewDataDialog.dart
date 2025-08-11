@@ -61,7 +61,7 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
         'updated_at': DateTime.now().toIso8601String(),
       });
 
-      Get.back();
+        Navigator.of(context).pop();
 
       CustomSnackBar.show(
         title: 'Sucesso!',

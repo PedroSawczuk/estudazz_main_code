@@ -69,7 +69,7 @@ void showDeleteAccountDialog(BuildContext context) {
 
                   await currentUser.delete();
 
-                  Get.back();
+                    Navigator.of(context).pop();
 
                   CustomSnackBar.show(
                     title: "Conta excluída com sucesso!",
@@ -79,7 +79,7 @@ void showDeleteAccountDialog(BuildContext context) {
 
                   Get.offAllNamed(AppRoutes.signInPage);
                 } catch (e) {
-                  Get.back();
+                    Navigator.of(context).pop();
                   CustomSnackBar.show(
                     title: "Erro ao excluir conta",
                     message: "Ocorreu um erro ao tentar excluir sua conta.",
