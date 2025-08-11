@@ -16,6 +16,28 @@ class PerformancePage extends StatelessWidget {
 
   final uid = FirebaseAuth.instance.currentUser?.uid;
 
+  Map<String, dynamic> _getPerformanceFeedback(double completionRate) {
+    if (completionRate < 40) {
+      return {
+        'text': 'Você pode melhorar, foco nas suas tarefas!',
+        'color': ConstColors.redColor,
+        'icon': Icons.trending_down,
+      };
+    } else if (completionRate < 70) {
+      return {
+        'text': 'Você está indo bem, continue assim!',
+        'color': ConstColors.orangeColor,
+        'icon': Icons.trending_flat,
+      };
+    } else {
+      return {
+        'text': 'Excelente! Continue nesse ritmo!',
+        'color': ConstColors.greenColor,
+        'icon': Icons.trending_up,
+      };
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +46,7 @@ class PerformancePage extends StatelessWidget {
         child: Column(
           children: [
             ConstSizedBox.h20,
-            HighlightPerformanceCard(
-              textCard: 'Bom trabalho! Você está indo bem!',
-              textCardColor: ConstColors.orangeColor,
-              icon: Icons.star,
-              iconColor: ConstColors.orangeColor,
-            ),
-            ConstSizedBox.h20,
-            StatsPerformanceCard(
-              icon: Icons.bar_chart,
-              color: ConstColors.blueColor,
-              titleStats: 'Desempenho Acadêmico',
-              value: '20%',
-              showProgressBar: true,
-              progressValue: 20 / 100,
-            ),
-            ConstSizedBox.h20,
+
             StreamBuilder<Map<String, int>>(
               stream: _tasksRepository.getTasksStats(uid!),
               builder: (context, snapshot) {
@@ -55,26 +62,41 @@ class PerformancePage extends StatelessWidget {
                 final total = data['total'] ?? 0;
                 final completed = data['completed'] ?? 0;
                 final progress = total > 0 ? completed / total : 0.0;
+                final completionRate =
+                    total > 0 ? (completed / total) * 100 : 0.0;
 
-                return StatsPerformanceCard(
-                  icon: Icons.task_alt,
-                  color: ConstColors.greenColor,
-                  titleStats: 'Tarefas Concluídas',
-                  value: '$completed/$total',
-                  showProgressBar: true,
-                  progressValue: progress,
+                final feedback = _getPerformanceFeedback(completionRate);
+
+                return Column(
+                  children: [
+                    HighlightPerformanceCard(
+                      textCard: feedback['text'],
+                      textCardColor: feedback['color'],
+                      icon: feedback['icon'],
+                      iconColor: feedback['color'],
+                    ),
+                    ConstSizedBox.h20,
+                    StatsPerformanceCard(
+                      icon: Icons.task_alt,
+                      color: ConstColors.greenColor,
+                      titleStats: 'Tarefas Concluídas',
+                      value: '$completed/$total',
+                      showProgressBar: true,
+                      progressValue: progress,
+                    ),
+                    ConstSizedBox.h20,
+                    StatsPerformanceCard(
+                      icon: Icons.check_circle,
+                      color: ConstColors.orangeColor,
+                      titleStats: 'Taxa de Conclusão de Tarefas',
+                      value: '${completionRate.toStringAsFixed(2)}%',
+                      showProgressBar: false,
+                    ),
+                  ],
                 );
               },
             ),
 
-            ConstSizedBox.h20,
-            StatsPerformanceCard(
-              icon: Icons.check_circle,
-              color: ConstColors.orangeColor,
-              titleStats: 'Taxa de Conclusão de Tarefas',
-              value: '${84.toStringAsFixed(2)}%',
-              showProgressBar: false,
-            ),
             ConstSizedBox.h20,
             StatsPerformanceCard(
               icon: Icons.groups,
@@ -84,8 +106,7 @@ class PerformancePage extends StatelessWidget {
               showProgressBar: false,
             ),
             ConstSizedBox.h20,
-            /*             
-            ), */
+
             StreamBuilder<Map<String, int>>(
               stream: _eventsRepository.getEventsStats(uid!),
               builder: (context, snapshot) {
