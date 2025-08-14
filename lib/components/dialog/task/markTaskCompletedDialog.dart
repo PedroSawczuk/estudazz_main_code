@@ -49,7 +49,8 @@ class MarkTaskCompletedDialog {
                     );
                     CustomSnackBar.show(
                       title: 'Tarefa Desmarcada',
-                      message: 'A tarefa "$taskName" foi desmarcada com sucesso.',
+                      message:
+                          'A tarefa "$taskName" foi desmarcada com sucesso.',
                       backgroundColor: ConstColors.greenColor,
                     );
                   } catch (e) {
@@ -59,13 +60,13 @@ class MarkTaskCompletedDialog {
                       backgroundColor: ConstColors.redColor,
                     );
                   }
-                    Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
                 child: Text('Desmarcar'),
               ),
               TextButton(
                 onPressed: () {
-                    Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
                 child: Text("OK"),
               ),
@@ -91,7 +92,7 @@ class MarkTaskCompletedDialog {
                 children: [
                   TextButton(
                     onPressed: () {
-                        Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                     child: Text("Cancelar"),
                   ),
@@ -99,12 +100,11 @@ class MarkTaskCompletedDialog {
                     icon: Icon(Icons.delete, color: ConstColors.redColor),
                     onPressed: () async {
                       try {
-                        await _taskController.tasksDB.deleteTask(
-                          taskId,
-                        );
+                        await _taskController.tasksDB.deleteTask(taskId);
                         CustomSnackBar.show(
                           title: 'Tarefa Excluída',
-                          message: 'A tarefa "$taskName" foi excluída com sucesso.',
+                          message:
+                              'A tarefa "$taskName" foi excluída com sucesso.',
                           backgroundColor: ConstColors.greenColor,
                         );
                       } catch (e) {
@@ -115,7 +115,7 @@ class MarkTaskCompletedDialog {
                           ),
                         );
                       }
-                        Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
@@ -144,7 +144,7 @@ class MarkTaskCompletedDialog {
                           ),
                         );
                       }
-                        Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                     child: Text("Confirmar"),
                   ),
