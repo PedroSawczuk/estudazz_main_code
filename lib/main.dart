@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,30 +22,29 @@ Future<void> main() async {
   } catch (e) {
     print("Erro ao carregar o arquivo .env: $e");
     CustomSnackBar.show(
-      title: "Erro ao carregar o arquivo .env", 
-      message: 'Erro ao carregar o arquivo .env. Tente novamente mais tarde!.', 
+      title: "Erro ao carregar o arquivo .env",
+      message: 'Erro ao carregar o arquivo .env. Tente novamente mais tarde!.',
       backgroundColor: ConstColors.redColor,
     );
   }
 
-  Gemini.init(
-    apiKey: dotenv.env['GEMINI_API_KEY'] ?? '',
-  );
+  Gemini.init(apiKey: dotenv.env['GEMINI_API_KEY'] ?? '');
+
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize(dotenv.env['APP_ID_ONESIGNAL_KEY'] ?? '');
+  OneSignal.Notifications.requestPermission(true);
 
   runApp(
     GetMaterialApp(
-
       // -- Configurações de Localização --
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
-        Locale('pt', 'BR'),
-      ],
-      locale: Locale('pt', 'BR'), 
-      
+      supportedLocales: [Locale('pt', 'BR')],
+      locale: Locale('pt', 'BR'),
+
       // -- Configurações de Tema --
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
