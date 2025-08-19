@@ -17,7 +17,13 @@ class PerformancePage extends StatelessWidget {
   final uid = FirebaseAuth.instance.currentUser?.uid;
 
   Map<String, dynamic> _getPerformanceFeedback(double completionRate) {
-    if (completionRate < 40) {
+    if (completionRate == 0) {
+      return {
+        'text': 'Você ainda não começou, vamos lá!',
+        'color': ConstColors.greyColor,
+        'icon': Icons.hourglass_empty,
+      };
+    } else if (completionRate < 40) {
       return {
         'text': 'Você pode melhorar, foco nas suas tarefas!',
         'color': ConstColors.redColor,
