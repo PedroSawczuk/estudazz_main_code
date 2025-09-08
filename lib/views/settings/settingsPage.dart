@@ -34,11 +34,7 @@ class SettingsPage extends StatelessWidget {
                     icon: Icons.notifications,
                     title: "Notificações",
                     onTap: () {
-                      CustomSnackBar.show(
-                        title: 'Em breve',
-                        message: 'Configurações de notificações em breve.',
-                        backgroundColor: ConstColors.blueColor,
-                      );
+                      Get.toNamed(AppRoutes.notificationsPage);
                     },
                   ),
                   SettingsCard(
