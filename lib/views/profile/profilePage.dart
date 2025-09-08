@@ -125,11 +125,6 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       UserInfoCard(
-                        infoName: 'Grupos de Estudo',
-                        iconData: Icons.groups,
-                        infoValue: '43',
-                      ),
-                      UserInfoCard(
                         infoName: 'Desempenho (%)',
                         iconData: Icons.bar_chart,
                         infoValue: '43',

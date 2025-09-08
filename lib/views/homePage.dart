@@ -58,18 +58,6 @@ class _HomePageState extends State<HomePage> {
                     ),
               ),
               ItensCards(
-                title: "Grupos de Estudo",
-                description: "Colabore com colegas.",
-                icon: Icons.groups,
-                color: ConstColors.purpleColor,
-                onTap:
-                    () => AuthGuard.handleAuthenticatedAction(
-                      context: context,
-                      onAuthenticated:
-                          () => Get.toNamed(AppRoutes.studyGroupPage),
-                    ),
-              ),
-              ItensCards(
                 title: "Desempenho",
                 description: "Acompanhe seu progresso acadêmico.",
                 icon: Icons.bar_chart,

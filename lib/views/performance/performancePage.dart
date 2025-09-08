@@ -104,14 +104,6 @@ class PerformancePage extends StatelessWidget {
             ),
 
             ConstSizedBox.h20,
-            StatsPerformanceCard(
-              icon: Icons.groups,
-              color: ConstColors.purpleColor,
-              titleStats: 'Grupos de Estudo',
-              value: '42/50',
-              showProgressBar: false,
-            ),
-            ConstSizedBox.h20,
 
             StreamBuilder<Map<String, int>>(
               stream: _eventsRepository.getEventsStats(uid!),

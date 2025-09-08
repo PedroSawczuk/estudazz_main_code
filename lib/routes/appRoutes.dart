@@ -8,7 +8,6 @@ import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';
 import 'package:estudazz_main_code/views/homePage.dart';
 import 'package:estudazz_main_code/views/tasks/allTasksPage.dart';
 import 'package:estudazz_main_code/views/calendar/calendarPage.dart';
-import 'package:estudazz_main_code/views/studyGroup/studyGroupPage.dart';
 import 'package:estudazz_main_code/views/performance/performancePage.dart';
 import 'package:estudazz_main_code/views/ia/iaPage.dart';
 import 'package:estudazz_main_code/views/settings/settingsPage.dart';
@@ -43,7 +42,6 @@ class AppRoutes {
   static final routes = [
     GetPage(name: homePage, page: () => HomePage()),
     GetPage(name: settingsPage, page: () => SettingsPage()),
-    GetPage(name: studyGroupPage, page: () => StudyGroupPage()),
     GetPage(name: allTasksPage, page: () => AllTasksPage()),
     GetPage(name: profilePage, page: () => ProfilePage()),
     GetPage(name: calendarPage, page: () => CalendarPage()),
