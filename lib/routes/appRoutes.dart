@@ -28,7 +28,6 @@ class AppRoutes {
   static const String settingsAIPage = '/settingsAIPage';
 
   static const String performancePage = '/performancePage';
-  static const String studyGroupPage = '/studyGroupPage';
 
   static const String notificationsPage = '/notificationsPage';
   static const String myDataPage = '/myDataPage';

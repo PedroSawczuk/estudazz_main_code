@@ -9,13 +9,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:estudazz_main_code/env.dart';
 import 'package:estudazz_main_code/utils/user/getUserData.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AiGeminiServices {
   final Dio _dio = Dio();
-  final String _geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
-  final String _geminiApiUrl = dotenv.env['GEMINI_API_URL'] ?? '';
+  final String _geminiApiKey = Env.geminiApiKey;
+  final String _geminiApiUrl = Env.geminiApiUrl;
 
   Future<String> generateText(String userPrompt) async {
     try {

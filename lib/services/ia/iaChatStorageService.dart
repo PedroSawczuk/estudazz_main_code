@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'package:estudazz_main_code/env.dart';
 import 'package:estudazz_main_code/models/ia/iaChatModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class IaChatStorageService {
-  static final String _storageKey = dotenv.env['IA_CHAT_STORAGE_KEY'] ?? '';
+  static final String _storageKey = Env.iaChatStorageKey;
 
   static Future<void> saveMessages(List<IaChatModel> messages) async {
     final prefs = await SharedPreferences.getInstance();
