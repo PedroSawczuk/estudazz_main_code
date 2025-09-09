@@ -51,4 +51,6 @@ ios/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
 firebase.json
 
+# Local environment configuration file
 .env
+env.*
