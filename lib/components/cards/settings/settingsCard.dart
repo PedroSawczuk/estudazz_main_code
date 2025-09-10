@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class SettingsCard extends StatelessWidget {
   final IconData icon;
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final Widget? child; // <--- novo
 
   const SettingsCard({
     Key? key,
     required this.icon,
     required this.title,
-    required this.onTap,
+    this.onTap,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -19,22 +21,30 @@ class SettingsCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       elevation: 4,
-      child: ListTile(
-        leading: Icon(icon, color: Theme.of(context).iconTheme.color),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).textTheme.bodyLarge?.color ?? ConstColors.black87Color,
-          ),
-        ),
-        trailing: Icon(
-          Icons.chevron_right,
-          color: Theme.of(context).iconTheme.color,
-        ),
-        onTap: onTap,
-      ),
+      child:
+          child != null
+              ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: child,
+              )
+              : ListTile(
+                leading: Icon(icon, color: Theme.of(context).iconTheme.color),
+                title: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color:
+                        Theme.of(context).textTheme.bodyLarge?.color ??
+                        ConstColors.black87Color,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                onTap: onTap,
+              ),
     );
   }
 }

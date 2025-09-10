@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:estudazz_main_code/components/cards/settings/settingsCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
@@ -6,11 +9,36 @@ import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/services/auth/saveUserLocal.dart';
 import 'package:estudazz_main_code/utils/user/userDeleteAccount.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool isDarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final dark = prefs.getBool('isDarkMode') ?? Get.isDarkMode;
+    setState(() {
+      isDarkMode = dark;
+    });
+    Get.changeThemeMode(dark ? ThemeMode.dark : ThemeMode.light);
+  }
+
+  Future<void> _saveTheme(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +65,26 @@ class SettingsPage extends StatelessWidget {
                       Get.toNamed(AppRoutes.notificationsPage);
                     },
                   ),
+
                   SettingsCard(
                     icon: Icons.dark_mode,
-                    title: "Tema",
-                    onTap: () {
-                      Get.toNamed(AppRoutes.themeSettingsPage);
-                    },
+                    title: "Tema Escuro",
+                    child: SwitchListTile(
+                      value: isDarkMode,
+                      title: Text("Tema Escuro"),
+                      secondary: Icon(Icons.dark_mode),
+                      onChanged: (value) {
+                        setState(() {
+                          isDarkMode = value;
+                        });
+                        Get.changeThemeMode(
+                          value ? ThemeMode.dark : ThemeMode.light,
+                        );
+                        _saveTheme(value);
+                      },
+                    ),
                   ),
+
                   SettingsCard(
                     icon: Icons.language,
                     title: "Idioma",
