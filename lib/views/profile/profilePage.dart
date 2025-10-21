@@ -45,9 +45,10 @@ class ProfilePage extends StatelessWidget {
                 Center(
                   child: CircleAvatar(
                     radius: 60,
-                    backgroundImage: NetworkImage(
-                      'assets/images/no-profile-photo.png',
-                    ),
+                    backgroundImage: userData.photoUrl.isNotEmpty
+                        ? NetworkImage(userData.photoUrl)
+                        : AssetImage('assets/images/no-profile-photo.png')
+                            as ImageProvider,
                   ),
                 ),
 

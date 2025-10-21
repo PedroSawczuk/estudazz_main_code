@@ -13,6 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await AppTheme.init();
 
   Gemini.init(apiKey: Env.geminiApiKey);
 
@@ -32,7 +33,7 @@ Future<void> main() async {
 
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: AppTheme.themeMode,
+      themeMode: AppTheme.currentThemeMode,
       debugShowCheckedModeBanner: false,
 
       initialRoute: AppRoutes.homePage,

@@ -16,13 +16,15 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _selectedThemeMode = AppTheme.themeMode;
+    _selectedThemeMode = AppTheme.currentThemeMode;
   }
 
   void _changeTheme(ThemeMode? value) {
     setState(() {
       _selectedThemeMode = value;
-      Get.changeThemeMode(value ?? ThemeMode.system);
+      final newThemeMode = value ?? ThemeMode.system;
+      Get.changeThemeMode(newThemeMode);
+      AppTheme.currentThemeMode = newThemeMode; 
     });
   }
 

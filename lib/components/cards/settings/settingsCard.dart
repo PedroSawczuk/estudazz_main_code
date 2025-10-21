@@ -5,7 +5,7 @@ class SettingsCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final VoidCallback? onTap;
-  final Widget? child; // <--- novo
+  final Widget? child; 
 
   const SettingsCard({
     Key? key,

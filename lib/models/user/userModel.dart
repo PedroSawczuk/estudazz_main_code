@@ -8,6 +8,7 @@ class UserModel {
   final String course;
   final String expectedGraduation;
   final bool profileCompleted;
+  final String photoUrl;
 
   UserModel({
     required this.uid,
@@ -19,6 +20,7 @@ class UserModel {
     required this.course,
     required this.expectedGraduation,
     required this.profileCompleted,
+    required this.photoUrl,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map, String uid) {
@@ -32,6 +34,7 @@ class UserModel {
       course: map['course'] ?? '',
       expectedGraduation: map['expected_graduation'] ?? '',
       profileCompleted: map['profile_completed'] ?? false,
+      photoUrl: map['photoURL'] ?? '',
     );
   }
 
@@ -45,6 +48,7 @@ class UserModel {
       'course': course,
       'expected_graduation': expectedGraduation,
       'profile_completed': profileCompleted,
+      'photoURL': photoUrl,
     };
   }
 }

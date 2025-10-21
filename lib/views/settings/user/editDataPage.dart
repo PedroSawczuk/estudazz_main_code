@@ -30,6 +30,7 @@ class _EditDataPageState extends State<EditDataPage> {
   final _institutionController = TextEditingController();
   final _courseController = TextEditingController();
   final _graduationDateController = TextEditingController();
+  String _photoUrl = '';
 
   @override
   void initState() {
@@ -52,6 +53,7 @@ class _EditDataPageState extends State<EditDataPage> {
       _institutionController.text = user.institution;
       _courseController.text = user.course;
       _graduationDateController.text = user.expectedGraduation;
+      _photoUrl = user.photoUrl;
     }
   }
 
@@ -70,6 +72,7 @@ class _EditDataPageState extends State<EditDataPage> {
           course: _courseController.text,
           expectedGraduation: _graduationDateController.text,
           profileCompleted: true,
+          photoUrl: _photoUrl,
         );
 
         await FirebaseFirestore.instance
