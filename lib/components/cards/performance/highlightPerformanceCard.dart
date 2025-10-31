@@ -26,7 +26,6 @@ class HighlightPerformanceCard extends StatelessWidget {
         child: Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
-          color: ConstColors.grey900Color,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

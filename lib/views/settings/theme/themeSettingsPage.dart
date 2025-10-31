@@ -1,5 +1,5 @@
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
-import 'package:estudazz_main_code/theme/appTheme.dart';
+import 'package:estudazz_main_code/services/theme/themeService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,20 +12,27 @@ class ThemeSettingsPage extends StatefulWidget {
 
 class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
   ThemeMode? _selectedThemeMode;
+  final ThemeService _themeService = ThemeService();
 
   @override
   void initState() {
     super.initState();
-    _selectedThemeMode = AppTheme.currentThemeMode;
+    _selectedThemeMode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  Future<void> _saveAndApplyTheme(ThemeMode value) async {
+    Get.changeThemeMode(value);
+    await _themeService.saveThemeMode(value);
   }
 
   void _changeTheme(ThemeMode? value) {
+    if (value == null) return;
+
     setState(() {
       _selectedThemeMode = value;
-      final newThemeMode = value ?? ThemeMode.system;
-      Get.changeThemeMode(newThemeMode);
-      AppTheme.currentThemeMode = newThemeMode; 
     });
+
+    _saveAndApplyTheme(value);
   }
 
   @override
@@ -42,7 +49,7 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
               child: DropdownButton<ThemeMode>(
                 value: _selectedThemeMode,
                 onChanged: _changeTheme,
-                items: [
+                items: const [
                   DropdownMenuItem(
                     value: ThemeMode.system,
                     child: Text("Padrão do Sistema"),

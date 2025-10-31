@@ -26,14 +26,14 @@ class ItensCards extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withAlpha((255 * 0.1).round()),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: color.withOpacity(0.2)),
+          border: Border.all(color: color.withAlpha((255 * 0.2).round())),
         ),
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: color.withOpacity(0.8),
+              backgroundColor: color.withAlpha((255 * 0.8).round()),
               radius: 28,
               child: Icon(
                 icon,
