@@ -1,8 +1,7 @@
-
 import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:estudazz_main_code/views/settings/notifications/notificationsPage.dart';
+import 'package:estudazz_main_code/views/study_room/studyRoomPage.dart';
 import 'package:get/get.dart';
-import 'package:estudazz_main_code/views/settings/theme/themeSettingsPage.dart';
 import 'package:estudazz_main_code/views/settings/user/editDataPage.dart';
 import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';
 import 'package:estudazz_main_code/views/homePage.dart';
@@ -22,6 +21,7 @@ class AppRoutes {
   static const String allTasksPage = '/allTasksPage';
   static const String profilePage = '/profilePage';
   static const String calendarPage = '/calendarPage';
+  static const String studyRoomPage = '/studyRoomPage';
 
   // -------------- IA
   static const String iaPage = '/iaPage';
@@ -32,7 +32,6 @@ class AppRoutes {
   static const String notificationsPage = '/notificationsPage';
   static const String myDataPage = '/myDataPage';
   static const String editDataPage = '/editDataPage';
-  static const String themeSettingsPage = '/themeSettingsPage';
 
   static const String signUpPage = '/signUpPage';
   static const String signInPage = '/signInPage';
@@ -44,6 +43,7 @@ class AppRoutes {
     GetPage(name: allTasksPage, page: () => AllTasksPage()),
     GetPage(name: profilePage, page: () => ProfilePage()),
     GetPage(name: calendarPage, page: () => CalendarPage()),
+    GetPage(name: studyRoomPage, page: () => StudyRoomPage()),
     GetPage(name: performancePage, page: () => PerformancePage()),
 
     // -------------- IA
@@ -54,9 +54,6 @@ class AppRoutes {
     GetPage(name: notificationsPage, page: () => NotificationsSettingsPage()),
     GetPage(name: myDataPage, page: () => MyDataPage()),
     GetPage(name: editDataPage, page: () => EditDataPage()),
-
-    // -------------- THEME
-    GetPage(name: themeSettingsPage, page: () => ThemeSettingsPage()),
 
     // -------------- AUTH
     GetPage(name: signUpPage, page: () => SignUpPage()),

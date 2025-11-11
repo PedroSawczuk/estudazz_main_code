@@ -1,4 +1,3 @@
-
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
@@ -19,33 +18,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool isDarkMode = false;
   bool _notificationsEnabled = true;
 
   @override
   void initState() {
     super.initState();
-    _loadTheme();
     _loadNotifications();
   }
 
-  // Load theme from shared preferences
-  Future<void> _loadTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    final dark = prefs.getBool('isDarkMode') ?? Get.isDarkMode;
-    setState(() {
-      isDarkMode = dark;
-    });
-    Get.changeThemeMode(dark ? ThemeMode.dark : ThemeMode.light);
-  }
-
-  // Save theme to shared preferences
-  Future<void> _saveTheme(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', value);
-  }
-
-  // Load notification settings from shared preferences
   Future<void> _loadNotifications() async {
     final prefs = await SharedPreferences.getInstance();
     final enabled = prefs.getBool('notificationsEnabled') ?? true;
@@ -61,18 +41,14 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          // Account Section
           _buildSectionHeader('Conta'),
           _buildAccountListTile(),
           const Divider(),
 
-          // App Settings Section
           _buildSectionHeader('Configurações do App'),
           _buildNotificationsSwitch(),
-          _buildDarkModeSwitch(),
           const Divider(),
 
-          // Logout and Delete Account Section
           _buildLogoutListTile(),
           const SizedBox(height: 20),
           _buildDeleteAccountButton(),
@@ -81,21 +57,19 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Section header widget
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
 
-  // 'My Data' list tile
   Widget _buildAccountListTile() {
     return ListTile(
       leading: const Icon(Icons.person),
@@ -107,7 +81,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Notifications switch
   Widget _buildNotificationsSwitch() {
     return SwitchListTile(
       secondary: const Icon(Icons.notifications),
@@ -144,25 +117,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Dark mode switch
-  Widget _buildDarkModeSwitch() {
-    return SwitchListTile(
-      secondary: const Icon(Icons.dark_mode),
-      title: const Text('Tema Escuro'),
-      value: isDarkMode,
-      onChanged: (value) {
-        setState(() {
-          isDarkMode = value;
-        });
-        Get.changeThemeMode(
-          value ? ThemeMode.dark : ThemeMode.light,
-        );
-        _saveTheme(value);
-      },
-    );
-  }
-
-  // Logout list tile
   Widget _buildLogoutListTile() {
     return ListTile(
       leading: const Icon(Icons.logout, color: ConstColors.redColor),
@@ -180,7 +134,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Delete account button
   Widget _buildDeleteAccountButton() {
     return Center(
       child: TextButton(
@@ -195,10 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         child: const Text(
           'Deletar Conta',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
     );

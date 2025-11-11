@@ -38,6 +38,9 @@ class AuthServices {
 
       if (_firebaseAuth.currentUser != null) {
         final user = _firebaseAuth.currentUser!;
+        await _firestore.collection('users').doc(user.uid).update({
+          'last_login': FieldValue.serverTimestamp(),
+        });
         await SaveUserLocal.saveUser(user);
       }
     } catch (e) {

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   final String uid;
   final String displayName;
@@ -9,6 +11,7 @@ class UserModel {
   final String expectedGraduation;
   final bool profileCompleted;
   final String photoUrl;
+  final DateTime? lastLogin;
 
   UserModel({
     required this.uid,
@@ -21,6 +24,7 @@ class UserModel {
     required this.expectedGraduation,
     required this.profileCompleted,
     required this.photoUrl,
+    this.lastLogin,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map, String uid) {
@@ -35,6 +39,7 @@ class UserModel {
       expectedGraduation: map['expected_graduation'] ?? '',
       profileCompleted: map['profile_completed'] ?? false,
       photoUrl: map['photoURL'] ?? '',
+      lastLogin: (map['last_login'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -49,6 +54,7 @@ class UserModel {
       'expected_graduation': expectedGraduation,
       'profile_completed': profileCompleted,
       'photoURL': photoUrl,
+      'last_login': lastLogin != null ? Timestamp.fromDate(lastLogin!) : null,
     };
   }
 }

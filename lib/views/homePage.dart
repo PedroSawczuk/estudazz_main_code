@@ -81,6 +81,18 @@ class _HomePageState extends State<HomePage> {
                     ),
               ),
               ItensCards(
+                title: "Sala de Estudos",
+                description: "Crie e participe de salas de estudo.",
+                icon: Icons.group,
+                color: ConstColors.purpleColor,
+                onTap:
+                    () => AuthGuard.handleAuthenticatedAction(
+                      context: context,
+                      onAuthenticated:
+                          () => Get.toNamed(AppRoutes.studyRoomPage),
+                    ),
+              ),
+              ItensCards(
                 title: "Configurações",
                 description: "Personalize a sua experiência.",
                 icon: Icons.settings,
