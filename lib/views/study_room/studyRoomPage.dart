@@ -18,7 +18,9 @@ class StudyRoomPage extends StatefulWidget {
 }
 
 class _StudyRoomPageState extends State<StudyRoomPage> {
-  final StudyRoomController _studyRoomController = Get.put(StudyRoomController());
+  final StudyRoomController _studyRoomController = Get.put(
+    StudyRoomController(),
+  );
 
   void _showCreateStudyRoomDialog() {
     showDialog(
@@ -80,14 +82,10 @@ class _StudyRoomPageState extends State<StudyRoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        titleAppBar: 'Sala de Estudos',
-      ),
+      appBar: CustomAppBar(titleAppBar: 'Sala de Estudos'),
       body: Obx(() {
         if (_studyRoomController.studyRooms.isEmpty) {
-          return const Center(
-            child: Text('Nenhuma sala de estudos criada.'),
-          );
+          return const Center(child: Text('Nenhuma sala de estudos criada.'));
         }
         return GridView.builder(
           padding: const EdgeInsets.all(16.0),
@@ -123,35 +121,42 @@ class _StudyRoomCard extends StatelessWidget {
   void _showEditNameDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => EditStudyRoomDialog(
-        currentName: room.name,
-        onSave: (newName) {
-          controller.updateRoomName(room.id, newName);
-        },
-      ),
+      builder:
+          (context) => EditStudyRoomDialog(
+            currentName: room.name,
+            onSave: (newName) {
+              controller.updateRoomName(room.id, newName);
+            },
+          ),
     );
   }
 
   void _showDeleteConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Excluir Sala'),
-        content: Text('Você tem certeza que deseja excluir a sala "${room.name}"? Esta ação não pode ser desfeita.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Excluir Sala'),
+            content: Text(
+              'Você tem certeza que deseja excluir a sala "${room.name}"? Esta ação não pode ser desfeita.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  controller.deleteRoom(room.id);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Excluir',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              controller.deleteRoom(room.id);
-              Navigator.pop(context);
-            },
-            child: const Text('Excluir', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
     );
   }
 
@@ -173,7 +178,10 @@ class _StudyRoomCard extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.delete, color: Colors.red),
-                title: const Text('Excluir sala', style: TextStyle(color: Colors.red)),
+                title: const Text(
+                  'Excluir sala',
+                  style: TextStyle(color: Colors.red),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                   _showDeleteConfirmationDialog(context);
@@ -203,9 +211,7 @@ class _StudyRoomCard extends StatelessWidget {
     return Card(
       color: _getColorFromId(room.id),
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: () {
           Get.toNamed(AppRoutes.studyRoomDetailsPage, arguments: room);
@@ -234,10 +240,7 @@ class _StudyRoomCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     '${room.members.length} membro(s)',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ],
               ),

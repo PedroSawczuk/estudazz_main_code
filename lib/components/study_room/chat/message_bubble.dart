@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:estudazz_main_code/models/study_room/chat_message_model.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,35 @@ class MessageBubble extends StatelessWidget {
     required this.isMe,
   });
 
+  Widget _buildAvatar() {
+    return ClipOval(
+      child: sender.photoUrl.isNotEmpty
+          ? CachedNetworkImage(
+              imageUrl: sender.photoUrl,
+              placeholder: (context, url) => const SizedBox(
+                width: 40,
+                height: 40,
+                child: CircularProgressIndicator(),
+              ),
+              errorWidget: (context, url, error) => Image.asset(
+                'assets/images/no-profile-photo.png',
+                fit: BoxFit.cover,
+                width: 40,
+                height: 40,
+              ),
+              fit: BoxFit.cover,
+              width: 40,
+              height: 40,
+            )
+          : Image.asset(
+              'assets/images/no-profile-photo.png',
+              fit: BoxFit.cover,
+              width: 40,
+              height: 40,
+            ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,15 +54,12 @@ class MessageBubble extends StatelessWidget {
         if (!isMe)
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: CircleAvatar(
-              backgroundImage: sender.photoUrl.isNotEmpty
-                  ? NetworkImage(sender.photoUrl)
-                  : const AssetImage('assets/images/no-profile-photo.png') as ImageProvider,
-            ),
+            child: _buildAvatar(),
           ),
         Flexible(
           child: Column(
-            crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            crossAxisAlignment:
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
               Text(
                 sender.displayName,
@@ -40,14 +67,21 @@ class MessageBubble extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 4),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isMe ? Theme.of(context).colorScheme.primary : Colors.grey[700],
+                  color: isMe
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.grey[700],
                   borderRadius: BorderRadius.only(
                     topLeft: const Radius.circular(12),
                     topRight: const Radius.circular(12),
-                    bottomLeft: isMe ? const Radius.circular(12) : const Radius.circular(0),
-                    bottomRight: isMe ? const Radius.circular(0) : const Radius.circular(12),
+                    bottomLeft: isMe
+                        ? const Radius.circular(12)
+                        : const Radius.circular(0),
+                    bottomRight: isMe
+                        ? const Radius.circular(0)
+                        : const Radius.circular(12),
                   ),
                 ),
                 child: Column(
@@ -59,7 +93,8 @@ class MessageBubble extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      DateFormat('dd/MM/yy HH:mm').format(message.createdAt.toDate()),
+                      DateFormat('dd/MM/yy HH:mm')
+                          .format(message.createdAt.toDate()),
                       style: const TextStyle(
                         fontSize: 10,
                         color: Colors.white70,
@@ -74,11 +109,7 @@ class MessageBubble extends StatelessWidget {
         if (isMe)
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: CircleAvatar(
-              backgroundImage: sender.photoUrl.isNotEmpty
-                  ? NetworkImage(sender.photoUrl)
-                  : const AssetImage('assets/images/no-profile-photo.png') as ImageProvider,
-            ),
+            child: _buildAvatar(),
           ),
       ],
     );

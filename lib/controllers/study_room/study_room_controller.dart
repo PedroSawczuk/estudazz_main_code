@@ -15,11 +15,16 @@ class StudyRoomController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _studyRooms.bindStream(_getStudyRoomsStream());
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      _studyRooms.bindStream(_getStudyRoomsStream(user.uid));
+    } else {
+      _studyRooms.value = [];
+    }
   }
 
-  Stream<List<StudyRoomModel>> _getStudyRoomsStream() {
-    return _studyRoomDB.getStudyRoomsStream().map((snapshot) {
+  Stream<List<StudyRoomModel>> _getStudyRoomsStream(String userId) {
+    return _studyRoomDB.getStudyRoomsStream(userId).map((snapshot) {
       return snapshot.docs.map((doc) => StudyRoomModel.fromFirestore(doc)).toList();
     });
   }

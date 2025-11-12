@@ -45,8 +45,11 @@ class StudyRoomDB {
     });
   }
 
-  Stream<QuerySnapshot> getStudyRoomsStream() {
-    return studyRoomsCollection.orderBy('createdAt', descending: true).snapshots();
+  Stream<QuerySnapshot> getStudyRoomsStream(String userId) {
+    return studyRoomsCollection
+        .where('members', arrayContains: userId)
+        .orderBy('createdAt', descending: true)
+        .snapshots();
   }
 
   Future<void> updateStudyRoom({
