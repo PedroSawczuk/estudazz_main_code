@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class StudyRoomDB {
   final CollectionReference studyRoomsCollection =
@@ -57,5 +58,26 @@ class StudyRoomDB {
 
   Future<void> deleteStudyRoom(String roomId) async {
     await studyRoomsCollection.doc(roomId).delete();
+  }
+
+  // Chat methods
+  Stream<QuerySnapshot> getChatMessagesStream(String roomId) {
+    return studyRoomsCollection
+        .doc(roomId)
+        .collection('messages')
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+  }
+
+  Future<void> sendChatMessage(String roomId, String text) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null || text.trim().isEmpty) {
+      return;
+    }
+    await studyRoomsCollection.doc(roomId).collection('messages').add({
+      'senderUid': user.uid,
+      'text': text,
+      'createdAt': Timestamp.now(),
+    });
   }
 }

@@ -1,10 +1,12 @@
 import 'dart:math';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/dialog/study_room/createStudyRoomDialog.dart';
+import 'package:estudazz_main_code/components/dialog/study_room/editStudyRoomDialog.dart';
 import 'package:estudazz_main_code/components/dialog/study_room/joinStudyRoomDialog.dart';
 import 'package:estudazz_main_code/controllers/study_room/study_room_controller.dart';
 import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -97,7 +99,10 @@ class _StudyRoomPageState extends State<StudyRoomPage> {
           ),
           itemCount: _studyRoomController.studyRooms.length,
           itemBuilder: (context, index) {
-            return _StudyRoomCard(room: _studyRoomController.studyRooms[index]);
+            return _StudyRoomCard(
+              room: _studyRoomController.studyRooms[index],
+              controller: _studyRoomController,
+            );
           },
         );
       }),
@@ -111,8 +116,75 @@ class _StudyRoomPageState extends State<StudyRoomPage> {
 
 class _StudyRoomCard extends StatelessWidget {
   final StudyRoomModel room;
+  final StudyRoomController controller;
 
-  const _StudyRoomCard({required this.room});
+  const _StudyRoomCard({required this.room, required this.controller});
+
+  void _showEditNameDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => EditStudyRoomDialog(
+        currentName: room.name,
+        onSave: (newName) {
+          controller.updateRoomName(room.id, newName);
+        },
+      ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Excluir Sala'),
+        content: Text('Você tem certeza que deseja excluir a sala "${room.name}"? Esta ação não pode ser desfeita.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              controller.deleteRoom(room.id);
+              Navigator.pop(context);
+            },
+            child: const Text('Excluir', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAdminActions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Editar nome'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showEditNameDialog(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete, color: Colors.red),
+                title: const Text('Excluir sala', style: TextStyle(color: Colors.red)),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showDeleteConfirmationDialog(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Color _getColorFromId(String id) {
     final random = Random(id.hashCode);
@@ -126,6 +198,8 @@ class _StudyRoomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isOwner = room.creatorUid == FirebaseAuth.instance.currentUser?.uid;
+
     return Card(
       color: _getColorFromId(room.id),
       elevation: 4,
@@ -136,6 +210,7 @@ class _StudyRoomCard extends StatelessWidget {
         onTap: () {
           Get.toNamed(AppRoutes.studyRoomDetailsPage, arguments: room);
         },
+        onLongPress: isOwner ? () => _showAdminActions(context) : null,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

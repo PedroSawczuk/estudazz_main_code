@@ -88,4 +88,42 @@ class StudyRoomController extends GetxController {
           backgroundColor: ConstColors.redColor);
     }
   }
+
+  Future<void> updateRoomName(String roomId, String newName) async {
+    if (newName.isEmpty) {
+      CustomSnackBar.show(
+          title: 'Erro',
+          message: 'O nome da sala não pode ser vazio.',
+          backgroundColor: ConstColors.redColor);
+      return;
+    }
+
+    try {
+      await _studyRoomDB.updateStudyRoom(roomId: roomId, data: {'name': newName});
+      CustomSnackBar.show(
+          title: 'Sucesso!',
+          message: 'O nome da sala foi atualizado.',
+          backgroundColor: ConstColors.greenColor);
+    } catch (e) {
+      CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Não foi possível atualizar o nome da sala.',
+          backgroundColor: ConstColors.redColor);
+    }
+  }
+
+  Future<void> deleteRoom(String roomId) async {
+    try {
+      await _studyRoomDB.deleteStudyRoom(roomId);
+      CustomSnackBar.show(
+          title: 'Sucesso!',
+          message: 'A sala foi excluída.',
+          backgroundColor: ConstColors.greenColor);
+    } catch (e) {
+      CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Não foi possível excluir a sala.',
+          backgroundColor: ConstColors.redColor);
+    }
+  }
 }

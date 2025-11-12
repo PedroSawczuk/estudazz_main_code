@@ -4,6 +4,7 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
+import 'package:estudazz_main_code/views/study_room/chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,13 +17,16 @@ class StudyRoomDetailsPage extends StatefulWidget {
   State<StudyRoomDetailsPage> createState() => _StudyRoomDetailsPageState();
 }
 
-class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage> {
+class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage> with TickerProviderStateMixin {
   List<UserModel> _members = [];
   bool _isLoading = true;
+  late final TabController _tabController;
+  bool get _canChat => widget.room.members.length >= 2;
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: _canChat ? 2 : 1, vsync: this);
     _fetchMembersData();
   }
 
@@ -52,16 +56,6 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage> {
             backgroundColor: ConstColors.redColor);
       }
     }
-  }
-
-  String _generateRoomCode(String roomId) {
-    final code = widget.room.roomCode.replaceAll('-', '');
-    if (code.length < 6) {
-      return code.toUpperCase();
-    }
-    final part1 = code.substring(0, 3).toUpperCase();
-    final part2 = code.substring(3, 6).toUpperCase();
-    return '$part1-$part2';
   }
 
   void _showMembersList() {
@@ -110,50 +104,71 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final roomCode = _generateRoomCode(widget.room.id);
-
     return Scaffold(
       appBar: CustomAppBar(
         titleAppBar: widget.room.name,
         showMembersIcon: true,
         onMembersIconTap: _showMembersList,
+        bottom: _canChat
+            ? TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(text: 'Detalhes'),
+                  Tab(text: 'Chat'),
+                ],
+              )
+            : null,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Código da Sala:',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _buildDetailsTab(),
+          if (_canChat)
+            _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ChatPage(room: widget.room, members: _members),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailsTab() {
+    final roomCode = widget.room.roomCode;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Código da Sala:',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            roomCode,
+            style: const TextStyle(
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 4,
             ),
-            const SizedBox(height: 16),
-            Text(
-              roomCode,
-              style: const TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 4,
-              ),
+          ),
+          const SizedBox(height: 32),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.copy),
+            label: const Text('Copiar'),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: roomCode));
+              CustomSnackBar.show(
+                title: 'Copiado!',
+                message: 'Código da sala copiado para a área de transferência.',
+                backgroundColor: ConstColors.greenColor,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              textStyle: const TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.copy),
-              label: const Text('Copiar'),
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: roomCode));
-                CustomSnackBar.show(
-                  title: 'Copiado!',
-                  message: 'Código da sala copiado para a área de transferência.',
-                  backgroundColor: ConstColors.greenColor,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                textStyle: const TextStyle(fontSize: 18),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

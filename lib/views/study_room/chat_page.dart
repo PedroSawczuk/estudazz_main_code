@@ -1,0 +1,118 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estudazz_main_code/components/study_room/chat/message_bubble.dart';
+import 'package:estudazz_main_code/models/study_room/chat_message_model.dart';
+import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
+import 'package:estudazz_main_code/models/user/userModel.dart';
+import 'package:estudazz_main_code/services/db/study_room/study_room_db.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+class ChatPage extends StatefulWidget {
+  final StudyRoomModel room;
+  final List<UserModel> members;
+
+  const ChatPage({super.key, required this.room, required this.members});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final _textController = TextEditingController();
+  final _studyRoomDB = StudyRoomDB();
+  late final Map<String, UserModel> _membersMap;
+
+  @override
+  void initState() {
+    super.initState();
+    _membersMap = {for (var member in widget.members) member.uid: member};
+  }
+
+  void _sendMessage() {
+    if (_textController.text.trim().isNotEmpty) {
+      _studyRoomDB.sendChatMessage(widget.room.id, _textController.text.trim());
+      _textController.clear();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    return Column(
+      children: [
+        Expanded(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _studyRoomDB.getChatMessagesStream(widget.room.id),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return const Center(child: Text('Nenhuma mensagem ainda.'));
+              }
+
+              final messages = snapshot.data!.docs;
+
+              return ListView.builder(
+                reverse: true,
+                padding: const EdgeInsets.all(8.0),
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final message = ChatMessageModel.fromFirestore(messages[index]);
+                  final sender = _membersMap[message.senderUid];
+
+                  if (sender == null) {
+                    // Handle case where sender is not in the members list
+                    return const SizedBox.shrink();
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: MessageBubble(
+                      message: message,
+                      sender: sender,
+                      isMe: message.senderUid == currentUser?.uid,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        _buildMessageInput(),
+      ],
+    );
+  }
+
+  Widget _buildMessageInput() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _textController,
+              decoration: const InputDecoration(
+                hintText: 'Digite uma mensagem...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(24)),
+                ),
+              ),
+              textCapitalization: TextCapitalization.sentences,
+            ),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.send),
+            onPressed: _sendMessage,
+            style: IconButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
