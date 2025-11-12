@@ -2,6 +2,7 @@ import 'package:estudazz_main_code/components/cards/home/homeCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
+import 'package:estudazz_main_code/services/connectivity/connectivity_service.dart';
 import 'package:estudazz_main_code/utils/user/authProfileCheck.dart';
 import 'package:estudazz_main_code/utils/user/userAuthCheck.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomePageController _profileController = Get.put(HomePageController());
+  final ConnectivityService _connectivityService = ConnectivityService();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _connectivityService.checkConnectivity(context);
+      _connectivityService.listenForConnectivityChanges(context);
+    });
     checkProfileCompletion(_profileController, context);
+  }
+
+  @override
+  void dispose() {
+    _connectivityService.dispose();
+    super.dispose();
   }
 
   @override
