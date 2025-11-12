@@ -19,6 +19,26 @@ class StudyRoomModel {
     required this.roomCode,
   });
 
+  StudyRoomModel copyWith({
+    String? id,
+    String? name,
+    String? description,
+    String? creatorUid,
+    List<String>? members,
+    Timestamp? createdAt,
+    String? roomCode,
+  }) {
+    return StudyRoomModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      creatorUid: creatorUid ?? this.creatorUid,
+      members: members ?? this.members,
+      createdAt: createdAt ?? this.createdAt,
+      roomCode: roomCode ?? this.roomCode,
+    );
+  }
+
   factory StudyRoomModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return StudyRoomModel(

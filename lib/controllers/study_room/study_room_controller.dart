@@ -8,9 +8,9 @@ import 'package:get/get.dart';
 
 class StudyRoomController extends GetxController {
   final StudyRoomDB _studyRoomDB = StudyRoomDB();
-  final Rx<List<StudyRoomModel>> _studyRooms = Rx<List<StudyRoomModel>>([]);
+  final _studyRooms = <StudyRoomModel>[].obs;
 
-  List<StudyRoomModel> get studyRooms => _studyRooms.value;
+  List<StudyRoomModel> get studyRooms => _studyRooms;
 
   @override
   void onInit() {
@@ -19,7 +19,7 @@ class StudyRoomController extends GetxController {
     if (user != null) {
       _studyRooms.bindStream(_getStudyRoomsStream(user.uid));
     } else {
-      _studyRooms.value = [];
+      _studyRooms.clear();
     }
   }
 
@@ -47,11 +47,28 @@ class StudyRoomController extends GetxController {
       return;
     }
 
-    await _studyRoomDB.createStudyRoom(
-      name: name,
-      description: description,
-      creatorUid: user.uid,
-    );
+    try {
+      final newRoomRef = await _studyRoomDB.createStudyRoom(
+        name: name,
+        description: description,
+        creatorUid: user.uid,
+      );
+
+      final newRoomSnapshot = await newRoomRef.get();
+      if (newRoomSnapshot.exists) {
+        final newRoom = StudyRoomModel.fromFirestore(newRoomSnapshot);
+        _studyRooms.insert(0, newRoom);
+        CustomSnackBar.show(
+            title: 'Sucesso!',
+            message: 'A sala "$name" foi criada.',
+            backgroundColor: ConstColors.greenColor);
+      }
+    } catch (e) {
+      CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Ocorreu um erro ao criar a sala.',
+          backgroundColor: ConstColors.redColor);
+    }
   }
 
   Future<void> joinStudyRoom(String roomCode) async {
@@ -78,14 +95,23 @@ class StudyRoomController extends GetxController {
       final roomDoc = roomSnapshot.docs.first;
       final room = StudyRoomModel.fromFirestore(roomDoc);
 
+      if (room.members.contains(user.uid)) {
+        Get.toNamed(AppRoutes.studyRoomDetailsPage, arguments: room);
+        return;
+      }
+
       await _studyRoomDB.addUserToRoom(room.id, user.uid);
+
+      final updatedRoom = room.copyWith(
+        members: List<String>.from(room.members)..add(user.uid),
+      );
 
       CustomSnackBar.show(
           title: 'Sucesso!',
           message: 'Você entrou na sala "${room.name}".',
           backgroundColor: ConstColors.greenColor);
 
-      Get.toNamed(AppRoutes.studyRoomDetailsPage, arguments: room);
+      Get.toNamed(AppRoutes.studyRoomDetailsPage, arguments: updatedRoom);
     } catch (e) {
       CustomSnackBar.show(
           title: 'Erro',

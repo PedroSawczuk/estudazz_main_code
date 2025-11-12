@@ -16,7 +16,7 @@ class StudyRoomDB {
     return '$part1-$part2';
   }
 
-  Future<void> createStudyRoom({
+  Future<DocumentReference> createStudyRoom({
     required String name,
     String? description,
     required String creatorUid,
@@ -25,7 +25,7 @@ class StudyRoomDB {
     // This might involve a loop that regenerates the code if it already exists.
     final roomCode = _generateRoomCode();
 
-    await studyRoomsCollection.add({
+    return await studyRoomsCollection.add({
       'name': name,
       'description': description,
       'creatorUid': creatorUid,
@@ -50,6 +50,10 @@ class StudyRoomDB {
         .where('members', arrayContains: userId)
         .orderBy('createdAt', descending: true)
         .snapshots();
+  }
+
+  Stream<DocumentSnapshot> getStudyRoomStream(String roomId) {
+    return studyRoomsCollection.doc(roomId).snapshots();
   }
 
   Future<void> updateStudyRoom({

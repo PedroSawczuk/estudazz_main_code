@@ -22,22 +22,62 @@ class StudyRoomDetailsPage extends StatefulWidget {
 
 class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
     with TickerProviderStateMixin {
+  late StudyRoomModel _currentRoom;
   List<UserModel> _members = [];
   bool _isLoading = true;
-  late final TabController _tabController;
-  bool get _canChat => widget.room.members.length >= 2;
+  late TabController _tabController;
+  StreamSubscription<DocumentSnapshot>? _roomSubscription;
+  bool get _canChat => _currentRoom.members.length >= 2;
 
   @override
   void initState() {
     super.initState();
+    _currentRoom = widget.room;
     _tabController = TabController(length: _canChat ? 2 : 1, vsync: this);
     _fetchMembersData();
+    _listenToRoomChanges();
+  }
+
+  @override
+  void dispose() {
+    _roomSubscription?.cancel();
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _listenToRoomChanges() {
+    _roomSubscription =
+        StudyRoomDB().getStudyRoomStream(widget.room.id).listen((snapshot) {
+      if (snapshot.exists && mounted) {
+        final newRoom = StudyRoomModel.fromFirestore(snapshot);
+        final canChatNow = newRoom.members.length >= 2;
+        final canChatBefore = _canChat;
+
+        setState(() {
+          _currentRoom = newRoom;
+        });
+
+        if (canChatNow != canChatBefore) {
+          final newIndex = _tabController.index;
+          _tabController.dispose();
+          _tabController = TabController(
+            length: canChatNow ? 2 : 1,
+            vsync: this,
+            initialIndex: newIndex > 0 && !canChatNow ? 0 : newIndex,
+          );
+        }
+
+        if (_currentRoom.members.length != _members.length) {
+          _fetchMembersData();
+        }
+      }
+    });
   }
 
   Future<void> _fetchMembersData() async {
     try {
       final List<UserModel> members = [];
-      for (final uid in widget.room.members) {
+      for (final uid in _currentRoom.members) {
         final userDoc =
             await FirebaseFirestore.instance.collection('users').doc(uid).get();
         if (userDoc.exists) {
@@ -67,7 +107,7 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        titleAppBar: widget.room.name,
+        titleAppBar: _currentRoom.name,
         bottom: _canChat
             ? TabBar(
                 controller: _tabController,
@@ -84,7 +124,7 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
             ? [
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : ChatPage(room: widget.room, members: _members),
+                    : ChatPage(room: _currentRoom, members: _members),
                 _buildDetailsTab(),
               ]
             : [_buildDetailsTab()],
@@ -94,9 +134,9 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
 
   Widget _buildDetailsTab() {
     final isOwner =
-        FirebaseAuth.instance.currentUser?.uid == widget.room.creatorUid;
+        FirebaseAuth.instance.currentUser?.uid == _currentRoom.creatorUid;
     final formattedDate =
-        DateFormat('dd/MM/yyyy').format(widget.room.createdAt.toDate());
+        DateFormat('dd/MM/yyyy').format(_currentRoom.createdAt.toDate());
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -113,7 +153,7 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.room.roomCode,
+                  _currentRoom.roomCode,
                   style: const TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
@@ -123,7 +163,7 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
                 IconButton(
                   icon: const Icon(Icons.copy),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: widget.room.roomCode));
+                    Clipboard.setData(ClipboardData(text: _currentRoom.roomCode));
                     CustomSnackBar.show(
                       title: 'Copiado!',
                       message:
