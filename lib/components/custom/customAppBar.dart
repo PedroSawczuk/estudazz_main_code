@@ -9,12 +9,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String titleAppBar;
   final bool showPersonIcon;
   final bool showSettingsIAIcon;
+  final bool showMembersIcon;
+  final VoidCallback? onMembersIconTap;
 
   CustomAppBar({
     Key? key,
     required this.titleAppBar,
     this.showPersonIcon = false,
     this.showSettingsIAIcon = false,
+    this.showMembersIcon = false,
+    this.onMembersIconTap,
   }) : preferredSize = Size.fromHeight(56.0),
        super(key: key);
 
@@ -26,6 +30,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text(titleAppBar),
       ),
       actions: [
+        if (showMembersIcon)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              icon: Icon(Icons.group),
+              onPressed: onMembersIconTap,
+              tooltip: 'Ver Membros',
+            ),
+          ),
         if (showSettingsIAIcon)
           Padding(
             padding: const EdgeInsets.only(right: 16.0),

@@ -1,6 +1,7 @@
 import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:estudazz_main_code/views/settings/notifications/notificationsPage.dart';
 import 'package:estudazz_main_code/views/study_room/studyRoomPage.dart';
+import 'package:estudazz_main_code/views/study_room/study_room_details_page.dart';
 import 'package:get/get.dart';
 import 'package:estudazz_main_code/views/settings/user/editDataPage.dart';
 import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';
@@ -22,6 +23,7 @@ class AppRoutes {
   static const String profilePage = '/profilePage';
   static const String calendarPage = '/calendarPage';
   static const String studyRoomPage = '/studyRoomPage';
+  static const String studyRoomDetailsPage = '/studyRoomDetailsPage';
 
   // -------------- IA
   static const String iaPage = '/iaPage';
@@ -44,6 +46,10 @@ class AppRoutes {
     GetPage(name: profilePage, page: () => ProfilePage()),
     GetPage(name: calendarPage, page: () => CalendarPage()),
     GetPage(name: studyRoomPage, page: () => StudyRoomPage()),
+    GetPage(
+      name: studyRoomDetailsPage,
+      page: () => StudyRoomDetailsPage(room: Get.arguments),
+    ),
     GetPage(name: performancePage, page: () => PerformancePage()),
 
     // -------------- IA
