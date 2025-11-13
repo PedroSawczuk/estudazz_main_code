@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:estudazz_main_code/models/study_room/chat_message_model.dart';
+import 'package:estudazz_main_code/models/studyRoom/chatMessageModel.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

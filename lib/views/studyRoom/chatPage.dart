@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:estudazz_main_code/components/study_room/chat/message_bubble.dart';
-import 'package:estudazz_main_code/models/study_room/chat_message_model.dart';
-import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
+import 'package:estudazz_main_code/components/studyRoom/chat/messageBubble.dart';
+import 'package:estudazz_main_code/models/studyRoom/chatMessageModel.dart';
+import 'package:estudazz_main_code/models/studyRoom/studyRoomModel.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
-import 'package:estudazz_main_code/services/db/study_room/study_room_db.dart';
+import 'package:estudazz_main_code/services/db/studyRoom/studyRoomDb.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

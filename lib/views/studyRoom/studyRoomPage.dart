@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
-import 'package:estudazz_main_code/components/dialog/study_room/createStudyRoomDialog.dart';
-import 'package:estudazz_main_code/components/dialog/study_room/editStudyRoomDialog.dart';
-import 'package:estudazz_main_code/components/dialog/study_room/joinStudyRoomDialog.dart';
-import 'package:estudazz_main_code/controllers/study_room/study_room_controller.dart';
-import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
+import 'package:estudazz_main_code/components/dialog/studyRoom/createStudyRoomDialog.dart';
+import 'package:estudazz_main_code/components/dialog/studyRoom/editStudyRoomDialog.dart';
+import 'package:estudazz_main_code/components/dialog/studyRoom/joinStudyRoomDialog.dart';
+import 'package:estudazz_main_code/controllers/studyRoom/studyRoomController.dart';
+import 'package:estudazz_main_code/models/studyRoom/studyRoomModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

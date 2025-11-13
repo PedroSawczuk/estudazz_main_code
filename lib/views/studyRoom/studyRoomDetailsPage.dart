@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
-import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
+import 'package:estudazz_main_code/models/studyRoom/studyRoomModel.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
-import 'package:estudazz_main_code/views/study_room/chat_page.dart';
+import 'package:estudazz_main_code/services/db/studyRoom/studyRoomDb.dart';
+import 'package:estudazz_main_code/views/studyRoom/chatPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,32 +49,33 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
   }
 
   void _listenToRoomChanges() {
-    _roomSubscription =
-        StudyRoomDB().getStudyRoomStream(widget.room.id).listen((snapshot) {
-      if (snapshot.exists && mounted) {
-        final newRoom = StudyRoomModel.fromFirestore(snapshot);
-        final canChatNow = newRoom.members.length >= 2;
-        final canChatBefore = _canChat;
+    _roomSubscription = StudyRoomDB().getStudyRoomStream(widget.room.id).listen(
+      (snapshot) {
+        if (snapshot.exists && mounted) {
+          final newRoom = StudyRoomModel.fromFirestore(snapshot);
+          final canChatNow = newRoom.members.length >= 2;
+          final canChatBefore = _canChat;
 
-        setState(() {
-          _currentRoom = newRoom;
-        });
+          setState(() {
+            _currentRoom = newRoom;
+          });
 
-        if (canChatNow != canChatBefore) {
-          final newIndex = _tabController.index;
-          _tabController.dispose();
-          _tabController = TabController(
-            length: canChatNow ? 2 : 1,
-            vsync: this,
-            initialIndex: newIndex > 0 && !canChatNow ? 0 : newIndex,
-          );
+          if (canChatNow != canChatBefore) {
+            final newIndex = _tabController.index;
+            _tabController.dispose();
+            _tabController = TabController(
+              length: canChatNow ? 2 : 1,
+              vsync: this,
+              initialIndex: newIndex > 0 && !canChatNow ? 0 : newIndex,
+            );
+          }
+
+          if (_currentRoom.members.length != _members.length) {
+            _fetchMembersData();
+          }
         }
-
-        if (_currentRoom.members.length != _members.length) {
-          _fetchMembersData();
-        }
-      }
-    });
+      },
+    );
   }
 
   Future<void> _fetchMembersData() async {
@@ -96,9 +100,10 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
           _isLoading = false;
         });
         CustomSnackBar.show(
-            title: 'Erro',
-            message: 'Não foi possível carregar os membros da sala.',
-            backgroundColor: ConstColors.redColor);
+          title: 'Erro',
+          message: 'Não foi possível carregar os membros da sala.',
+          backgroundColor: ConstColors.redColor,
+        );
       }
     }
   }
@@ -108,26 +113,25 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
     return Scaffold(
       appBar: CustomAppBar(
         titleAppBar: _currentRoom.name,
-        bottom: _canChat
-            ? TabBar(
-                controller: _tabController,
-                tabs: const [
-                  Tab(text: 'Chat'),
-                  Tab(text: 'Detalhes'),
-                ],
-              )
-            : null,
+        bottom:
+            _canChat
+                ? TabBar(
+                  controller: _tabController,
+                  tabs: const [Tab(text: 'Chat'), Tab(text: 'Detalhes')],
+                )
+                : null,
       ),
       body: TabBarView(
         controller: _tabController,
-        children: _canChat
-            ? [
-                _isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : ChatPage(room: _currentRoom, members: _members),
-                _buildDetailsTab(),
-              ]
-            : [_buildDetailsTab()],
+        children:
+            _canChat
+                ? [
+                  _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : ChatPage(room: _currentRoom, members: _members),
+                  _buildDetailsTab(),
+                ]
+                : [_buildDetailsTab()],
       ),
     );
   }
@@ -135,8 +139,9 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
   Widget _buildDetailsTab() {
     final isOwner =
         FirebaseAuth.instance.currentUser?.uid == _currentRoom.creatorUid;
-    final formattedDate =
-        DateFormat('dd/MM/yyyy').format(_currentRoom.createdAt.toDate());
+    final formattedDate = DateFormat(
+      'dd/MM/yyyy',
+    ).format(_currentRoom.createdAt.toDate());
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -163,7 +168,9 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
                 IconButton(
                   icon: const Icon(Icons.copy),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: _currentRoom.roomCode));
+                    Clipboard.setData(
+                      ClipboardData(text: _currentRoom.roomCode),
+                    );
                     CustomSnackBar.show(
                       title: 'Copiado!',
                       message:
@@ -189,41 +196,43 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
           _isLoading
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _members.length,
-                  itemBuilder: (context, index) {
-                    final member = _members[index];
-                    return ListTile(
-                      leading: ClipOval(
-                        child: member.photoUrl.isNotEmpty
-                            ? CachedNetworkImage(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _members.length,
+                itemBuilder: (context, index) {
+                  final member = _members[index];
+                  return ListTile(
+                    leading: ClipOval(
+                      child:
+                          member.photoUrl.isNotEmpty
+                              ? CachedNetworkImage(
                                 imageUrl: member.photoUrl,
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                  'assets/images/no-profile-photo.png',
-                                  fit: BoxFit.cover,
-                                  width: 40,
-                                  height: 40,
-                                ),
+                                placeholder:
+                                    (context, url) =>
+                                        const CircularProgressIndicator(),
+                                errorWidget:
+                                    (context, url, error) => Image.asset(
+                                      'assets/images/no-profile-photo.png',
+                                      fit: BoxFit.cover,
+                                      width: 40,
+                                      height: 40,
+                                    ),
                                 fit: BoxFit.cover,
                                 width: 40,
                                 height: 40,
                               )
-                            : Image.asset(
+                              : Image.asset(
                                 'assets/images/no-profile-photo.png',
                                 fit: BoxFit.cover,
                                 width: 40,
                                 height: 40,
                               ),
-                      ),
-                      title: Text(member.displayName),
-                      subtitle: Text(member.email),
-                    );
-                  },
-                ),
+                    ),
+                    title: Text(member.displayName),
+                    subtitle: Text(member.email),
+                  );
+                },
+              ),
         ],
       ),
     );

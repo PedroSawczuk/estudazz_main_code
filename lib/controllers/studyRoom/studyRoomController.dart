@@ -1,8 +1,8 @@
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
-import 'package:estudazz_main_code/models/study_room/study_room_model.dart';
+import 'package:estudazz_main_code/models/studyRoom/studyRoomModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
-import 'package:estudazz_main_code/services/db/study_room/study_room_db.dart';
+import 'package:estudazz_main_code/services/db/studyRoom/studyRoomDb.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -146,6 +146,7 @@ class StudyRoomController extends GetxController {
   Future<void> deleteRoom(String roomId) async {
     try {
       await _studyRoomDB.deleteStudyRoom(roomId);
+      _studyRooms.removeWhere((room) => room.id == roomId);
       CustomSnackBar.show(
           title: 'Sucesso!',
           message: 'A sala foi excluída.',

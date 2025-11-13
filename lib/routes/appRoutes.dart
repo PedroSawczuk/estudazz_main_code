@@ -1,7 +1,7 @@
 import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:estudazz_main_code/views/settings/notifications/notificationsPage.dart';
-import 'package:estudazz_main_code/views/study_room/studyRoomPage.dart';
-import 'package:estudazz_main_code/views/study_room/study_room_details_page.dart';
+import 'package:estudazz_main_code/views/studyRoom/studyRoomPage.dart';
+import 'package:estudazz_main_code/views/studyRoom/studyRoomDetailsPage.dart';
 import 'package:get/get.dart';
 import 'package:estudazz_main_code/views/settings/user/editDataPage.dart';
 import 'package:estudazz_main_code/views/settings/user/myDataPage.dart';

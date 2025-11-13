@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/models/calendar/eventModel.dart';
 import 'package:estudazz_main_code/services/db/calendar/eventsDB.dart';
 
 class EventsRepository {
@@ -8,8 +9,25 @@ class EventsRepository {
         .where('uid', isEqualTo: uid)
         .snapshots()
         .map((snapshot) {
-          final total = snapshot.docs.length;
-          return {'total': total};
-        });
+      final total = snapshot.docs.length;
+      return {'total': total};
+    });
+  }
+
+  Future<List<EventModel>> getEventsBetween(
+      String uid, DateTime start, DateTime end) async {
+    final snapshot = await _eventsDB.getEventsByUser(uid).first;
+    final events = snapshot.docs
+        .map((doc) => EventModel.fromDocument(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    return events.where((event) {
+      try {
+        // eventDate já é DateTime no modelo
+        return event.eventDate.isAfter(start) && event.eventDate.isBefore(end);
+      } catch (e) {
+        return false;
+      }
+    }).toList();
   }
 }
