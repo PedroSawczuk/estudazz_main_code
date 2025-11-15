@@ -21,15 +21,13 @@ class StudyRoomDB {
     String? description,
     required String creatorUid,
   }) async {
-    // In a production app, you'd need to ensure the code is unique.
-    // This might involve a loop that regenerates the code if it already exists.
     final roomCode = _generateRoomCode();
 
     return await studyRoomsCollection.add({
       'name': name,
       'description': description,
       'creatorUid': creatorUid,
-      'members': [creatorUid], // The creator is the first member
+      'members': [creatorUid],
       'createdAt': Timestamp.now(),
       'roomCode': roomCode,
     });
@@ -42,6 +40,12 @@ class StudyRoomDB {
   Future<void> addUserToRoom(String roomId, String userId) {
     return studyRoomsCollection.doc(roomId).update({
       'members': FieldValue.arrayUnion([userId]),
+    });
+  }
+
+  Future<void> leaveStudyRoom(String roomId, String userId) {
+    return studyRoomsCollection.doc(roomId).update({
+      'members': FieldValue.arrayRemove([userId]),
     });
   }
 
@@ -67,7 +71,6 @@ class StudyRoomDB {
     await studyRoomsCollection.doc(roomId).delete();
   }
 
-  // Chat methods
   Stream<QuerySnapshot> getChatMessagesStream(String roomId) {
     return studyRoomsCollection
         .doc(roomId)

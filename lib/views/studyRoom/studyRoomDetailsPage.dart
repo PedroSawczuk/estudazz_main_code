@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'package:estudazz_main_code/controllers/studyRoom/studyRoomController.dart';
 import 'package:estudazz_main_code/models/studyRoom/studyRoomModel.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/services/db/studyRoom/studyRoomDb.dart';
@@ -12,6 +13,7 @@ import 'package:estudazz_main_code/views/studyRoom/chatPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class StudyRoomDetailsPage extends StatefulWidget {
@@ -142,6 +144,7 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
     final formattedDate = DateFormat(
       'dd/MM/yyyy',
     ).format(_currentRoom.createdAt.toDate());
+    final controller = Get.find<StudyRoomController>();
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -196,43 +199,52 @@ class _StudyRoomDetailsPageState extends State<StudyRoomDetailsPage>
           _isLoading
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _members.length,
-                itemBuilder: (context, index) {
-                  final member = _members[index];
-                  return ListTile(
-                    leading: ClipOval(
-                      child:
-                          member.photoUrl.isNotEmpty
-                              ? CachedNetworkImage(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _members.length,
+                  itemBuilder: (context, index) {
+                    final member = _members[index];
+                    return ListTile(
+                      leading: ClipOval(
+                        child: member.photoUrl.isNotEmpty
+                            ? CachedNetworkImage(
                                 imageUrl: member.photoUrl,
-                                placeholder:
-                                    (context, url) =>
-                                        const CircularProgressIndicator(),
-                                errorWidget:
-                                    (context, url, error) => Image.asset(
-                                      'assets/images/no-profile-photo.png',
-                                      fit: BoxFit.cover,
-                                      width: 40,
-                                      height: 40,
-                                    ),
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                  'assets/images/no-profile-photo.png',
+                                  fit: BoxFit.cover,
+                                  width: 40,
+                                  height: 40,
+                                ),
                                 fit: BoxFit.cover,
                                 width: 40,
                                 height: 40,
                               )
-                              : Image.asset(
+                            : Image.asset(
                                 'assets/images/no-profile-photo.png',
                                 fit: BoxFit.cover,
                                 width: 40,
                                 height: 40,
                               ),
-                    ),
-                    title: Text(member.displayName),
-                    subtitle: Text(member.email),
-                  );
-                },
+                      ),
+                      title: Text(member.displayName),
+                      subtitle: Text(member.email),
+                    );
+                  },
+                ),
+          if (!isOwner) ...[
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () => controller.leaveRoom(_currentRoom.id),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                minimumSize: const Size(double.infinity, 50),
               ),
+              child: const Text('Sair da Sala'),
+            ),
+          ],
         ],
       ),
     );

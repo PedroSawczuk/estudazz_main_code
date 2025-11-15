@@ -49,7 +49,7 @@ class _MyDataPageState extends State<MyDataPage> {
                 Get.back();
                 await _userController.updateProfilePicture(ImageSource.camera);
                 setState(() {
-                  _futureUserData = _fetchUserData(); // Refresh data
+                  _futureUserData = _fetchUserData(); 
                 });
               },
             ),
@@ -60,7 +60,7 @@ class _MyDataPageState extends State<MyDataPage> {
                 Get.back();
                 await _userController.updateProfilePicture(ImageSource.gallery);
                 setState(() {
-                  _futureUserData = _fetchUserData(); // Refresh data
+                  _futureUserData = _fetchUserData(); 
                 });
               },
             ),

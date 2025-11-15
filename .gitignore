@@ -54,3 +54,5 @@ firebase.json
 # Local environment configuration file
 .env
 env.*
+
+GEMINI.md

@@ -25,7 +25,6 @@ class TasksRepository {
 
     return tasks.where((task) {
       try {
-        // dueDate já é DateTime no modelo
         return task.dueDate.isAfter(start) && task.dueDate.isBefore(end);
       } catch (e) {
         return false;

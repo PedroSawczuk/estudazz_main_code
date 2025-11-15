@@ -15,12 +15,13 @@ class StudyRoomController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      _studyRooms.bindStream(_getStudyRoomsStream(user.uid));
-    } else {
-      _studyRooms.clear();
-    }
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null) {
+        _studyRooms.bindStream(_getStudyRoomsStream(user.uid));
+      } else {
+        _studyRooms.clear();
+      }
+    });
   }
 
   Stream<List<StudyRoomModel>> _getStudyRoomsStream(String userId) {
@@ -146,7 +147,6 @@ class StudyRoomController extends GetxController {
   Future<void> deleteRoom(String roomId) async {
     try {
       await _studyRoomDB.deleteStudyRoom(roomId);
-      _studyRooms.removeWhere((room) => room.id == roomId);
       CustomSnackBar.show(
           title: 'Sucesso!',
           message: 'A sala foi excluída.',
@@ -155,6 +155,31 @@ class StudyRoomController extends GetxController {
       CustomSnackBar.show(
           title: 'Erro',
           message: 'Não foi possível excluir a sala.',
+          backgroundColor: ConstColors.redColor);
+    }
+  }
+
+  Future<void> leaveRoom(String roomId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Você precisa estar logado para sair de uma sala.',
+          backgroundColor: ConstColors.redColor);
+      return;
+    }
+
+    try {
+      await _studyRoomDB.leaveStudyRoom(roomId, user.uid);
+      CustomSnackBar.show(
+          title: 'Sucesso!',
+          message: 'Você saiu da sala.',
+          backgroundColor: ConstColors.greenColor);
+      Get.offNamed(AppRoutes.studyRoomPage);
+    } catch (e) {
+      CustomSnackBar.show(
+          title: 'Erro',
+          message: 'Não foi possível sair da sala.',
           backgroundColor: ConstColors.redColor);
     }
   }

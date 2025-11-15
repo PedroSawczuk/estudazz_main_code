@@ -1,5 +1,6 @@
 import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:estudazz_main_code/views/settings/notifications/notificationsPage.dart';
+import 'package:estudazz_main_code/views/splashPage.dart';
 import 'package:estudazz_main_code/views/studyRoom/studyRoomPage.dart';
 import 'package:estudazz_main_code/views/studyRoom/studyRoomDetailsPage.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import 'package:estudazz_main_code/views/auth/signInPage.dart';
 import 'package:estudazz_main_code/views/auth/forgotPasswordPage.dart';
 
 class AppRoutes {
+  static const String splashPage = '/splashPage';
   static const String homePage = '/homePage';
   static const String settingsPage = '/settingsPage';
   static const String allTasksPage = '/allTasksPage';
@@ -40,6 +42,7 @@ class AppRoutes {
   static const String forgotPasswordPage = '/forgotPasswordPage';
 
   static final routes = [
+    GetPage(name: splashPage, page: () => SplashPage()),
     GetPage(name: homePage, page: () => HomePage()),
     GetPage(name: settingsPage, page: () => SettingsPage()),
     GetPage(name: allTasksPage, page: () => AllTasksPage()),

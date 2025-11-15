@@ -63,7 +63,6 @@ class _ChatPageState extends State<ChatPage> {
                   final sender = _membersMap[message.senderUid];
 
                   if (sender == null) {
-                    // Handle case where sender is not in the members list
                     return const SizedBox.shrink();
                   }
 

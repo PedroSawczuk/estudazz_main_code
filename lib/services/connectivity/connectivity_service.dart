@@ -53,8 +53,6 @@ class ConnectivityService {
         }
       } else {
         if (!_isDialogShowing) {
-          // We need a context to show a dialog, so we'll use the one from the page.
-          // This assumes the page is still mounted. A more advanced solution might use a global navigator key.
           final navigator = Navigator.of(context);
           if (navigator.canPop()) {
              _showNoInternetDialog(context);

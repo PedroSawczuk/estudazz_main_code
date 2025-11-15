@@ -4,7 +4,6 @@
   Caso queira rodar localmente, você precisa de uma chave de API e a URL do Gemini.
 
   Você consegue pegar esses dados aqui: https://aistudio.google.com/apikey
-
 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';

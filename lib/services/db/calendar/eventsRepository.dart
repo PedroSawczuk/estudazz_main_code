@@ -23,7 +23,6 @@ class EventsRepository {
 
     return events.where((event) {
       try {
-        // eventDate já é DateTime no modelo
         return event.eventDate.isAfter(start) && event.eventDate.isBefore(end);
       } catch (e) {
         return false;

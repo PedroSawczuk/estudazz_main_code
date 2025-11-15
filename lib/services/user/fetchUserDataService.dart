@@ -22,19 +22,17 @@ class FetchUserDataService {
 
     final XFile? pickedFile = await _picker.pickImage(source: source, imageQuality: 80);
 
-    if (pickedFile == null) return null; // User cancelled picking
+    if (pickedFile == null) return null; 
 
     final File imageFile = File(pickedFile.path);
     final String uid = user.uid;
     final String filePath = 'users/$uid/profile.jpg';
 
     try {
-      // Upload image to Firebase Storage
       final UploadTask uploadTask = _storage.ref().child(filePath).putFile(imageFile);
       final TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
       final String downloadUrl = await snapshot.ref.getDownloadURL();
 
-      // Save download URL to Firestore user document
       await _firestore.collection('users').doc(uid).set(
         {'photoURL': downloadUrl},
         SetOptions(merge: true),
