@@ -4,7 +4,6 @@ import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
-import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/utils/formatter/inputsFormatter.dart';
 import 'package:estudazz_main_code/utils/user/getUserData.dart';
 import 'package:estudazz_main_code/utils/validators/TextFieldValidator.dart';
@@ -86,10 +85,7 @@ class _EditDataPageState extends State<EditDataPage> {
           backgroundColor: ConstColors.greenColor,
         );
 
-        Get.offNamedUntil(
-          AppRoutes.myDataPage,
-          ModalRoute.withName(AppRoutes.settingsPage),
-        );
+        Get.back();
       }
     } catch (e) {
       print(e);
@@ -98,7 +94,7 @@ class _EditDataPageState extends State<EditDataPage> {
         message: 'Erro ao atualizar os dados. Tente novamente mais tarde.',
         backgroundColor: ConstColors.redColor,
       );
-      Get.offAllNamed(AppRoutes.myDataPage);
+      Get.back();
     }
   }
 

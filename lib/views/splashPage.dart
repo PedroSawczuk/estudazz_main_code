@@ -35,11 +35,13 @@ class _SplashPageState extends State<SplashPage> {
 
     await prefs.setInt('lastActivity', now);
 
-    if (FirebaseAuth.instance.currentUser != null) {
-      Get.offAllNamed(AppRoutes.homePage);
-    } else {
-      Get.offAllNamed(AppRoutes.signInPage);
-    }
+    FirebaseAuth.instance.authStateChanges().first.then((user) {
+      if (user != null) {
+        Get.offAllNamed(AppRoutes.homePage);
+      } else {
+        Get.offAllNamed(AppRoutes.signInPage);
+      }
+    });
   }
 
   @override
