@@ -79,6 +79,15 @@ class StudyRoomDB {
         .snapshots();
   }
 
+  Stream<Map<String, int>> getParticipatedStudyRoomsStats(String userId) {
+    return studyRoomsCollection
+        .where('members', arrayContains: userId)
+        .snapshots()
+        .map((snapshot) {
+      return {'total': snapshot.docs.length};
+    });
+  }
+
   Future<void> sendChatMessage(String roomId, String text) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null || text.trim().isEmpty) {

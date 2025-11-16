@@ -60,26 +60,29 @@ class ProfilePage extends StatelessWidget {
 
                 userData.displayName.isNotEmpty
                     ? Column(
-                      children: [
-                        Text(
-                          userData.displayName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                        children: [
+                          Text(
+                            userData.displayName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
                           ),
-                        ),
-
-                        ConstSizedBox.h5,
-                      ],
-                    )
+                          ConstSizedBox.h5,
+                          Text(
+                            '@${userData.username}',
+                            style: TextStyle(
+                                fontSize: 16, color: ConstColors.greyColor),
+                          ),
+                        ],
+                      )
                     : Text(
-                      'Sem nome definido',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        'Sem nome definido',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
-
                 Text(
                   userData.email,
                   style: TextStyle(fontSize: 16, color: ConstColors.greyColor),
@@ -88,22 +91,22 @@ class ProfilePage extends StatelessWidget {
 
                 userData.profileCompleted
                     ? Text(
-                      'Seu perfil está completo!',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: ConstColors.greenColor,
-                      ),
-                    )
+                        'Seu perfil está completo!',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: ConstColors.greenColor,
+                        ),
+                      )
                     : ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.myDataPage);
-                      },
-                      child: Text('Complete seu perfil'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ConstColors.redColor,
-                        foregroundColor: ConstColors.whiteColor,
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.myDataPage);
+                        },
+                        child: Text('Complete seu perfil'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ConstColors.redColor,
+                          foregroundColor: ConstColors.whiteColor,
+                        ),
                       ),
-                    ),
                 ConstSizedBox.h30,
                 StreamBuilder<Map<String, int>>(
                   stream: _tasksRepository.getTasksStats(uid!),
@@ -153,9 +156,33 @@ class ProfilePage extends StatelessWidget {
                                 iconData: Icons.bar_chart,
                                 infoValue: completionRate.toStringAsFixed(0),
                               ),
+                              UserInfoCard(
+                                infoName: 'Instituição',
+                                iconData: Icons.school_outlined,
+                                infoValue: userData.institution,
+                              ),
                             ],
                           ),
                         ),
+                        ConstSizedBox.h20,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              UserInfoCard(
+                                infoName: 'Curso',
+                                iconData: Icons.menu_book_outlined,
+                                infoValue: userData.course,
+                              ),
+                              UserInfoCard(
+                                infoName: 'Graduação',
+                                iconData: Icons.calendar_today_outlined,
+                                infoValue: userData.expectedGraduation,
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     );
                   },

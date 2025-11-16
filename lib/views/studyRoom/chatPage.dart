@@ -99,6 +99,8 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
               textCapitalization: TextCapitalization.sentences,
+              maxLines: null, 
+              keyboardType: TextInputType.multiline,
             ),
           ),
           const SizedBox(width: 8),
