@@ -49,6 +49,10 @@ class _SettingsPageState extends State<SettingsPage> {
           _buildNotificationsSwitch(),
           const Divider(),
 
+          _buildSectionHeader('Sobre'),
+          _buildAboutListTile(),
+          const Divider(),
+
           _buildLogoutListTile(),
           const SizedBox(height: 20),
           _buildDeleteAccountButton(),
@@ -77,6 +81,17 @@ class _SettingsPageState extends State<SettingsPage> {
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         Get.toNamed(AppRoutes.myDataPage);
+      },
+    );
+  }
+
+  Widget _buildAboutListTile() {
+    return ListTile(
+      leading: const Icon(Icons.info_outline),
+      title: const Text('O que é o Estudazz'),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () {
+        Get.toNamed(AppRoutes.aboutPage);
       },
     );
   }

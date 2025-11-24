@@ -1,3 +1,4 @@
+import 'package:estudazz_main_code/views/about/aboutPage.dart';
 import 'package:estudazz_main_code/views/ia/settings/settingsIAPage.dart';
 import 'package:estudazz_main_code/views/settings/notifications/notificationsPage.dart';
 import 'package:estudazz_main_code/views/splashPage.dart';
@@ -36,6 +37,7 @@ class AppRoutes {
   static const String notificationsPage = '/notificationsPage';
   static const String myDataPage = '/myDataPage';
   static const String editDataPage = '/editDataPage';
+  static const String aboutPage = '/aboutPage';
 
   static const String signUpPage = '/signUpPage';
   static const String signInPage = '/signInPage';
@@ -63,6 +65,7 @@ class AppRoutes {
     GetPage(name: notificationsPage, page: () => NotificationsSettingsPage()),
     GetPage(name: myDataPage, page: () => MyDataPage()),
     GetPage(name: editDataPage, page: () => EditDataPage()),
+    GetPage(name: aboutPage, page: () => const AboutPage()),
 
     // -------------- AUTH
     GetPage(name: signUpPage, page: () => SignUpPage()),
