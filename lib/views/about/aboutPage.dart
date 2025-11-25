@@ -13,8 +13,6 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // TODO: Adicionar a logo do Estudazz
-            // Image.asset('assets/images/logo.png'),
             const SizedBox(height: 24),
             Text(
               'Estudazz',
@@ -31,6 +29,12 @@ class AboutPage extends StatelessWidget {
               'Com o Estudazz, você pode criar um plano de estudos personalizado, registrar o seu progresso, acessar um banco de questões e muito mais.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Versão 1.0.0',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         ),
