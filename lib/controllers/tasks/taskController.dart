@@ -1,36 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
-import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
+
+enum AddTaskResult { success, emptyName, pastDueDate }
 
 class TaskController {
   final TasksDB tasksDB;
 
   TaskController({required this.tasksDB});
 
-  Future<void> addTask({
+  Future<AddTaskResult> addTask({
     required String uid,
     required String taskName,
     required DateTime dueDate,
   }) async {
     if (taskName.isEmpty) {
-      CustomSnackBar.show(
-        title: 'Erro!',
-        message: 'O nome da tarefa não pode ser vazio', 
-        backgroundColor: ConstColors.redColor,
-      );
+      return AddTaskResult.emptyName;
     }
     if (dueDate.isBefore(DateTime.now())) {
-      CustomSnackBar.show(
-        title: 'Erro!',
-        message: 'A data de vencimento não pode ser no passado',
-        backgroundColor: ConstColors.redColor,
-      );
+      return AddTaskResult.pastDueDate;
     }
 
     String dueDateString = dueDate.toIso8601String();
 
     await tasksDB.addTask(uid: uid, taskName: taskName, dueDate: dueDateString);
+    return AddTaskResult.success;
   }
 
   Future<void> updateTask({

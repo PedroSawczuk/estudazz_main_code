@@ -93,28 +93,41 @@ class AddEventDialog {
                     );
 
                     String? uid = await getUserUid();
-
-                    try {
-                      await _eventController.addEvent(
-                        uid: uid!,
-                        eventName: _eventNameController.text,
-                        eventDate: fullDateTime,
+                     if (uid == null) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Usuário não autenticado.',
+                        backgroundColor: ConstColors.redColor,
                       );
+                      return;
+                    }
 
+                    final result = await _eventController.addEvent(
+                      uid: uid,
+                      eventName: _eventNameController.text,
+                      eventDate: fullDateTime,
+                    );
+
+                    if (result == AddEventResult.success) {
                       _eventNameController.clear();
-                        Navigator.of(context).pop();
-
+                      Navigator.of(context).pop();
                       CustomSnackBar.show(
                         title: 'Evento Adicionado',
                         message: 'Evento adicionado com sucesso.',
                         backgroundColor: ConstColors.greenColor,
                       );
-                    } catch (e) {
+                    } else if (result == AddEventResult.emptyName) {
                       CustomSnackBar.show(
                         title: 'Erro!',
-                        message: 'Falha ao adicionar tarefa: $e',
+                        message: 'O nome do evento não pode ser vazio.',
                         backgroundColor: ConstColors.redColor,
                       );
+                    } else if (result == AddEventResult.pastDate) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'A data do evento não pode ser no passado.',
+                        backgroundColor: ConstColors.redColor,
+      );
                     }
                   },
                   child: Text('Salvar'),

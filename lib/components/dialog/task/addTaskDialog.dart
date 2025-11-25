@@ -78,27 +78,48 @@ class AddTaskDialog {
                   child: Text("Salvar"),
                   onPressed: () async {
                     String? uid = await getUserUid();
-                    try {
-                      await taskController.addTask(
-                        uid: uid!,
-                        taskName: _taskNameController.text,
-                        dueDate: tempSelectedDate!,
+                    if (uid == null) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Usuário não autenticado.',
+                        backgroundColor: ConstColors.redColor,
                       );
+                      return;
+                    }
+                    if (tempSelectedDate == null) {
+                       CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Selecione uma data de vencimento.',
+                        backgroundColor: ConstColors.redColor,
+                      );
+                      return;
+                    }
 
+                    final result = await taskController.addTask(
+                      uid: uid,
+                      taskName: _taskNameController.text,
+                      dueDate: tempSelectedDate!,
+                    );
+
+                    if (result == AddTaskResult.success) {
                       _taskNameController.clear();
                       _selectedDate = null;
-
+                      Navigator.of(context).pop();
                       CustomSnackBar.show(
                         title: 'Tarefa adicionada',
                         message: 'A tarefa foi adicionada com sucesso.',
                         backgroundColor: ConstColors.greenColor,
                       );
-
-                        Navigator.of(context).pop();
-                    } catch (e) {
+                    } else if (result == AddTaskResult.emptyName) {
                       CustomSnackBar.show(
                         title: 'Erro!',
-                        message: 'Falha ao adicionar tarefa: $e',
+                        message: 'O nome da tarefa não pode ser vazio.',
+                        backgroundColor: ConstColors.redColor,
+                      );
+                    } else if (result == AddTaskResult.pastDueDate) {
+                       CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'A data de vencimento não pode ser no passado.',
                         backgroundColor: ConstColors.redColor,
                       );
                     }
