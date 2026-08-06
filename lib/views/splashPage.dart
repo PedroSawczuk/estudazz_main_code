@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -37,6 +38,7 @@ class _SplashPageState extends State<SplashPage> {
 
     FirebaseAuth.instance.authStateChanges().first.then((user) {
       if (user != null) {
+        OneSignal.login(user.uid);
         Get.offAllNamed(AppRoutes.homePage);
       } else {
         Get.offAllNamed(AppRoutes.signInPage);

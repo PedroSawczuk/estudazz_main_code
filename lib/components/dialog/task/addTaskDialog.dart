@@ -116,12 +116,6 @@ class AddTaskDialog {
                         message: 'O nome da tarefa não pode ser vazio.',
                         backgroundColor: ConstColors.redColor,
                       );
-                    } else if (result == AddTaskResult.pastDueDate) {
-                       CustomSnackBar.show(
-                        title: 'Erro!',
-                        message: 'A data de vencimento não pode ser no passado.',
-                        backgroundColor: ConstColors.redColor,
-                      );
                     }
                   },
                 ),

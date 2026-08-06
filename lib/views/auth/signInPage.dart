@@ -42,28 +42,52 @@ class _SignInPageState extends State<SignInPage> {
         if (e.code == 'user-not-found') {
           CustomSnackBar.show(
             title: 'Erro!',
-            message: 'Usuário não encontrado',
+            message: 'Usuário não encontrado.',
             backgroundColor: ConstColors.redColor,
           );
-        } else if (e.code == 'invalid-credential') {
+        } else if (e.code == 'invalid-credential' || e.code == 'wrong-password') {
+          CustomSnackBar.show(
+            title: 'Credenciais Incorretas',
+            message: 'Verifique se seu email ou senha estão corretos.',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'invalid-email') {
           CustomSnackBar.show(
             title: 'Erro!',
-            message: 'Verifique se seu email ou senha estão corretos',
+            message: 'Por favor, insira um endereço de email válido.',
             backgroundColor: ConstColors.redColor,
           );
         } else if (e.code == 'user-disabled') {
           CustomSnackBar.show(
             title: 'Erro!',
-            message: 'Essa conta foi desativada',
+            message: 'Essa conta foi desativada.',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'too-many-requests') {
+          CustomSnackBar.show(
+            title: 'Muitas Tentativas',
+            message: 'Sua conta foi bloqueada temporariamente. Tente de novo mais tarde.',
+            backgroundColor: ConstColors.redColor,
+          );
+        } else if (e.code == 'network-request-failed') {
+          CustomSnackBar.show(
+            title: 'Sem Conexão',
+            message: 'Verifique sua conexão com a internet.',
             backgroundColor: ConstColors.redColor,
           );
         } else {
           CustomSnackBar.show(
-            title: 'Erro Inesperado',
-            message: 'Erro ao entrar, contate o suporte',
+            title: 'Erro',
+            message: 'Ocorreu um erro ao entrar (${e.code}). Contate o suporte.',
             backgroundColor: ConstColors.redColor,
           );
         }
+      } catch (e) {
+        CustomSnackBar.show(
+          title: 'Erro Inesperado',
+          message: 'Falha ao processar o login. Tente novamente.',
+          backgroundColor: ConstColors.redColor,
+        );
       }
     }
   }

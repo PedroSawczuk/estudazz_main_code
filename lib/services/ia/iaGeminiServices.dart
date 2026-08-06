@@ -41,26 +41,44 @@ class AiGeminiServices {
       ''';
 
       final response = await _dio.post(
-        '$_geminiApiUrl?key=$_geminiApiKey',
-        options: Options(headers: {'Content-Type': 'application/json'}),
+        _geminiApiUrl,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': _geminiApiKey,
+        }),
         data: {
-          "contents": [
-            {
-              "parts": [
-                {"text": prompt},
-              ],
-            },
-          ],
+          "model": "gemini-3.6-flash",
+          "input": prompt,
         },
       );
 
       final data = response.data;
-      final responseContent =
-          data['candidates'][0]['content']['parts'][0]['text'];
+      String responseContent = '';
+      
+      if (data['steps'] != null) {
+        final steps = data['steps'] as List;
+        for (var step in steps) {
+          if (step['type'] == 'model_output' && step['content'] != null) {
+            responseContent = step['content'][0]['text'] ?? '';
+            break;
+          }
+        }
+      }
+
+      if (responseContent.isEmpty) {
+        responseContent = 'A IA processou a requisição, mas não retornou um texto legível.';
+      }
+
       return responseContent;
+    } on DioException catch (e) {
+      String erroDetalhado = 'Erro na API';
+      if (e.response != null && e.response?.data != null) {
+        erroDetalhado = e.response?.data.toString() ?? 'Erro desconhecido';
+      }
+      return 'Erro na requisição: ${e.message}\nDetalhes da Google: $erroDetalhado';
     } catch (e) {
       print(e);
-      return 'Erro ao gerar texto: $e';
+      return 'Erro inesperado: $e';
     }
   }
 }

@@ -19,24 +19,50 @@ class MarkTaskCompletedDialog {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(
-              "Tarefa Concluída",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            backgroundColor: ConstColors.grey900Color,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
             ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            title: Column(
               children: [
-                Text("A tarefa '$taskName' já foi marcada como concluída."),
+                Icon(
+                  Icons.check_circle,
+                  color: ConstColors.greenColor,
+                  size: 60,
+                ),
                 ConstSizedBox.h10,
-                Text("Deseja desmarcá-la? como concluída?"),
+                Text(
+                  "Tarefa Concluída",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ConstColors.whiteColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
+            content: Text(
+              "A tarefa '$taskName' já está concluída.\nDeseja desmarcá-la e voltar para pendentes?",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: ConstColors.white54Color),
+            ),
+            actionsAlignment: MainAxisAlignment.center,
             actions: [
               TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: ConstColors.redColor,
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  "Fechar",
+                  style: TextStyle(color: ConstColors.greyColor),
+                ),
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ConstColors.orangeColor,
                   foregroundColor: ConstColors.whiteColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
                 onPressed: () async {
                   try {
@@ -49,8 +75,7 @@ class MarkTaskCompletedDialog {
                     );
                     CustomSnackBar.show(
                       title: 'Tarefa Desmarcada',
-                      message:
-                          'A tarefa "$taskName" foi desmarcada com sucesso.',
+                      message: 'A tarefa "$taskName" foi desmarcada com sucesso.',
                       backgroundColor: ConstColors.greenColor,
                     );
                   } catch (e) {
@@ -62,13 +87,8 @@ class MarkTaskCompletedDialog {
                   }
                   Navigator.of(context).pop();
                 },
-                child: Text('Desmarcar'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("OK"),
+                icon: Icon(Icons.undo),
+                label: Text('Desmarcar'),
               ),
             ],
           );
@@ -79,76 +99,117 @@ class MarkTaskCompletedDialog {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(
-              "Marcar Tarefa como Concluída",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            backgroundColor: ConstColors.grey900Color,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
             ),
-            content: Text(
-              "Você tem certeza que deseja marcar a tarefa ${taskName} como concluída?",
+            title: Column(
+              children: [
+                Icon(Icons.task_alt, color: ConstColors.orangeColor, size: 60),
+                ConstSizedBox.h10,
+                Text(
+                  "Ações da Tarefa",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ConstColors.whiteColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "O que deseja fazer com a tarefa '$taskName'?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: ConstColors.whiteColor,
+                    fontSize: 16,
+                  ),
+                ),
+                ConstSizedBox.h24,
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    try {
+                      await _taskController.tasksDB.updateTask(
+                        taskId: taskId,
+                        data: {
+                          'task_completed': true,
+                          'task_completed_at': DateTime.now().toIso8601String(),
+                        },
+                      );
+                      CustomSnackBar.show(
+                        title: 'Parabéns!',
+                        message: 'Tarefa marcada como concluída.',
+                        backgroundColor: ConstColors.greenColor,
+                      );
+                    } catch (e) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Falha ao concluir: $e',
+                        backgroundColor: ConstColors.redColor,
+                      );
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.check_circle_outline, size: 24),
+                  label: Text(
+                    'Marcar como Concluída',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ConstColors.greenColor,
+                    foregroundColor: ConstColors.whiteColor,
+                    minimumSize: Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+                ConstSizedBox.h16,
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    try {
+                      await _taskController.tasksDB.deleteTask(taskId);
+                      CustomSnackBar.show(
+                        title: 'Tarefa Excluída',
+                        message: 'A tarefa "$taskName" foi excluída.',
+                        backgroundColor: ConstColors.greenColor,
+                      );
+                    } catch (e) {
+                      CustomSnackBar.show(
+                        title: 'Erro!',
+                        message: 'Falha ao excluir: $e',
+                        backgroundColor: ConstColors.redColor,
+                      );
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.delete_outline, size: 24),
+                  label: Text(
+                    'Excluir Tarefa',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: ConstColors.redColor,
+                    side: BorderSide(color: ConstColors.redColor),
+                    minimumSize: Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actionsAlignment: MainAxisAlignment.center,
             actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Cancelar"),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete, color: ConstColors.redColor),
-                    onPressed: () async {
-                      try {
-                        await _taskController.tasksDB.deleteTask(taskId);
-                        CustomSnackBar.show(
-                          title: 'Tarefa Excluída',
-                          message:
-                              'A tarefa "$taskName" foi excluída com sucesso.',
-                          backgroundColor: ConstColors.greenColor,
-                        );
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Erro ao excluir tarefa: $e'),
-                            backgroundColor: ConstColors.redColor,
-                          ),
-                        );
-                      }
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      try {
-                        await _taskController.tasksDB.updateTask(
-                          taskId: taskId,
-                          data: {
-                            'task_completed': true,
-                            'task_completed_at':
-                                DateTime.now().toIso8601String(),
-                          },
-                        );
-                        CustomSnackBar.show(
-                          title: 'Tarefa Concluída',
-                          message: 'A tarefa foi marcada como concluída.',
-                          backgroundColor: ConstColors.greenColor,
-                        );
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Erro ao marcar tarefa como concluída: $e',
-                            ),
-                            backgroundColor: ConstColors.redColor,
-                          ),
-                        );
-                      }
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Confirmar"),
-                  ),
-                ],
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  "Cancelar",
+                  style: TextStyle(color: ConstColors.grey400Color),
+                ),
               ),
             ],
           );
