@@ -9,14 +9,32 @@ import 'package:estudazz_main_code/services/db/tasks/tasksRepository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class PerformancePage extends StatelessWidget {
+class PerformancePage extends StatefulWidget {
+  PerformancePage({super.key});
+
+  @override
+  _PerformancePageState createState() => _PerformancePageState();
+}
+
+class _PerformancePageState extends State<PerformancePage> {
   final TasksRepository _tasksRepository = TasksRepository();
   final EventsRepository _eventsRepository = EventsRepository();
   final StudyRoomDB _studyRoomDB = StudyRoomDB();
-
-  PerformancePage({super.key});
-
   final uid = FirebaseAuth.instance.currentUser?.uid;
+
+  Stream<Map<String, int>>? _tasksStatsStream;
+  Stream<Map<String, int>>? _eventsStatsStream;
+  Stream<Map<String, int>>? _studyRoomStatsStream;
+
+  @override
+  void initState() {
+    super.initState();
+    if (uid != null) {
+      _tasksStatsStream = _tasksRepository.getTasksStats(uid!);
+      _eventsStatsStream = _eventsRepository.getEventsStats(uid!);
+      _studyRoomStatsStream = _studyRoomDB.getParticipatedStudyRoomsStats(uid!);
+    }
+  }
 
   Map<String, dynamic> _getPerformanceFeedback(double completionRate) {
     if (completionRate == 0) {
@@ -55,7 +73,7 @@ class PerformancePage extends StatelessWidget {
           children: [
             ConstSizedBox.h20,
             StreamBuilder<Map<String, int>>(
-              stream: _tasksRepository.getTasksStats(uid!),
+              stream: _tasksStatsStream,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -105,7 +123,7 @@ class PerformancePage extends StatelessWidget {
             ),
             ConstSizedBox.h20,
             StreamBuilder<Map<String, int>>(
-              stream: _eventsRepository.getEventsStats(uid!),
+              stream: _eventsStatsStream,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -129,7 +147,7 @@ class PerformancePage extends StatelessWidget {
             ),
             ConstSizedBox.h20,
             StreamBuilder<Map<String, int>>(
-              stream: _studyRoomDB.getParticipatedStudyRoomsStats(uid!),
+              stream: _studyRoomStatsStream,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();

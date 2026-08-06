@@ -22,6 +22,14 @@ class _AllTasksPageState extends State<AllTasksPage> {
   final TaskController _taskController = TaskController(tasksDB: TasksDB());
   final TasksDB _tasksDB = TasksDB();
 
+  late Future<String?> _userUidFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _userUidFuture = _getUserUid();
+  }
+
   Future<String?> _getUserUid() async {
     User? user = FirebaseAuth.instance.currentUser;
     return user?.uid;
@@ -48,7 +56,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Minhas Tarefas'),
       body: FutureBuilder<String?>(
-        future: _getUserUid(),
+        future: _userUidFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

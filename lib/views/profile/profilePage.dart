@@ -3,6 +3,7 @@ import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/user/userController.dart';
+import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksRepository.dart';
 import 'package:estudazz_main_code/utils/formatter/dateFormatter.dart';
@@ -10,18 +11,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  ProfilePage({super.key});
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   final TasksRepository _tasksRepository = TasksRepository();
   final uid = FirebaseAuth.instance.currentUser?.uid;
+  late Stream<UserModel?> _userDataStream;
+  Stream<Map<String, int>>? _tasksStatsStream;
 
-  ProfilePage({super.key});
+  @override
+  void initState() {
+    super.initState();
+    _userDataStream = UserController().streamUserData();
+    if (uid != null) {
+      _tasksStatsStream = _tasksRepository.getTasksStats(uid!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Seu Perfil'),
-      body: FutureBuilder(
-        future: UserController().fetchUserData(),
+      body: StreamBuilder<UserModel?>(
+        stream: _userDataStream,
         builder: (context, userSnapshot) {
           if (!userSnapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -109,7 +126,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                 ConstSizedBox.h30,
                 StreamBuilder<Map<String, int>>(
-                  stream: _tasksRepository.getTasksStats(uid!),
+                  stream: _tasksStatsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();

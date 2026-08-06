@@ -2,7 +2,7 @@ import 'package:estudazz_main_code/components/cards/user/userDataCard.dart';
 import 'package:estudazz_main_code/components/custom/customAppBar.dart';
 import 'package:estudazz_main_code/constants/color/constColors.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
-import 'package:estudazz_main_code/services/user/fetchUserDataService.dart';
+import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,18 +18,13 @@ class MyDataPage extends StatefulWidget {
 }
 
 class _MyDataPageState extends State<MyDataPage> {
-  final FetchUserDataService _fetchUserDataService = FetchUserDataService();
   final UserController _userController = UserController();
-  late Future<DocumentSnapshot> _futureUserData;
+  late Stream<UserModel?> _userDataStream;
 
   @override
   void initState() {
     super.initState();
-    _futureUserData = _fetchUserData();
-  }
-
-  Future<DocumentSnapshot> _fetchUserData() {
-    return _fetchUserDataService.getUserData();
+    _userDataStream = _userController.streamUserData();
   }
 
   void _showImageSourceSelection() {
@@ -48,9 +43,6 @@ class _MyDataPageState extends State<MyDataPage> {
               onTap: () async {
                 Get.back();
                 await _userController.updateProfilePicture(ImageSource.camera);
-                setState(() {
-                  _futureUserData = _fetchUserData(); 
-                });
               },
             ),
             ListTile(
@@ -59,9 +51,6 @@ class _MyDataPageState extends State<MyDataPage> {
               onTap: () async {
                 Get.back();
                 await _userController.updateProfilePicture(ImageSource.gallery);
-                setState(() {
-                  _futureUserData = _fetchUserData(); 
-                });
               },
             ),
           ],
@@ -74,19 +63,19 @@ class _MyDataPageState extends State<MyDataPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Meus Dados'),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: _futureUserData,
+      body: StreamBuilder<UserModel?>(
+        stream: _userDataStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
 
-          if (!snapshot.hasData || !snapshot.data!.exists) {
+          if (!snapshot.hasData || snapshot.data == null) {
             return Center(child: Text("Dados não encontrados."));
           }
 
-          var data = snapshot.data!.data() as Map<String, dynamic>;
-          String? photoURL = data['photoURL'];
+          final data = snapshot.data!;
+          String? photoURL = data.photoUrl;
 
           return Padding(
             padding: EdgeInsets.all(16.0),
@@ -114,12 +103,12 @@ class _MyDataPageState extends State<MyDataPage> {
                 Divider(thickness: 1),
                 ConstSizedBox.h8,
 
-                UserDataCard(label: "Nome", value: data['display_name'] ?? ''),
-                UserDataCard(label: "Username", value: data['username'] ?? ''),
-                UserDataCard(label: "Email", value: data['email'] ?? ''),
+                UserDataCard(label: "Nome", value: data.displayName),
+                UserDataCard(label: "Username", value: data.username),
+                UserDataCard(label: "Email", value: data.email),
                 UserDataCard(
                   label: "Data de Nascimento",
-                  value: data['birth_date'] ?? '',
+                  value: data.birthDate,
                 ),
 
                 ConstSizedBox.h13,
@@ -134,12 +123,12 @@ class _MyDataPageState extends State<MyDataPage> {
 
                 UserDataCard(
                   label: "Instituição",
-                  value: data['institution'] ?? '',
+                  value: data.institution,
                 ),
-                UserDataCard(label: "Curso", value: data['course'] ?? ''),
+                UserDataCard(label: "Curso", value: data.course),
                 UserDataCard(
                   label: "Conclusão Prevista",
-                  value: data['expected_graduation'] ?? '',
+                  value: data.expectedGraduation,
                 ),
                 ConstSizedBox.h30,
                 Center(

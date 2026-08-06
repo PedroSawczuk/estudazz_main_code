@@ -37,6 +37,18 @@ class _EditDataPageState extends State<EditDataPage> {
     _loadUserData();
   }
 
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _usernameController.dispose();
+    _emailController.dispose();
+    _birthDateController.dispose();
+    _institutionController.dispose();
+    _courseController.dispose();
+    _graduationDateController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadUserData() async {
     final uid = await GetUserData.getUserUid();
     final snapshot =
@@ -79,13 +91,13 @@ class _EditDataPageState extends State<EditDataPage> {
             .doc(uid)
             .update(updatedUser.toMap());
 
+        Get.back();
+
         CustomSnackBar.show(
           title: 'Sucesso!',
           message: 'Dados atualizados com sucesso!',
           backgroundColor: ConstColors.greenColor,
         );
-
-        Get.back();
       }
     } catch (e) {
       print(e);
@@ -98,157 +110,167 @@ class _EditDataPageState extends State<EditDataPage> {
     }
   }
 
+  InputDecoration _buildPremiumDecoration(String label, IconData icon, {String? hint}) {
+    return InputDecoration(
+      labelText: label,
+      hintText: hint,
+      prefixIcon: Icon(icon, color: ConstColors.orangeColor),
+      filled: true,
+      fillColor: ConstColors.blackColor,
+      labelStyle: TextStyle(color: ConstColors.greyColor),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: ConstColors.orangeColor, width: 2),
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({required String title, required IconData sectionIcon, required List<Widget> children}) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: ConstColors.grey900Color,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(sectionIcon, color: ConstColors.orangeColor, size: 28),
+              ConstSizedBox.w8,
+              Text(
+                title,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ConstColors.whiteColor),
+              ),
+            ],
+          ),
+          ConstSizedBox.h20,
+          ...children,
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Editar Dados'),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Informações Pessoais',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Divider(thickness: 1),
-                TextFormField(
-                  controller: _nameController,
-                  inputFormatters: [nameFormatter],
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    labelText: 'Nome',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                _buildSectionCard(
+                  title: 'Informações Pessoais',
+                  sectionIcon: Icons.person_outline,
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      inputFormatters: [nameFormatter],
+                      keyboardType: TextInputType.text,
+                      decoration: _buildPremiumDecoration('Nome', Icons.badge_outlined),
+                      validator: (value) => textFieldValidator(value, 'Nome é obrigatório'),
                     ),
-                  ),
-                  validator:
-                      (value) =>
-                          textFieldValidator(value, 'Nome é obrigatório'),
-                ),
-                ConstSizedBox.h10,
-                TextFormField(
-                  controller: _usernameController,
-                  inputFormatters: [usernameFormatter],
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    ConstSizedBox.h16,
+                    TextFormField(
+                      controller: _usernameController,
+                      inputFormatters: [usernameFormatter],
+                      keyboardType: TextInputType.text,
+                      decoration: _buildPremiumDecoration('Username', Icons.alternate_email),
+                      validator: (value) => textFieldValidator(value, 'Username é obrigatório'),
                     ),
-                  ),
-                  validator:
-                      (value) =>
-                          textFieldValidator(value, 'Username é obrigatório'),
-                ),
-                ConstSizedBox.h10,
-                GestureDetector(
-                  onTap: () {
-                    CustomSnackBar.show(
-                      title: 'Atenção!',
-                      message: 'Você não pode alterar o email do usuário.',
-                      backgroundColor: ConstColors.orangeColor,
-                    );
-                  },
-                  child: TextFormField(
-                    controller: _emailController,
-                    enabled: false,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                    ConstSizedBox.h16,
+                    GestureDetector(
+                      onTap: () {
+                        CustomSnackBar.show(
+                          title: 'Atenção!',
+                          message: 'Você não pode alterar o email do usuário.',
+                          backgroundColor: ConstColors.orangeColor,
+                        );
+                      },
+                      child: TextFormField(
+                        controller: _emailController,
+                        enabled: false,
+                        decoration: _buildPremiumDecoration('Email', Icons.email_outlined),
+                        validator: (value) => textFieldValidator(value, 'Email é obrigatório'),
                       ),
                     ),
-                    validator:
-                        (value) =>
-                            textFieldValidator(value, 'Email é obrigatório'),
-                  ),
-                ),
-                ConstSizedBox.h10,
-                TextFormField(
-                  controller: _birthDateController,
-                  inputFormatters: [birthDateFormatter],
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Data de Nascimento',
-                    hintText: 'DD/MM/AAAA',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    ConstSizedBox.h16,
+                    TextFormField(
+                      controller: _birthDateController,
+                      inputFormatters: [birthDateFormatter],
+                      keyboardType: TextInputType.number,
+                      decoration: _buildPremiumDecoration('Data de Nascimento', Icons.cake_outlined, hint: 'DD/MM/AAAA'),
+                      validator: birthDateValidator,
                     ),
-                  ),
-                  validator: birthDateValidator,
+                  ],
                 ),
 
+                ConstSizedBox.h24,
+
+                _buildSectionCard(
+                  title: 'Informações Acadêmicas',
+                  sectionIcon: Icons.school_outlined,
+                  children: [
+                    TextFormField(
+                      controller: _institutionController,
+                      decoration: _buildPremiumDecoration('Instituição', Icons.account_balance_outlined),
+                      validator: (value) => textFieldValidator(value, 'Instituição é obrigatória'),
+                    ),
+                    ConstSizedBox.h16,
+                    TextFormField(
+                      controller: _courseController,
+                      decoration: _buildPremiumDecoration('Curso', Icons.menu_book_outlined),
+                      validator: (value) => textFieldValidator(value, 'Curso é obrigatório'),
+                    ),
+                    ConstSizedBox.h16,
+                    TextFormField(
+                      controller: _graduationDateController,
+                      inputFormatters: [graduationDateFormatter],
+                      keyboardType: TextInputType.number,
+                      decoration: _buildPremiumDecoration('Conclusão (MM/AAAA)', Icons.timeline),
+                      validator: graduationDateValidator,
+                    ),
+                  ],
+                ),
+
+                ConstSizedBox.h32,
+
+                ElevatedButton.icon(
+                  onPressed: _saveUserData,
+                  icon: Icon(Icons.check_circle_outline, size: 28),
+                  label: Text(
+                    'Salvar Alterações',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 18),
+                    foregroundColor: ConstColors.whiteColor,
+                    backgroundColor: ConstColors.orangeColor,
+                    elevation: 8,
+                    shadowColor: ConstColors.orangeColor.withOpacity(0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
                 ConstSizedBox.h30,
-                Text(
-                  'Informações Acadêmicas',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Divider(thickness: 1),
-                TextFormField(
-                  controller: _institutionController,
-                  decoration: InputDecoration(
-                    labelText: 'Instituição',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  validator:
-                      (value) => textFieldValidator(
-                        value,
-                        'Instituição é obrigatória',
-                      ),
-                ),
-                ConstSizedBox.h10,
-                TextFormField(
-                  controller: _courseController,
-                  decoration: InputDecoration(
-                    labelText: 'Curso',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  validator:
-                      (value) =>
-                          textFieldValidator(value, 'Curso é obrigatório'),
-                ),
-                ConstSizedBox.h10,
-                TextFormField(
-                  controller: _graduationDateController,
-                  inputFormatters: [graduationDateFormatter],
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Data de Conclusão',
-                    hintText: 'MM/AAAA',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  validator: graduationDateValidator,
-                ),
-                ConstSizedBox.h30,
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _saveUserData,
-                    child: Text(
-                      'Salvar Alterações',
-                      style: TextStyle(color: ConstColors.whiteColor),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 12,
-                      ),
-                      backgroundColor: ConstColors.orangeColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

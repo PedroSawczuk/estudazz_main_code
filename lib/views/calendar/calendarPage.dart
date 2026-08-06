@@ -23,6 +23,13 @@ class _CalendarPageState extends State<CalendarPage> {
 
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  late Future<String?> _userUidFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _userUidFuture = GetUserData.getUserUid();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +64,15 @@ class _CalendarPageState extends State<CalendarPage> {
               },
               calendarStyle: CalendarStyle(
                 selectedDecoration: BoxDecoration(
-                  color: ConstColors.accentPurpleColor,
+                  color: ConstColors.orangeColor,
                   shape: BoxShape.circle,
                 ),
                 todayDecoration: BoxDecoration(
-                  color: ConstColors.purpleColor,
+                  color: ConstColors.redColor,
                   shape: BoxShape.circle,
                 ),
                 markerDecoration: BoxDecoration(
-                  color: ConstColors.redColor,
+                  color: ConstColors.whiteColor,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -78,7 +85,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ConstSizedBox.h16,
             Expanded(
               child: FutureBuilder<String?>(
-                future: GetUserData.getUserUid(),
+                future: _userUidFuture,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
@@ -126,10 +133,7 @@ class _CalendarPageState extends State<CalendarPage> {
                             eventDate: event.eventDate,
                             onTap: () {
                               DetailEventDialog().showDetailEventDialog(
-                                deleteEvent: () async {
-                                  await _eventsDB.deleteEvent(event.id);
-                                },
-                                eventId: uid,
+                                eventId: event.id,
                                 context: context,
                                 eventName: event.eventName,
                                 eventDate: event.eventDate,
