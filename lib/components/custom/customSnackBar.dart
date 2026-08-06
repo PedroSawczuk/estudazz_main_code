@@ -11,7 +11,9 @@ class CustomSnackBar {
     SnackPosition snackPosition = SnackPosition.BOTTOM,
     Duration duration = const Duration(seconds: 3),
   }) {
-    Get.snackbar(
+    if (Get.context == null && Get.overlayContext == null) return;
+    try {
+      Get.snackbar(
       title,
       message,
       backgroundColor: backgroundColor,
@@ -21,5 +23,6 @@ class CustomSnackBar {
       margin: EdgeInsets.all(10),
       borderRadius: 8,
     );
+    } catch (_) {}
   }
 }

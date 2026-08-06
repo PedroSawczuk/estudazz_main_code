@@ -4,17 +4,23 @@ import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/theme/appTheme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:estudazz_main_code/services/connectivity/networkController.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart'; // importando o package raiz do get
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+class InitialBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(NetworkController(), permanent: true);
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  Gemini.init(apiKey: Env.geminiApiKey);
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  OneSignal.initialize(Env.iaChatStorageKey);
+  OneSignal.initialize(Env.appIdOnesignalKey);
   OneSignal.Notifications.requestPermission(true);
   runApp(const MyApp());
 }
@@ -25,7 +31,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      localizationsDelegates: const [
+      initialBinding: InitialBinding(),
+      localizationsDelegates: const [ 
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
