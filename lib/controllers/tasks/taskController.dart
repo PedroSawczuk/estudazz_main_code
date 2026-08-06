@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/services/db/tasks/tasksDB.dart';
+import 'package:estudazz_main_code/components/custom/customSnackBar.dart';
+import 'package:estudazz_main_code/constants/color/constColors.dart';
+import 'dart:async';
 
-enum AddTaskResult { success, emptyName, pastDueDate }
+enum AddTaskResult { success, emptyName, pastDueDate, error }
 
 class TaskController {
   final TasksDB tasksDB;
@@ -16,14 +19,20 @@ class TaskController {
     if (taskName.isEmpty) {
       return AddTaskResult.emptyName;
     }
-    if (dueDate.isBefore(DateTime.now())) {
-      return AddTaskResult.pastDueDate;
-    }
 
     String dueDateString = dueDate.toIso8601String();
 
-    await tasksDB.addTask(uid: uid, taskName: taskName, dueDate: dueDateString);
-    return AddTaskResult.success;
+    try {
+      await tasksDB.addTask(uid: uid, taskName: taskName, dueDate: dueDateString);
+      return AddTaskResult.success;
+    } catch (e) {
+      CustomSnackBar.show(
+        title: 'Servidor Ocupado',
+        message: 'A solicitação demorou muito. Verifique sua rede e tente novamente.',
+        backgroundColor: ConstColors.redColor,
+      );
+      return AddTaskResult.error;
+    }
   }
 
   Future<void> updateTask({

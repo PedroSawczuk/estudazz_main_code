@@ -21,6 +21,17 @@ class EventsDB {
     return await eventsCollection.doc(eventId).get();
   }
 
+  Future<void> updateEvent({
+    required String eventId,
+    required String eventName,
+    required DateTime eventDate,
+  }) async {
+    await eventsCollection.doc(eventId).update({
+      'event_name': eventName,
+      'event_date': eventDate.toIso8601String(),
+    });
+  }
+
   Future<void> deleteEvent(String eventId) async {
     await eventsCollection.doc(eventId).delete();
   }

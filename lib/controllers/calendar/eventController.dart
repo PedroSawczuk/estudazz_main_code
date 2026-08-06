@@ -22,4 +22,20 @@ class EventController {
     await eventsDB.addEvent(uid: uid, eventName: eventName, eventDate: eventDate);
     return AddEventResult.success;
   }
+
+  Future<AddEventResult> updateEvent({
+    required String eventId,
+    required String eventName,
+    required DateTime eventDate,
+  }) async {
+    if (eventName.isEmpty) {
+      return AddEventResult.emptyName;
+    }
+    if (eventDate.isBefore(DateTime.now())) {
+      return AddEventResult.pastDate;
+    }
+
+    await eventsDB.updateEvent(eventId: eventId, eventName: eventName, eventDate: eventDate);
+    return AddEventResult.success;
+  }
 }

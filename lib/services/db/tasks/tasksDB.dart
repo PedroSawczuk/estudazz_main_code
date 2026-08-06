@@ -9,29 +9,45 @@ class TasksDB {
     required String taskName,
     required String dueDate,
   }) async {
-    await tasksCollection.add({
-      'uid': uid,
-      'task_name': taskName,
-      'created_at': DateTime.now().toIso8601String(),
-      'task_completed': false,
-      'due_date': dueDate,
-      'task_completed_at': null,
-    });
+    try {
+      await tasksCollection.add({
+        'uid': uid,
+        'task_name': taskName,
+        'created_at': DateTime.now().toIso8601String(),
+        'task_completed': false,
+        'due_date': dueDate,
+        'task_completed_at': null,
+      }).timeout(const Duration(seconds: 15));
+    } catch (e) {
+      throw Exception('Timeout ou erro ao adicionar tarefa: $e');
+    }
   }
 
   Future<void> updateTask({
     required String taskId,
     required Map<String, dynamic> data,
-  }) {
-    return tasksCollection.doc(taskId).update(data);
+  }) async {
+    try {
+      await tasksCollection.doc(taskId).update(data).timeout(const Duration(seconds: 15));
+    } catch (e) {
+      throw Exception('Timeout ou erro ao atualizar tarefa: $e');
+    }
   }
 
   Future<void> deleteTask(String taskId) async {
-    await tasksCollection.doc(taskId).delete();
+    try {
+      await tasksCollection.doc(taskId).delete().timeout(const Duration(seconds: 15));
+    } catch (e) {
+      throw Exception('Timeout ou erro ao apagar tarefa: $e');
+    }
   }
   
   Future<DocumentSnapshot> getTask(String taskId) async {
-    return await tasksCollection.doc(taskId).get();
+    try {
+      return await tasksCollection.doc(taskId).get().timeout(const Duration(seconds: 15));
+    } catch (e) {
+      throw Exception('Timeout ou erro ao buscar tarefa: $e');
+    }
   }
 
   Stream<QuerySnapshot> getTasksByUser(String uid) {

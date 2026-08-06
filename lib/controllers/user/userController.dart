@@ -25,6 +25,23 @@ class UserController {
     return null;
   }
 
+  Stream<UserModel?> streamUserData() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.exists && snapshot.data() != null) {
+          return UserModel.fromMap(snapshot.data()!, user.uid);
+        }
+        return null;
+      });
+    }
+    return Stream.value(null);
+  }
+
   Future<String?> updateProfilePicture(ImageSource source) async {
     try {
       final String? photoUrl = await _fetchUserDataService.uploadProfileImageAndSaveUrl(source);
