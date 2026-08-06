@@ -54,6 +54,7 @@ firebase.json
 # Local environment configuration file
 .env
 env.*
+*.g.dart
 
 GEMINI.md
 firebase_collections.txt
