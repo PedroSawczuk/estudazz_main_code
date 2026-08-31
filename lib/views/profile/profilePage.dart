@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -68,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     radius: 60,
                     backgroundImage: userData.photoUrl.isNotEmpty
                         ? NetworkImage(userData.photoUrl)
-                        : AssetImage('assets/images/no-profile-photo.png')
+                        : const AssetImage('assets/images/no-profile-photo.png')
                             as ImageProvider,
                   ),
                 ),
@@ -88,12 +88,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           ConstSizedBox.h5,
                           Text(
                             '@${userData.username}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, color: ConstColors.greyColor),
                           ),
                         ],
                       )
-                    : Text(
+                    : const Text(
                         'Sem nome definido',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -102,12 +102,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                 Text(
                   userData.email,
-                  style: TextStyle(fontSize: 16, color: ConstColors.greyColor),
+                  style: const TextStyle(fontSize: 16, color: ConstColors.greyColor),
                 ),
                 ConstSizedBox.h5,
 
                 userData.profileCompleted
-                    ? Text(
+                    ? const Text(
                         'Seu perfil está completo!',
                         style: TextStyle(
                           fontSize: 16,
@@ -118,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onPressed: () {
                           Get.toNamed(AppRoutes.myDataPage);
                         },
-                        child: Text('Complete seu perfil'),
+                        child: const Text('Complete seu perfil'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ConstColors.redColor,
                           foregroundColor: ConstColors.whiteColor,

@@ -24,8 +24,8 @@ class UserInputMessage extends StatelessWidget {
           );
         },
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          padding: EdgeInsets.all(12),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: ConstColors.orangeColor,
             borderRadius: BorderRadius.circular(12),
@@ -34,7 +34,7 @@ class UserInputMessage extends StatelessWidget {
             data: text,
             styleSheet: MarkdownStyleSheet.fromTheme(
               Theme.of(context),
-            ).copyWith(p: TextStyle(color: ConstColors.whiteColor)),
+            ).copyWith(p: const TextStyle(color: ConstColors.whiteColor)),
           ),
         ),
       ),

@@ -23,15 +23,15 @@ class EventsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         leading: Container(
           width: 40,
           height: 40,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: ConstColors.lightBlueColor,
             shape: BoxShape.circle,
           ),
-          child: Icon(
+          child: const Icon(
             Icons.calendar_month,
             color: ConstColors.whiteColor,
             size: 22,
@@ -39,7 +39,7 @@ class EventsCard extends StatelessWidget {
         ),
         title: Text(
           eventName,
-          style: TextStyle(
+          style: const TextStyle(
             color: ConstColors.whiteColor,
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -47,7 +47,7 @@ class EventsCard extends StatelessWidget {
         ),
         subtitle: Text(
           DateFormat('dd/MM/yyyy - HH:mm').format(eventDate),
-          style: TextStyle(
+          style: const TextStyle(
             color: ConstColors.whiteColor,
             fontSize: 14,
           ),

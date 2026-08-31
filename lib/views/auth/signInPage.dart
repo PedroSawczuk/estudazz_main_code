@@ -11,7 +11,7 @@ import 'signUpPage.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class SignInPage extends StatefulWidget {
-  SignInPage({super.key});
+  const SignInPage({super.key});
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -37,7 +37,7 @@ class _SignInPageState extends State<SignInPage> {
 
       try {
         await _authController.signIn(email, password);
-        Get.offAll(() => HomePage());
+        Get.offAll(() => const HomePage());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           CustomSnackBar.show(
@@ -104,16 +104,16 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'ENTRAR',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 ConstSizedBox.h30,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
@@ -125,13 +125,13 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 ConstSizedBox.h10,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       labelText: 'Senha',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isPasswordVisible
@@ -156,9 +156,9 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Get.offAll(() => ForgotPasswordPage());
+                        Get.offAll(() => const ForgotPasswordPage());
                       },
-                      child: Text(
+                      child: const Text(
                         'Esqueci minha senha',
                         style: TextStyle(color: ConstColors.greyColor),
                       ),
@@ -167,16 +167,16 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 ConstSizedBox.h5,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Não tem uma conta?'),
+                      const Text('Não tem uma conta?'),
                       TextButton(
                         onPressed: () {
-                          Get.offAll(() => SignUpPage());
+                          Get.offAll(() => const SignUpPage());
                         },
-                        child: Text('Crie aqui'),
+                        child: const Text('Crie aqui'),
                       ),
                     ],
                   ),
@@ -185,11 +185,11 @@ class _SignInPageState extends State<SignInPage> {
                 ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(200, 44),
+                    fixedSize: const Size(200, 44),
                     backgroundColor: ConstColors.orangeColor,
                     foregroundColor: ConstColors.whiteColor,
                   ),
-                  child: Text('Entrar'),
+                  child: const Text('Entrar'),
                 ),
               ],
             ),

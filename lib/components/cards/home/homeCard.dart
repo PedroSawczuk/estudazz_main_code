@@ -23,8 +23,8 @@ class ItensCards extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        padding: EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: color.withAlpha((255 * 0.1).round()),
           borderRadius: BorderRadius.circular(20),

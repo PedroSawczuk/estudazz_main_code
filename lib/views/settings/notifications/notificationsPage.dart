@@ -14,7 +14,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Configurações de Notificação'),
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
       ),

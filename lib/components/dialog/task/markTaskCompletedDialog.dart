@@ -23,7 +23,7 @@ class MarkTaskCompletedDialog {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),
-            title: Column(
+            title: const Column(
               children: [
                 Icon(
                   Icons.check_circle,
@@ -44,13 +44,13 @@ class MarkTaskCompletedDialog {
             content: Text(
               "A tarefa '$taskName' já está concluída.\nDeseja desmarcá-la e voltar para pendentes?",
               textAlign: TextAlign.center,
-              style: TextStyle(color: ConstColors.white54Color),
+              style: const TextStyle(color: ConstColors.white54Color),
             ),
             actionsAlignment: MainAxisAlignment.center,
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(
+                child: const Text(
                   "Fechar",
                   style: TextStyle(color: ConstColors.greyColor),
                 ),
@@ -62,7 +62,7 @@ class MarkTaskCompletedDialog {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
                 onPressed: () async {
                   try {
@@ -87,8 +87,8 @@ class MarkTaskCompletedDialog {
                   }
                   Navigator.of(context).pop();
                 },
-                icon: Icon(Icons.undo),
-                label: Text('Desmarcar'),
+                icon: const Icon(Icons.undo),
+                label: const Text('Desmarcar'),
               ),
             ],
           );
@@ -103,7 +103,7 @@ class MarkTaskCompletedDialog {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),
-            title: Column(
+            title: const Column(
               children: [
                 Icon(Icons.task_alt, color: ConstColors.orangeColor, size: 60),
                 ConstSizedBox.h10,
@@ -123,7 +123,7 @@ class MarkTaskCompletedDialog {
                 Text(
                   "O que deseja fazer com a tarefa '$taskName'?",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: ConstColors.whiteColor,
                     fontSize: 16,
                   ),
@@ -153,15 +153,15 @@ class MarkTaskCompletedDialog {
                     }
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.check_circle_outline, size: 24),
-                  label: Text(
+                  icon: const Icon(Icons.check_circle_outline, size: 24),
+                  label: const Text(
                     'Marcar como Concluída',
                     style: TextStyle(fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ConstColors.greenColor,
                     foregroundColor: ConstColors.whiteColor,
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -186,15 +186,15 @@ class MarkTaskCompletedDialog {
                     }
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.delete_outline, size: 24),
-                  label: Text(
+                  icon: const Icon(Icons.delete_outline, size: 24),
+                  label: const Text(
                     'Excluir Tarefa',
                     style: TextStyle(fontSize: 16),
                   ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: ConstColors.redColor,
-                    side: BorderSide(color: ConstColors.redColor),
-                    minimumSize: Size(double.infinity, 50),
+                    side: const BorderSide(color: ConstColors.redColor),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -206,7 +206,7 @@ class MarkTaskCompletedDialog {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(
+                child: const Text(
                   "Cancelar",
                   style: TextStyle(color: ConstColors.grey400Color),
                 ),

@@ -5,7 +5,6 @@ import 'package:estudazz_main_code/routes/appRoutes.dart';
 import 'package:estudazz_main_code/models/user/userModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 import 'package:estudazz_main_code/controllers/user/userController.dart';
 import 'package:image_picker/image_picker.dart';
@@ -67,18 +66,18 @@ class _MyDataPageState extends State<MyDataPage> {
         stream: _userDataStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text("Dados não encontrados."));
+            return const Center(child: Text("Dados não encontrados."));
           }
 
           final data = snapshot.data!;
           String? photoURL = data.photoUrl;
 
           return Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -88,19 +87,19 @@ class _MyDataPageState extends State<MyDataPage> {
                     onTap: _showImageSourceSelection,
                     child: CircleAvatar(
                       radius: 60,
-                      backgroundImage: photoURL != null && photoURL.isNotEmpty
+                      backgroundImage: photoURL.isNotEmpty
                           ? NetworkImage(photoURL)
                           : const AssetImage('assets/images/no-profile-photo.png') as ImageProvider,
                     ),
                   ),
                 ),
                 ConstSizedBox.h30,
-                Text(
+                const Text(
                   'Informações Pessoais',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
 
-                Divider(thickness: 1),
+                const Divider(thickness: 1),
                 ConstSizedBox.h8,
 
                 UserDataCard(label: "Nome", value: data.displayName),
@@ -113,12 +112,12 @@ class _MyDataPageState extends State<MyDataPage> {
 
                 ConstSizedBox.h13,
 
-                Text(
+                const Text(
                   'Informações Acadêmicas',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
 
-                Divider(thickness: 1),
+                const Divider(thickness: 1),
                 ConstSizedBox.h8,
 
                 UserDataCard(
@@ -136,8 +135,8 @@ class _MyDataPageState extends State<MyDataPage> {
                     onPressed: () {
                       Get.toNamed(AppRoutes.editDataPage);
                     },
-                    icon: Icon(Icons.edit, color: ConstColors.whiteColor),
-                    label: Text("Editar Dados"),
+                    icon: const Icon(Icons.edit, color: ConstColors.whiteColor),
+                    label: const Text("Editar Dados"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ConstColors.orangeColor,
                       foregroundColor: ConstColors.whiteColor,

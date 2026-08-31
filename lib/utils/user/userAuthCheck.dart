@@ -22,15 +22,15 @@ class AuthGuard {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text("Você não está autenticado!"),
-            content: Text("Para ter uma experiência completa, faça login."),
+            title: const Text("Você não está autenticado!"),
+            content: const Text("Para ter uma experiência completa, faça login."),
             actions: [
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                   Get.toNamed(AppRoutes.signInPage);
                 },
-                child: Text("Entrar"),
+                child: const Text("Entrar"),
               ),
             ],
           ),

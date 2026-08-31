@@ -20,7 +20,7 @@ class CustomSnackBar {
       colorText: textColor,
       snackPosition: snackPosition,
       duration: duration,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       borderRadius: 8,
     );
     } catch (_) {}

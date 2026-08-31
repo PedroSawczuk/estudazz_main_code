@@ -36,7 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: Icon(Icons.group),
+              icon: const Icon(Icons.group),
               onPressed: onMembersIconTap,
               tooltip: 'Ver Membros',
             ),
@@ -45,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
               onPressed:
                   () => {
                     AuthGuard.handleAuthenticatedAction(
@@ -60,7 +60,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
               onPressed:
                   () => {
                     AuthGuard.handleAuthenticatedAction(

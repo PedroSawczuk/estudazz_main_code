@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PerformancePage extends StatefulWidget {
-  PerformancePage({super.key});
+  const PerformancePage({super.key});
 
   @override
   _PerformancePageState createState() => _PerformancePageState();
@@ -80,7 +80,7 @@ class _PerformancePageState extends State<PerformancePage> {
                 } else if (snapshot.hasError) {
                   return Text('Erro ao carregar dados: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data == null) {
-                  return Text('Nenhuma tarefa encontrada');
+                  return const Text('Nenhuma tarefa encontrada');
                 }
 
                 final data = snapshot.data!;
@@ -130,7 +130,7 @@ class _PerformancePageState extends State<PerformancePage> {
                 } else if (snapshot.hasError) {
                   return Text('Erro ao carregar dados: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data == null) {
-                  return Text('Nenhum evento encontrado');
+                  return const Text('Nenhum evento encontrado');
                 }
 
                 final data = snapshot.data!;

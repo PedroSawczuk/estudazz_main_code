@@ -22,7 +22,7 @@ class UserInfoCard extends StatelessWidget {
       child: Container(
         width: 150,
         height: 130,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -30,7 +30,7 @@ class UserInfoCard extends StatelessWidget {
             ConstSizedBox.h10,
             Text(
               infoName,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: ConstColors.whiteColor,
@@ -42,7 +42,7 @@ class UserInfoCard extends StatelessWidget {
             ConstSizedBox.h5,
             Text(
               infoValue,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: ConstColors.orangeColor,

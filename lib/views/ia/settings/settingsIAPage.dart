@@ -17,41 +17,41 @@ class _SettingsAIPageState extends State<SettingsAIPage> {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Configurações da IA'),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
             ListTile(
-              title: Text('Treinar IA com Novos Dados'),
-              subtitle: Text(
+              title: const Text('Treinar IA com Novos Dados'),
+              subtitle: const Text(
                 'Adicione informações para melhorar as respostas.',
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: const Icon(Icons.chevron_right),
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => IATrainingNewDataDialog(),
+                  builder: (context) => const IATrainingNewDataDialog(),
                 );
               },
             ),
             ListTile(
-              title: Text('Redefinir Configurações de IA'),
-              subtitle: Text('Restaura para os padrões originais.'),
-              trailing: Icon(Icons.restore),
+              title: const Text('Redefinir Configurações de IA'),
+              subtitle: const Text('Restaura para os padrões originais.'),
+              trailing: const Icon(Icons.restore),
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => IAResetConfirmationDialog(),
+                  builder: (context) => const IAResetConfirmationDialog(),
                 );
               },
             ),
             ListTile(
-              title: Text('Limpar conversa com a IA'),
-              subtitle: Text('Remover todas as mensagens da conversa.'),
-              trailing: Icon(Icons.delete),
+              title: const Text('Limpar conversa com a IA'),
+              subtitle: const Text('Remover todas as mensagens da conversa.'),
+              trailing: const Icon(Icons.delete),
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => IAResetChat(),
+                  builder: (context) => const IAResetChat(),
                 );
               },
             ),

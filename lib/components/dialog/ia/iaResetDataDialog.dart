@@ -25,14 +25,14 @@ class IAResetConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Redefinir dados da IA'),
-      content: Text(
+      title: const Text('Redefinir dados da IA'),
+      content: const Text(
         'Tem certeza que deseja apagar os dados personalizados da IA?',
       ),
       actions: [
         TextButton(
           onPressed: () => Get.back(),
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
         ElevatedButton(
           onPressed: () => _deleteIAData(context),
@@ -40,7 +40,7 @@ class IAResetConfirmationDialog extends StatelessWidget {
             foregroundColor: ConstColors.whiteColor,
             backgroundColor: ConstColors.redColor,
           ),
-          child: Text('Confirmar'),
+          child: const Text('Confirmar'),
         ),
       ],
     );

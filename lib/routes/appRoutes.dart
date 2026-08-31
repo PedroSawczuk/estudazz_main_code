@@ -44,32 +44,32 @@ class AppRoutes {
   static const String forgotPasswordPage = '/forgotPasswordPage';
 
   static final routes = [
-    GetPage(name: splashPage, page: () => SplashPage()),
-    GetPage(name: homePage, page: () => HomePage()),
-    GetPage(name: settingsPage, page: () => SettingsPage()),
-    GetPage(name: allTasksPage, page: () => AllTasksPage()),
-    GetPage(name: profilePage, page: () => ProfilePage()),
-    GetPage(name: calendarPage, page: () => CalendarPage()),
-    GetPage(name: studyRoomPage, page: () => StudyRoomPage()),
+    GetPage(name: splashPage, page: () => const SplashPage()),
+    GetPage(name: homePage, page: () => const HomePage()),
+    GetPage(name: settingsPage, page: () => const SettingsPage()),
+    GetPage(name: allTasksPage, page: () => const AllTasksPage()),
+    GetPage(name: profilePage, page: () => const ProfilePage()),
+    GetPage(name: calendarPage, page: () => const CalendarPage()),
+    GetPage(name: studyRoomPage, page: () => const StudyRoomPage()),
     GetPage(
       name: studyRoomDetailsPage,
       page: () => StudyRoomDetailsPage(room: Get.arguments),
     ),
-    GetPage(name: performancePage, page: () => PerformancePage()),
+    GetPage(name: performancePage, page: () => const PerformancePage()),
 
     // -------------- IA
-    GetPage(name: iaPage, page: () => IaPage()),
-    GetPage(name: settingsAIPage, page: () => SettingsAIPage()),
+    GetPage(name: iaPage, page: () => const IaPage()),
+    GetPage(name: settingsAIPage, page: () => const SettingsAIPage()),
 
     // -------------- SETTINGS
-    GetPage(name: notificationsPage, page: () => NotificationsSettingsPage()),
-    GetPage(name: myDataPage, page: () => MyDataPage()),
-    GetPage(name: editDataPage, page: () => EditDataPage()),
+    GetPage(name: notificationsPage, page: () => const NotificationsSettingsPage()),
+    GetPage(name: myDataPage, page: () => const MyDataPage()),
+    GetPage(name: editDataPage, page: () => const EditDataPage()),
     GetPage(name: aboutPage, page: () => const AboutPage()),
 
     // -------------- AUTH
-    GetPage(name: signUpPage, page: () => SignUpPage()),
-    GetPage(name: signInPage, page: () => SignInPage()),
-    GetPage(name: forgotPasswordPage, page: () => ForgotPasswordPage()),
+    GetPage(name: signUpPage, page: () => const SignUpPage()),
+    GetPage(name: signInPage, page: () => const SignInPage()),
+    GetPage(name: forgotPasswordPage, page: () => const ForgotPasswordPage()),
   ];
 }

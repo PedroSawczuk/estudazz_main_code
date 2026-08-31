@@ -30,13 +30,13 @@ class AddEventDialog {
         return StatefulBuilder(
           builder: (context, setStateDialog) {
             return AlertDialog(
-              title: Text("Adicionar Evento"),
+              title: const Text("Adicionar Evento"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     controller: _eventNameController,
-                    decoration: InputDecoration(labelText: 'Nome do Evento'),
+                    decoration: const InputDecoration(labelText: 'Nome do Evento'),
                   ),
                   ConstSizedBox.h16,
                   TextButton(
@@ -55,10 +55,10 @@ class AddEventDialog {
                     child: Row(
                       children: [
                         selectedTime == null
-                            ? Text('Selecionar Horário')
+                            ? const Text('Selecionar Horário')
                             : Text(
                               'Horário: ${selectedTime!.hour.toString().padLeft(2, '0')}:${selectedTime!.minute.toString().padLeft(2, '0')}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -71,7 +71,7 @@ class AddEventDialog {
               actions: [
                 TextButton(
                   onPressed: () => Get.back(),
-                  child: Text('Cancelar'),
+                  child: const Text('Cancelar'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -130,7 +130,7 @@ class AddEventDialog {
       );
                     }
                   },
-                  child: Text('Salvar'),
+                  child: const Text('Salvar'),
                 ),
               ],
             );

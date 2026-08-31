@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:estudazz_main_code/constants/constSizedBox.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({super.key});
+  const SignUpPage({super.key});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -38,31 +38,28 @@ class _SignUpPageState extends State<SignUpPage> {
         await _authController.signUp(email, password);
         Get.offAndToNamed(AppRoutes.signInPage);
       } on FirebaseAuthException catch (e) {
+        String msg;
         if (e.code == 'email-already-in-use') {
-          CustomSnackBar.show(
-            title: 'Erro!',
-            message: 'Esse email já está sendo usado. Tente outro',
-            backgroundColor: ConstColors.redColor,
-          );
+          msg = 'Esse email já está sendo usado. Tente outro!';
         } else if (e.code == 'invalid-email') {
-          CustomSnackBar.show(
-            title: 'Erro!',
-            message: 'Email inválido. Digite um email válido',
-            backgroundColor: ConstColors.redColor,
-          );
+          msg = 'Email inválido. Digite um email válido!';
         } else if (e.code == 'weak-password') {
-          CustomSnackBar.show(
-            title: 'Erro!',
-            message: 'A senha deve ter pelo menos 6 caracteres',
-            backgroundColor: ConstColors.redColor,
-          );
+          msg = 'A senha deve ter pelo menos 6 caracteres!';
         } else {
-          CustomSnackBar.show(
-            title: 'Erro Inesperado',
-            message: 'Erro ao entrar, contate o suporte',
-            backgroundColor: ConstColors.redColor,
-          );
+          msg = 'Erro de cadastro. Verifique os dados: ${e.message}';
         }
+        
+        CustomSnackBar.show(
+          title: 'Erro!',
+          message: msg,
+          backgroundColor: ConstColors.redColor,
+        );
+      } catch (e) {
+        CustomSnackBar.show(
+          title: 'Erro Inesperado',
+          message: 'Erro ao criar conta. Tente novamente mais tarde.',
+          backgroundColor: ConstColors.redColor,
+        );
       }
     }
   }
@@ -74,21 +71,21 @@ class _SignUpPageState extends State<SignUpPage> {
         key: _formKey,
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'REGISTRAR',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 ConstSizedBox.h30,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
@@ -100,13 +97,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 ConstSizedBox.h10,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       labelText: 'Senha',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isPasswordVisible
@@ -127,16 +124,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 ConstSizedBox.h10,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Já tem uma conta?'),
+                      const Text('Já tem uma conta?'),
                       TextButton(
                         onPressed: () {
-                          Get.offAll(() => SignInPage());
+                          Get.offAll(() => const SignInPage());
                         },
-                        child: Text('Entre aqui'),
+                        child: const Text('Entre aqui'),
                       ),
                     ],
                   ),
@@ -145,11 +142,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(200, 44),
+                    fixedSize: const Size(200, 44),
                     backgroundColor: ConstColors.orangeColor,
                     foregroundColor: ConstColors.whiteColor,
                   ),
-                  child: Text('Criar Conta'),
+                  child: const Text('Criar Conta'),
                 ),
               ],
             ),

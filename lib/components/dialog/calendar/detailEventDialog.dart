@@ -24,21 +24,21 @@ class DetailEventDialog {
           ),
           title: Text(
             DateFormat('dd/MM/yyyy').format(eventDate),
-            style: TextStyle(
+            style: const TextStyle(
               color: ConstColors.orangeColor,
               fontWeight: FontWeight.w900,
               fontSize: 20,
             ),
           ),
           content: Padding(
-            padding: EdgeInsets.only(left: 8.0),
+            padding: const EdgeInsets.only(left: 8.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   eventName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: ConstColors.whiteColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -47,7 +47,7 @@ class DetailEventDialog {
                 ConstSizedBox.h12,
                 Text(
                   DateFormat('HH:mm').format(eventDate),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: ConstColors.white54Color,
                     fontSize: 16,
                     fontStyle: FontStyle.italic,
@@ -67,7 +67,7 @@ class DetailEventDialog {
                   eventDate: eventDate,
                 );
               },
-              icon: Icon(Icons.edit, color: ConstColors.whiteColor),
+              icon: const Icon(Icons.edit, color: ConstColors.whiteColor),
             ),
             IconButton(
               onPressed: () async {
@@ -79,11 +79,11 @@ class DetailEventDialog {
                   backgroundColor: ConstColors.greenColor,
                 );
               },
-              icon: Icon(Icons.delete_forever, color: ConstColors.whiteColor),
+              icon: const Icon(Icons.delete_forever, color: ConstColors.whiteColor),
             ),
             ElevatedButton(
               onPressed: () => Get.back(),
-              child: Text('Fechar'),
+              child: const Text('Fechar'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: ConstColors.orangeColor,
                 foregroundColor: ConstColors.whiteColor,

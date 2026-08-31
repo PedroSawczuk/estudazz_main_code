@@ -28,13 +28,13 @@ class EditEventDialog {
         return StatefulBuilder(
           builder: (context, setStateDialog) {
             return AlertDialog(
-              title: Text("Editar Evento"),
+              title: const Text("Editar Evento"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     controller: _eventNameController,
-                    decoration: InputDecoration(labelText: 'Nome do Evento'),
+                    decoration: const InputDecoration(labelText: 'Nome do Evento'),
                   ),
                   ConstSizedBox.h16,
                   TextButton(
@@ -53,10 +53,10 @@ class EditEventDialog {
                     child: Row(
                       children: [
                         selectedTime == null
-                            ? Text('Selecionar Horário')
+                            ? const Text('Selecionar Horário')
                             : Text(
                                 'Horário: ${selectedTime!.hour.toString().padLeft(2, '0')}:${selectedTime!.minute.toString().padLeft(2, '0')}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -69,7 +69,7 @@ class EditEventDialog {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Cancelar'),
+                  child: const Text('Cancelar'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -118,7 +118,7 @@ class EditEventDialog {
                       );
                     }
                   },
-                  child: Text('Salvar Alterações'),
+                  child: const Text('Salvar Alterações'),
                 ),
               ],
             );

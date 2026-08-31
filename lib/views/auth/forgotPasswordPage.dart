@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'signInPage.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
-  ForgotPasswordPage({super.key});
+  const ForgotPasswordPage({super.key});
 
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
@@ -69,16 +69,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'RECUPERAR CONTA',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 ConstSizedBox.h30,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
@@ -90,15 +90,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 ConstSizedBox.h10,
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
                         onPressed: () {
-                          Get.offAll(() => SignInPage());
+                          Get.offAll(() => const SignInPage());
                         },
-                        child: Text(
+                        child: const Text(
                           'Voltar ao login',
                           style: TextStyle(color: ConstColors.greyColor),
                         ),
@@ -110,11 +110,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ElevatedButton(
                   onPressed: recoverPassword,
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(200, 44),
+                    fixedSize: const Size(200, 44),
                     backgroundColor: ConstColors.orangeColor,
                     foregroundColor: ConstColors.whiteColor,
                   ),
-                  child: Text('Recuperar'),
+                  child: const Text('Recuperar'),
                 ),
               ],
             ),

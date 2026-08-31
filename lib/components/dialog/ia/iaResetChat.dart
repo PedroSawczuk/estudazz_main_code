@@ -11,14 +11,14 @@ class IAResetChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Resetar conversa da IA'),
-      content: Text(
+      title: const Text('Resetar conversa da IA'),
+      content: const Text(
         'Tem certeza que deseja apagar todas as mensagens da conversa com a IA?',
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -34,7 +34,7 @@ class IAResetChat extends StatelessWidget {
             foregroundColor: ConstColors.whiteColor,
             backgroundColor: ConstColors.redColor,
           ),
-          child: Text('Confirmar'),
+          child: const Text('Confirmar'),
         ),
       ],
     );

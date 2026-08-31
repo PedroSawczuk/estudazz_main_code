@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(titleAppBar: 'Estudazz', showPersonIcon: true),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               ItensCards(

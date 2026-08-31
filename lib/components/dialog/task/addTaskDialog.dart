@@ -26,13 +26,13 @@ class AddTaskDialog {
             }
 
             return AlertDialog(
-              title: Text("Adicionar Tarefa"),
+              title: const Text("Adicionar Tarefa"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     controller: _taskNameController,
-                    decoration: InputDecoration(labelText: 'Nome da Tarefa'),
+                    decoration: const InputDecoration(labelText: 'Nome da Tarefa'),
                   ),
                   ConstSizedBox.h10,
                   Row(
@@ -48,7 +48,7 @@ class AddTaskDialog {
                           );
 
                           DateTime? pickedDate = await showDatePicker(
-                            locale: Locale('pt', 'BR'),
+                            locale: const Locale('pt', 'BR'),
                             context: context,
                             initialDate: onlyDate,
                             firstDate: onlyDate,
@@ -61,7 +61,7 @@ class AddTaskDialog {
                             });
                           }
                         },
-                        child: Text('Selecionar Data'),
+                        child: const Text('Selecionar Data'),
                       ),
                     ],
                   ),
@@ -69,13 +69,13 @@ class AddTaskDialog {
               ),
               actions: [
                 TextButton(
-                  child: Text("Cancelar"),
+                  child: const Text("Cancelar"),
                   onPressed: () {
                       Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
-                  child: Text("Salvar"),
+                  child: const Text("Salvar"),
                   onPressed: () async {
                     String? uid = await getUserUid();
                     if (uid == null) {

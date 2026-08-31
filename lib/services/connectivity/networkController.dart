@@ -30,8 +30,8 @@ class NetworkController extends GetxController {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              title: Row(
-                children: const [
+              title: const Row(
+                children: [
                   Icon(Icons.wifi_off, color: ConstColors.redColor, size: 28),
                   SizedBox(width: 10),
                   Text('Você está offline'),
