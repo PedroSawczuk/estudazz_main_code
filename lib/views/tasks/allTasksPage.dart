@@ -59,11 +59,11 @@ class _AllTasksPageState extends State<AllTasksPage> {
         future: _userUidFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text("Erro ao carregar UID do usuário."));
+            return const Center(child: Text("Erro ao carregar UID do usuário."));
           }
 
           String uid = snapshot.data!;
@@ -72,7 +72,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
             stream: _tasksDB.getTasksByUser(uid),
             builder: (context, taskSnapshot) {
               if (taskSnapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
 
               if (taskSnapshot.hasError) {
@@ -84,7 +84,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
               }
 
               if (!taskSnapshot.hasData || taskSnapshot.data!.docs.isEmpty) {
-                return Center(child: Text("Nenhuma tarefa encontrada."));
+                return const Center(child: Text("Nenhuma tarefa encontrada."));
               }
 
               final tasks =
@@ -95,9 +95,34 @@ class _AllTasksPageState extends State<AllTasksPage> {
                     );
                   }).toList();
 
-              return ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  // Faixa de Dica (Tutorial)
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: ConstColors.grey900Color,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: ConstColors.orangeColor.withValues(alpha: 0.5)),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.lightbulb_outline, color: ConstColors.orangeColor),
+                        ConstSizedBox.w8,
+                        Expanded(
+                          child: Text(
+                            "Dica: Pressione e segure em uma tarefa para marcá-la como concluída ou reabri-la.",
+                            style: TextStyle(color: ConstColors.whiteColor, fontSize: 13),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
                   final task = tasks[index];
 
                   final formattedDueDate = DateFormat(
@@ -133,16 +158,16 @@ class _AllTasksPageState extends State<AllTasksPage> {
                         _showMarkTaskCompletedDialog(task.id, task.taskName);
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(
+                        margin: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 8,
                         ),
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
-                            BoxShadow(
+                            const BoxShadow(
                               color: ConstColors.black54Color,
                               blurRadius: 4,
                               offset: Offset(2, 4),
@@ -160,23 +185,32 @@ class _AllTasksPageState extends State<AllTasksPage> {
                                     children: [
                                       Text(
                                         "$statusText: ",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Text(
                                         task.taskName,
-                                        style: TextStyle(fontSize: 16),
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
                                   ConstSizedBox.h4,
                                   Text(
                                     "Prazo: $formattedDueDate",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: ConstColors.greyColor,
                                       fontSize: 14,
+                                    ),
+                                  ),
+                                  ConstSizedBox.h4,
+                                  Text(
+                                    "Pressione e segure para opções",
+                                    style: TextStyle(
+                                      color: ConstColors.greyColor.withValues(alpha: 0.8),
+                                      fontSize: 11,
+                                      fontStyle: FontStyle.italic,
                                     ),
                                   ),
                                 ],
@@ -189,6 +223,9 @@ class _AllTasksPageState extends State<AllTasksPage> {
                     ),
                   );
                 },
+                    ),
+                  ),
+                ],
               );
             },
           );
@@ -198,9 +235,10 @@ class _AllTasksPageState extends State<AllTasksPage> {
         backgroundColor: ConstColors.orangeColor,
         foregroundColor: ConstColors.whiteColor,
         onPressed: _showAddTaskDialog,
-        icon: Icon(Icons.add),
-        label: Text('Adicionar Tarefa'),
+        icon: const Icon(Icons.add),
+        label: const Text('Adicionar Tarefa'),
       ),
     );
   }
 }
+

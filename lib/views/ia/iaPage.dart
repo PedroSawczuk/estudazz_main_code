@@ -34,6 +34,10 @@ class _IaPageState extends State<IaPage> {
   final AiGeminiServices _aiGeminiServices = AiGeminiServices();
   final List<IaChatModel> _messages = [];
 
+  // Variáveis para Controle de Cota de IA
+  int _usedTokens = 0;
+  final int _totalTokens = 1000;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,19 +60,51 @@ class _IaPageState extends State<IaPage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            color: ConstColors.grey900Color,
+            child: Row(
+              children: [
+                const Icon(Icons.bolt, color: ConstColors.orangeColor, size: 20),
+                ConstSizedBox.w8,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tokens: $_usedTokens / $_totalTokens',
+                        style: const TextStyle(
+                          color: ConstColors.greyColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      ConstSizedBox.h4,
+                      LinearProgressIndicator(
+                        value: _usedTokens / _totalTokens,
+                        backgroundColor: ConstColors.blackColor,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                            ConstColors.orangeColor),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             color: ConstColors.blackColor,
             child: Row(
               children: [
                 Expanded(
                   child: TextFormField(
                     controller: _messageController,
-                    style: TextStyle(color: ConstColors.whiteColor),
+                    style: const TextStyle(color: ConstColors.whiteColor),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: ConstColors.grey900Color,
                       hintText: 'Digite sua mensagem',
-                      hintStyle: TextStyle(color: ConstColors.greyColor),
+                      hintStyle: const TextStyle(color: ConstColors.greyColor),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide.none,
@@ -78,7 +114,7 @@ class _IaPageState extends State<IaPage> {
                 ),
                 ConstSizedBox.w8,
                 IconButton(
-                  icon: Icon(Icons.send, color: ConstColors.whiteColor),
+                  icon: const Icon(Icons.send, color: ConstColors.whiteColor),
                   onPressed: () async {
                     final userInputText = _messageController.text.trim();
 

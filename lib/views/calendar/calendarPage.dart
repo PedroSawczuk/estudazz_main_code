@@ -39,6 +39,28 @@ class _CalendarPageState extends State<CalendarPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // Faixa de Dica (Tutorial de Calendário)
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: ConstColors.grey900Color,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: ConstColors.orangeColor.withValues(alpha: 0.5)),
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.lightbulb_outline, color: ConstColors.orangeColor),
+                  ConstSizedBox.w8,
+                  Expanded(
+                    child: Text(
+                      "Dica: Pressione e segure sobre um dia no calendário abaixo para criar um novo evento.",
+                      style: TextStyle(color: ConstColors.whiteColor, fontSize: 13),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             TableCalendar(
               firstDay: DateTime.utc(2025, 1, 1),
               lastDay: DateTime.utc(2030, 12, 31),
@@ -62,7 +84,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   );
                 }
               },
-              calendarStyle: CalendarStyle(
+              calendarStyle: const CalendarStyle(
                 selectedDecoration: BoxDecoration(
                   color: ConstColors.orangeColor,
                   shape: BoxShape.circle,
@@ -76,7 +98,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   shape: BoxShape.circle,
                 ),
               ),
-              headerStyle: HeaderStyle(
+              headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
               ),
@@ -96,11 +118,11 @@ class _CalendarPageState extends State<CalendarPage> {
                     builder: (context, eventSnapshot) {
                       if (eventSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       if (eventSnapshot.hasError) {
                         print('Erro: ${eventSnapshot.error}');
-                        return Center(
+                        return const Center(
                           child: Text(
                             'Erro ao carregar eventos. \nContate o suporte.',
                           ),
@@ -108,7 +130,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       }
                       if (!eventSnapshot.hasData ||
                           eventSnapshot.data!.docs.isEmpty) {
-                        return Center(
+                        return const Center(
                           child: Text(
                             'Nenhum evento cadastrado.',
                             style: TextStyle(color: ConstColors.white54Color),
