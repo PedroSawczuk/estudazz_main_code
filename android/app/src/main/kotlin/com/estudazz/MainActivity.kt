@@ -1,4 +1,4 @@
-package com.example.estudazz_main_code
+package com.estudazz
 
 import io.flutter.embedding.android.FlutterActivity
 
