@@ -19,23 +19,24 @@ void _showIncompleteProfileDialog(BuildContext context) {
     context: context,
     builder:
         (context) => AlertDialog(
-          title: Text(
+          title: const Text(
             "Falta Pouco!",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          content: Text(
+          content: const Text(
             "Adicione algumas informações que serão úteis para sua experiência ser completa!",
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("Mais Tarde"),
+              child: const Text("Mais Tarde"),
             ),
             ElevatedButton(
               onPressed: () {
+                Navigator.pop(context); // Fecha o modal primeiro
                 Get.toNamed(AppRoutes.myDataPage);
               },
-              child: Text("Editar Perfil"),
+              child: const Text("Editar Perfil"),
             ),
           ],
         ),

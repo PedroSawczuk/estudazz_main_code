@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class IATrainingNewDataDialog extends StatefulWidget {
-  IATrainingNewDataDialog({super.key});
+  const IATrainingNewDataDialog({super.key});
 
   @override
   State<IATrainingNewDataDialog> createState() =>
@@ -21,6 +21,12 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
   void initState() {
     super.initState();
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadData() async {
@@ -61,7 +67,8 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
         'updated_at': DateTime.now().toIso8601String(),
       });
 
-        Navigator.of(context).pop();
+      FocusManager.instance.primaryFocus?.unfocus(); // Mata o teclado antes de fechar o dialog
+      Get.back(); // Fecha o dialog com segurança via GetX
 
       CustomSnackBar.show(
         title: 'Sucesso!',
@@ -82,18 +89,18 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Treinar IA com Novos Dados'),
+      title: const Text('Treinar IA com Novos Dados'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Adicione informações para melhorar as respostas da IA.'),
+          const Text('Adicione informações para melhorar as respostas da IA.'),
           ConstSizedBox.h12,
           TextField(
             controller: _textController,
             minLines: 5,
             maxLines: null,
             keyboardType: TextInputType.multiline,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Digite aqui...',
               border: OutlineInputBorder(),
             ),
@@ -103,9 +110,9 @@ class _IATrainingNewDataDialogState extends State<IATrainingNewDataDialog> {
       actions: [
         TextButton(
           onPressed: () => Get.back(),
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
-        ElevatedButton(onPressed: _confirmIANewData, child: Text('Salvar')),
+        ElevatedButton(onPressed: _confirmIANewData, child: const Text('Salvar')),
       ],
     );
   }

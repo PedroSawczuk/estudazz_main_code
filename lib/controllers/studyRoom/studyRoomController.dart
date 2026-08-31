@@ -131,6 +131,11 @@ class StudyRoomController extends GetxController {
     }
 
     try {
+      final index = _studyRooms.indexWhere((room) => room.id == roomId);
+      if (index != -1) {
+        _studyRooms[index] = _studyRooms[index].copyWith(name: newName);
+      }
+      
       await _studyRoomDB.updateStudyRoom(roomId: roomId, data: {'name': newName});
       CustomSnackBar.show(
           title: 'Sucesso!',
@@ -146,6 +151,7 @@ class StudyRoomController extends GetxController {
 
   Future<void> deleteRoom(String roomId) async {
     try {
+      _studyRooms.removeWhere((room) => room.id == roomId); // Remove instantaneamente da interface
       await _studyRoomDB.deleteStudyRoom(roomId);
       CustomSnackBar.show(
           title: 'Sucesso!',

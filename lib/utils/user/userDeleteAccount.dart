@@ -15,7 +15,7 @@ void showDeleteAccountDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Confirmar Exclusão"),
+        title: const Text("Confirmar Exclusão"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -26,20 +26,20 @@ void showDeleteAccountDialog(BuildContext context) {
                 children: [
                   TextSpan(
                     text: "${currentUser?.email ?? '[email não disponível]'}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: ConstColors.redColor,
                     ),
                   ),
                 ],
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
             ConstSizedBox.h12,
             TextField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "E-mail",
                 border: OutlineInputBorder(),
               ),
@@ -48,7 +48,7 @@ void showDeleteAccountDialog(BuildContext context) {
         ),
         actions: [
           TextButton(
-            child: Text("Cancelar"),
+            child: const Text("Cancelar"),
             onPressed: () => Get.back(),
           ),
           ElevatedButton(
@@ -56,7 +56,7 @@ void showDeleteAccountDialog(BuildContext context) {
               backgroundColor:ConstColors.redColor,
               foregroundColor: ConstColors.whiteColor,
             ),
-            child: Text("Excluir"),
+            child: const Text("Excluir"),
             onPressed: () async {
               if (emailController.text.trim() == currentUser?.email) {
                 try {
@@ -69,7 +69,8 @@ void showDeleteAccountDialog(BuildContext context) {
 
                   await currentUser.delete();
 
-                    Navigator.of(context).pop();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Get.back(); // Fecha o modal de exclusão
 
                   CustomSnackBar.show(
                     title: "Conta excluída com sucesso!",
@@ -77,13 +78,15 @@ void showDeleteAccountDialog(BuildContext context) {
                     backgroundColor: ConstColors.greenColor,
                   );
 
+                  // O offAllNamed leva para o SignInPage destruindo as telas antigas
                   Get.offAllNamed(AppRoutes.signInPage);
                 } catch (e) {
-                    Navigator.of(context).pop();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Get.back();
                   CustomSnackBar.show(
                     title: "Erro ao excluir conta",
                     message: "Ocorreu um erro ao tentar excluir sua conta.",
-                    backgroundColor:ConstColors.redColor,
+                    backgroundColor: ConstColors.redColor,
                   );
                 }
               } else {

@@ -24,6 +24,8 @@ class AuthServices {
 
       await SaveUserLocal.saveUser(user);
 
+    } on FirebaseAuthException catch (e) {
+      throw e;
     } on FirebaseException catch (e) {
       throw "Erro ao salvar no Firestore: ${e.message}";
     } catch (e) {
@@ -47,7 +49,7 @@ class AuthServices {
         await SaveUserLocal.saveUser(user);
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

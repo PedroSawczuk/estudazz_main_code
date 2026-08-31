@@ -91,12 +91,18 @@ class _EditDataPageState extends State<EditDataPage> {
             .doc(uid)
             .update(updatedUser.toMap());
 
-        Get.back();
-
+        FocusManager.instance.primaryFocus?.unfocus(); 
+        Get.back(); 
         CustomSnackBar.show(
           title: 'Sucesso!',
           message: 'Dados atualizados com sucesso!',
           backgroundColor: ConstColors.greenColor,
+        );
+      } else {
+        CustomSnackBar.show(
+          title: 'Atenção!',
+          message: 'Verifique se você preencheu todos os campos obrigatórios corretamente.',
+          backgroundColor: ConstColors.orangeColor,
         );
       }
     } catch (e) {
@@ -117,26 +123,26 @@ class _EditDataPageState extends State<EditDataPage> {
       prefixIcon: Icon(icon, color: ConstColors.orangeColor),
       filled: true,
       fillColor: ConstColors.blackColor,
-      labelStyle: TextStyle(color: ConstColors.greyColor),
+      labelStyle: const TextStyle(color: ConstColors.greyColor),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: ConstColors.orangeColor, width: 2),
+        borderSide: const BorderSide(color: ConstColors.orangeColor, width: 2),
       ),
     );
   }
 
   Widget _buildSectionCard({required String title, required IconData sectionIcon, required List<Widget> children}) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: ConstColors.grey900Color,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black26,
             blurRadius: 10,
             offset: Offset(0, 5),
@@ -152,7 +158,7 @@ class _EditDataPageState extends State<EditDataPage> {
               ConstSizedBox.w8,
               Text(
                 title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ConstColors.whiteColor),
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ConstColors.whiteColor),
               ),
             ],
           ),
@@ -168,9 +174,9 @@ class _EditDataPageState extends State<EditDataPage> {
     return Scaffold(
       appBar: CustomAppBar(titleAppBar: 'Editar Dados'),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -254,17 +260,17 @@ class _EditDataPageState extends State<EditDataPage> {
 
                 ElevatedButton.icon(
                   onPressed: _saveUserData,
-                  icon: Icon(Icons.check_circle_outline, size: 28),
-                  label: Text(
+                  icon: const Icon(Icons.check_circle_outline, size: 28),
+                  label: const Text(
                     'Salvar Alterações',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 18),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     foregroundColor: ConstColors.whiteColor,
                     backgroundColor: ConstColors.orangeColor,
                     elevation: 8,
-                    shadowColor: ConstColors.orangeColor.withOpacity(0.5),
+                    shadowColor: ConstColors.orangeColor.withValues(alpha: 0.5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
