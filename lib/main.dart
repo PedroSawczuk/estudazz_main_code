@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:estudazz_main_code/env.dart';
 import 'package:estudazz_main_code/firebase_options.dart';
 import 'package:estudazz_main_code/routes/appRoutes.dart';
@@ -15,13 +16,23 @@ class InitialBinding extends Bindings {
     Get.put(NetworkController(), permanent: true);
   }
 }
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  OneSignal.initialize(Env.appIdOnesignalKey);
-  OneSignal.Notifications.requestPermission(true);
+  
+  // Oculta completamente o "Header" (Relógio, Bateria, Sinal)
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  try {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+    OneSignal.initialize(Env.appIdOnesignalKey);
+    OneSignal.Notifications.requestPermission(true);
+  } catch (e) {
+    debugPrint("=== ERRO FATAL DE INICIALIZAÇÃO INTERCEPTADO: ===");
+    debugPrint(e.toString());
+    debugPrint("==================================================");
+  }
+  
   runApp(const MyApp());
 }
 
