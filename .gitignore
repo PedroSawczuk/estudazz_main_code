@@ -58,3 +58,18 @@ env.*
 
 GEMINI.md
 firebase_collections.txt
+
+# Keys and Signing
+keys/
+*.jks
+*.keystore
+key.properties
+**/key.properties
+
+# Build artifacts and logs
+*.apk
+*.aab
+build_*.txt
+*_log.txt
+android/build_log.txt
+
